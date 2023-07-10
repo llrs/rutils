@@ -15,3 +15,7 @@ You can install the development version of rutils from [GitHub](https://github.c
 # install.packages("devtools")
 devtools::install_github("llrs/rutils")
 ```
+
+## Style
+
+Exported functions start with `llrs_`

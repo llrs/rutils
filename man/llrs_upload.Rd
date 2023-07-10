@@ -2,7 +2,7 @@
 % Please edit documentation in R/onedrive.R
 \name{llrs_upload}
 \alias{llrs_upload}
-\title{Upload a file to Microsoft cloud in One drive}
+\title{Upload a file to Microsoft cloud in One Drive}
 \usage{
 llrs_upload(path)
 }
@@ -13,5 +13,5 @@ llrs_upload(path)
 The id of the file uploaded
 }
 \description{
-Upload a file to Microsoft cloud in One drive
+Upload a file to Microsoft cloud in One Drive
 }
