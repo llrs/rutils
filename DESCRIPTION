@@ -1,0 +1,16 @@
+Package: rutils
+Type: Package
+Title: Personal package for helping with my day to day work
+Version: 0.0.0.9000
+Authors@R: person(
+              "Lluís", "Revilla Sancho",
+              email = "lluis.revilla@gmail.com",
+              role = c("aut", "cre"),
+              comment = c(ORCID = "0000-0001-9747-2570")
+            )
+Description: Helpers to work with remote data and setup my preferences.
+License: GPL (>= 3)
+Encoding: UTF-8
+Suggests: 
+    Microsoft365R (>= 2.4.0),
+    roxygen2 (>= 7.2.3)
