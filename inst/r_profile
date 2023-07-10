@@ -1,0 +1,37 @@
+if (interactive() && !isNamespace(environment())) {
+  message("Loadings preferences from ~/.Rprofile")
+  options(usethis.full_name = "Lluís Revilla Sancho",  # For package creation
+          Ncpus = 4,
+          max.print = 100,
+          usethis.protocol = "ssh",
+          useFancyQuotes = FALSE,
+          max.print = 100,
+          usethis.description = list(
+            "Authors@R" = utils::person(
+              "Lluís", "Revilla Sancho",
+              email = "lluis.revilla@gmail.com",
+              role = c("aut", "cre"),
+              comment = c(ORCID = "0000-0001-9747-2570")
+            ),
+            License = "MIT + file LICENSE",
+            Version = "0.0.0.9000"),
+          servr.daemon = TRUE,
+          # Temporary workaround: https://github.com/rstudio/rstudio/issues/13188#issuecomment-1585012408
+          rstudio.help.showDataPreview = FALSE,
+          usethis.destdir = "~/Documents/projects/code",
+          warnPartialMatchArgs = TRUE,
+          warnPartialMatchDollar = TRUE,
+          warnPartialMatchAttr = TRUE,
+          #          CRAN_mirror = "https://packagemanager.rstudio.com/cran/__linux__/focal/latest",
+          #          BioC_mirror = "https://packagemanager.rstudio.com/bioconductor"
+          setWidthOnResize = TRUE # https://twitter.com/henrikbengtsson/status/1460367104079663106?s=20
+  ) # Faster updates/installation of packages
+
+  if (requireNamespace("usethis", quietly = TRUE)) {
+    suppressPackageStartupMessages(library("usethis"))
+  }
+
+  if (requireNamespace("devtools", quietly = TRUE)) {
+    suppressPackageStartupMessages(library("devtools"))
+  }
+}
