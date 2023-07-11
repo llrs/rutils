@@ -1,0 +1,9 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles: {}
+last_built: 2023-07-11T12:43Z
+urls:
+  reference: https://llrs.github.io/rutils/reference
+  article: https://llrs.github.io/rutils/articles
+
