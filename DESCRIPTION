@@ -18,5 +18,7 @@ Suggests:
     rappdirs (>= 0.3.3),
     roxygen2 (>= 7.2.3),
     rstudioapi (>= 0.14)
+Remotes:
+    jonocarroll/ntfy
 Encoding: UTF-8
 RoxygenNote: 7.2.3

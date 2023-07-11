@@ -10,6 +10,9 @@ llrs_rstudio_setup <- function() {
 
 
 check_rstudio <- function() {
+  if (!is.null(.state$rstudio)) {
+    return(TRUE)
+  }
   if (!requireNamespace("rstudioapi", quietly = TRUE)) {
     stop("Install rstudioapi", call. = FALSE)
   }
@@ -30,6 +33,7 @@ check_rstudio <- function() {
       path = file.path(rcp, "rstudio-prefs.json"),
       backup =  file.path(rcp, "rstudio-prefs.json.bkp") )
   }
+  TRUE
 }
 
 rstudio_config_path <- function() {
@@ -64,7 +68,7 @@ llrs_rstudio_default <- function() {
   check_rstudio()
   rstudio_path <- .state$rstudio["path"]
   rstudio_backup <- .state$rstudio["backup"]
-  if (file.exists()) {
+  if (file.exists(rstudio_backup)) {
     stop("Already a previous configuration exists.")
   }
   if (file.rename(rstudio_path, rstudio_backup)) {
@@ -94,5 +98,10 @@ llrs_rstudio_restore <- function() {
 
 # Provide snippets
 llrs_rstudio_snippets <- function() {
+
+}
+
+# Check if theme is in the computer.
+llrs_rstudio_check_theme <- function(theme) {
 
 }

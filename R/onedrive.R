@@ -1,14 +1,27 @@
 #' Upload a file to Microsoft cloud in One Drive
 #'
+#'
+#' Folders will be created if they don't exists.
 #' @param path File you want to upload
 #'
 #' @return The id of the file uploaded
 #' @export
-llrs_upload <- function(path) {
-  if (!file.exists(path)) {
-    stop("!File doesn't exists")
+llrs_upload <- function(file, dest) {
+  if (!file.exists(file)) {
+    stop("File doesn't exists!")
   }
-
+  if (!nzchar(tools::file_ext(dest))) {
+    stop("Destination should be the name of the file in the remote location.")
+  }
+  folder <- dirname(dest)
+  check_onedrive()
+  out <- tryCatch(.state$azure$onedrive$list_files(folder), error = function(e){
+    FALSE
+  }, finally = TRUE)
+  if (isFALSE(out)) {
+    warning("It will create a new folder!")
+  }
+  .state$azure$onedrive$upload_file(dest = dest, src = file)
 
 }
 
