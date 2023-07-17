@@ -1,3 +1,7 @@
+get_onedrive <- function() {
+  .state$azure$onedrive
+}
+
 #' Upload a file to Microsoft cloud in One Drive
 #'
 #'
@@ -15,13 +19,13 @@ llrs_upload <- function(file, dest) {
   }
   folder <- dirname(dest)
   check_onedrive()
-  out <- tryCatch(.state$azure$onedrive$list_files(folder), error = function(e){
+  out <- tryCatch(get_onedrive()$list_files(folder), error = function(e){
     FALSE
   }, finally = TRUE)
   if (isFALSE(out)) {
     warning("It will create a new folder!")
   }
-  .state$azure$onedrive$upload_file(dest = dest, src = file)
+  get_onedrive()$upload_file(dest = dest, src = file)
 
 }
 
@@ -51,7 +55,7 @@ check_onedrive <- function() {
 #'
 llrs_download <- function(path) {
   check_onedrive()
-  onedrive <- .state$azure$onedrive
+  onedrive <- get_onedrive()
   if (!nzchar(tools::file_ext(path))) {
     onedrive$download_folder(path, recursive = TRUE, overwrite = TRUE,
                              parallel = FALSE)

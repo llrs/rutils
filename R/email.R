@@ -1,5 +1,9 @@
 # Send emails
-#
+
+get_azure <- function() {
+  .state$azure$outlook
+}
+
 check_email <- function() {
   if (!requireNamespace("emayili", quietly = TRUE) ||
       !requireNamespace("blastula", quietly = TRUE)) {
@@ -43,7 +47,7 @@ choose_email_method <- function() {
 #' @export
 llrs_send_email <- function() {
   check_email()
-  outlook <- .state$azure$outlook
+  outlook <- get_azure()
   check_email_args()
   method <- choose_email_method()
 
@@ -58,7 +62,7 @@ llrs_send_email <- function() {
     outlook$create_email(ey_email)
   }
 
-  if (method == "blsatula") {
+  if (method == "blastula") {
 
 
   }
