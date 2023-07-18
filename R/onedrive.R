@@ -18,14 +18,14 @@ llrs_upload <- function(file, dest) {
     stop("Destination should be the name of the file in the remote location.")
   }
   folder <- dirname(dest)
-  check_onedrive()
-  out <- tryCatch(get_onedrive()$list_files(folder), error = function(e){
+  onedrive <- check_onedrive()
+  out <- tryCatch(onedrive$list_files(folder), error = function(e){
     FALSE
   }, finally = TRUE)
   if (isFALSE(out)) {
     warning("It will create a new folder!")
   }
-  get_onedrive()$upload_file(dest = dest, src = file)
+  onedrive$upload_file(dest = dest, src = file)
 
 }
 
@@ -43,6 +43,7 @@ check_onedrive <- function() {
     }
     .state$azure <- c(onedrive = Microsoft365R::get_business_onedrive())
   }
+  get_onedrive()
 }
 
 
@@ -54,8 +55,7 @@ check_onedrive <- function() {
 #' @export
 #'
 llrs_download <- function(path) {
-  check_onedrive()
-  onedrive <- get_onedrive()
+  onedrive <- check_onedrive()
   if (!nzchar(tools::file_ext(path))) {
     onedrive$download_folder(path, recursive = TRUE, overwrite = TRUE,
                              parallel = FALSE)
@@ -75,8 +75,7 @@ llrs_download <- function(path) {
 #' @return A link to share a resource
 #' @export
 llrs_share <- function(path, type, expiry, password, scope) {
-  check_onedrive()
-  business <- .state$onedrive$business
-  business$create_share_link(name = path, type = type, expiry = expiry,
+  onedrive <- check_onedrive()
+  onedrive$create_share_link(name = path, type = type, expiry = expiry,
                              scope = scope)
 }
