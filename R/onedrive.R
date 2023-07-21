@@ -7,7 +7,7 @@ get_onedrive <- function() {
 #'
 #' Folders will be created if they don't exists.
 #' @param file File you want to upload.
-#' @param dest Where you want to sve the file.
+#' @param dest Where you want to save the file.
 #'
 #' @return The id of the file uploaded
 #' @export

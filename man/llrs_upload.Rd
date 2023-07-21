@@ -9,7 +9,7 @@ llrs_upload(file, dest)
 \arguments{
 \item{file}{File you want to upload.}
 
-\item{dest}{Where you want to sve the file.}
+\item{dest}{Where you want to save the file.}
 }
 \value{
 The id of the file uploaded
