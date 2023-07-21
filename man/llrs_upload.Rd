@@ -4,14 +4,16 @@
 \alias{llrs_upload}
 \title{Upload a file to Microsoft cloud in One Drive}
 \usage{
-llrs_upload(path)
+llrs_upload(file, dest)
 }
 \arguments{
-\item{path}{File you want to upload}
+\item{file}{File you want to upload.}
+
+\item{dest}{Where you want to sve the file.}
 }
 \value{
 The id of the file uploaded
 }
 \description{
-Upload a file to Microsoft cloud in One Drive
+Folders will be created if they don't exists.
 }

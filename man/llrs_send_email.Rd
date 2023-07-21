@@ -4,7 +4,16 @@
 \alias{llrs_send_email}
 \title{Send a quick email}
 \usage{
-llrs_send_email()
+llrs_send_email(text, subject, to, attachments = NULL)
+}
+\arguments{
+\item{text}{Text of the email?}
+
+\item{subject}{What is the subject of the email?}
+
+\item{to}{Address to send the emails (no CC or BCC)}
+
+\item{attachments}{Paths to files.}
 }
 \value{
 Called by its side effects
