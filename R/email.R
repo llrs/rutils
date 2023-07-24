@@ -1,7 +1,7 @@
 # Send emails
 
 get_azure <- function() {
-  .state$azure$outlook
+  .state[["azure"]][["outlook"]]
 }
 
 check_email <- function() {
@@ -18,9 +18,9 @@ check_email <- function() {
   if (is.null(get_azure())) {
     if (!dir.exists(rappdirs::user_data_dir("AzureR"))) {
       message("R will use your current Outlook account in the default brower.")
-      Sys.sleep(5)
+      Sys.sleep(5L)
     }
-    suppressMessages(.state$azure <- c(outlook = Microsoft365R::get_business_outlook()))
+    .state[["azure"]] <- suppressMessages(c(outlook = Microsoft365R::get_business_outlook()))
   }
   get_azure()
 }
@@ -30,7 +30,7 @@ check_attachments <- function(attachments) {
     return(TRUE)
   }
 
-  file_exists <- vapply(attachments, file.exists, FUN.VALUE = logical(1))
+  file_exists <- vapply(attachments, file.exists, FUN.VALUE = logical(1L))
   if (!all(file_exists)) {
     missing <- attachments[!file_exists]
     stop("Not able to find file(s): ", dQuote(missing, q = '"'))
@@ -53,8 +53,8 @@ choose_email_method <- function(attachments = NULL) {
                      "blastula" = requireNamespace("blastula", quietly = TRUE)
                      )
   out <- names(possibilities)[possibilities]
-  if (length(out) > 1) {
-    out <- out[1]
+  if (length(out) > 1L) {
+    out <- out[[1L]]
   }
   out
 }

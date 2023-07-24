@@ -1,5 +1,5 @@
 get_onedrive <- function() {
-  .state$azure$onedrive
+  .state[["azure"]][["onedrive"]]
 }
 
 #' Upload a file to Microsoft cloud in One Drive
@@ -20,7 +20,7 @@ llrs_upload <- function(file, dest) {
   }
   folder <- dirname(dest)
   onedrive <- check_onedrive()
-  out <- tryCatch(onedrive$list_files(folder), error = function(e){
+  out <- tryCatch(onedrive$list_files(folder), error = function(e) {
     FALSE
   }, finally = TRUE)
   if (isFALSE(out)) {
@@ -40,7 +40,7 @@ check_onedrive <- function() {
   if (is.null(.state$azure$ondrive)) {
     if (!dir.exists(rappdirs::user_data_dir("AzureR"))) {
       message("R will use your current Outlook account in the default brower.")
-      Sys.sleep(5)
+      Sys.sleep(5L)
     }
     .state$azure <- c(onedrive = Microsoft365R::get_business_onedrive())
   }

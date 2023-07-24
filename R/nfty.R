@@ -6,7 +6,8 @@ check_nfty <- function() {
   }
 }
 
-llrs_send_nfty <- function(message, title, topic) {
+llrs_send_nfty <- function(message, title, ..., topic  = NULL) {
   check_nfty()
-  ntfy::ntfy_send(message, title, topic)
+  topic <- if (is.null(topic)) ntfy::ntfy_topic() else topic
+  ntfy::ntfy_send(message, title, topic = topic, ...)
 }

@@ -80,7 +80,7 @@ llrs_rstudio_default <- function() {
   }
   if (file.rename(rstudio_path, rstudio_backup)) {
     message("Restaring Rstudio")
-    Sys.sleep(1)
+    Sys.sleep(1L)
     rstudioapi::openProject()
   }
 }
@@ -96,7 +96,7 @@ llrs_rstudio_restore <- function() {
   rstudio_backup <- .state$rstudio["backup"]
   if (file.exists(rstudio_backup) && file.rename(rstudio_backup, rstudio_path)) {
     message("Restaring Rstudio")
-    Sys.sleep(1)
+    Sys.sleep(1L)
     rstudioapi::openProject()
   } else {
     stop("Missing previous configuration")
