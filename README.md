@@ -2,6 +2,7 @@
 # rutils
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/llrs/rutils/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/llrs/rutils/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of rutils is to make it easier for me to setup and reuse functions across computers and jobs.
