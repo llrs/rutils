@@ -4,10 +4,12 @@
 \alias{llrs_download}
 \title{Download a file}
 \usage{
-llrs_download(path)
+llrs_download(file, dest = ".")
 }
 \arguments{
-\item{path}{Path to file from the One Drive.}
+\item{file}{Path to file from the One Drive.}
+
+\item{dest}{Path to where the file should be stored.}
 }
 \value{
 The path
