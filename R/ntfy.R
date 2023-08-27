@@ -14,7 +14,7 @@ check_ntfy <- function() {
 #' @param topic  Send the message to the default NTFY environment variable:
 #' "NTFY_TOPIC". Specify topic if you don't use the default.
 #' @export
-#' @returns TRUE if sent.
+#' @returns The default `httr` response.
 llrs_send_ntfy <- function(message, title, ..., topic  = NULL) {
   check_ntfy()
   topic <- if (is.null(topic)) ntfy::ntfy_topic() else topic

@@ -17,7 +17,7 @@ llrs_send_ntfy(message, title, ..., topic = NULL)
 "NTFY_TOPIC". Specify topic if you don't use the default.}
 }
 \value{
-TRUE if sent.
+The default `httr` response.
 }
 \description{
 Send a message to the NTFY address
