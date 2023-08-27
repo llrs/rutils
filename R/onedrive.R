@@ -50,18 +50,19 @@ check_onedrive <- function() {
 
 #' Download a file
 #'
-#' @param path Path to file from the One Drive.
+#' @param file Path to file from the One Drive.
+#' @param dest Path to where the file should be stored.
 #'
 #' @return The path
 #' @export
 #'
-llrs_download <- function(path) {
+llrs_download <- function(file, dest = ".") {
   onedrive <- check_onedrive()
-  if (!nzchar(tools::file_ext(path))) {
-    onedrive$download_folder(path, recursive = TRUE, overwrite = TRUE,
-                             parallel = FALSE)
+  if (!nzchar(tools::file_ext(file))) {
+    onedrive$download_folder(src = file, recursive = TRUE, overwrite = TRUE,
+                             parallel = FALSE, dest = dest)
   }
-  onedrive$download_file(path, overwrite = TRUE)
+  onedrive$download_file(file, overwrite = TRUE, dest = dest)
 }
 
 #' Create a link to a shared file
