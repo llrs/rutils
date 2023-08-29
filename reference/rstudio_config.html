@@ -48,7 +48,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">llrs_rstudio_default</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">llrs_rstudio_set</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">llrs_rstudio_default</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">llrs_rstudio_restore</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -62,7 +64,8 @@
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>llrs_rstudio_default()</code>: Will rename your configuration and restart RStudio,
+<ul><li><p><code>llrs_rstudio_set()</code>: Will setup the configuration.</p></li>
+<li><p><code>llrs_rstudio_default()</code>: Will rename your configuration and restart RStudio,
 to revert to a fresh Rstudio with the default configuration (useful for
 teaching) or double checking default options.</p></li>
 <li><p><code>llrs_rstudio_restore()</code>: Will restore your configuration.</p></li>
@@ -71,6 +74,7 @@ teaching) or double checking default options.</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">llrs_rstudio_set</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">llrs_rstudio_default</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">llrs_rstudio_restore</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
