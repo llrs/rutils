@@ -2,10 +2,13 @@
 % Please edit documentation in R/rstudio.R
 \name{rstudio_configuration}
 \alias{rstudio_configuration}
+\alias{llrs_rstudio_set}
 \alias{llrs_rstudio_default}
 \alias{llrs_rstudio_restore}
 \title{Switch between Rstudio configurations.}
 \usage{
+llrs_rstudio_set()
+
 llrs_rstudio_default()
 
 llrs_rstudio_restore()
@@ -18,6 +21,8 @@ Switch between Rstudio configurations.
 }
 \section{Functions}{
 \itemize{
+\item \code{llrs_rstudio_set()}: Will setup the configuration.
+
 \item \code{llrs_rstudio_default()}: Will rename your configuration and restart RStudio,
 to revert to a fresh Rstudio with the default configuration (useful for
 teaching) or double checking default options.
@@ -27,6 +32,7 @@ teaching) or double checking default options.
 }}
 \examples{
 \dontrun{
+llrs_rstudio_set()
 llrs_rstudio_default()
 llrs_rstudio_restore()
 }

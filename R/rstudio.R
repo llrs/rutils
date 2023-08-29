@@ -8,7 +8,6 @@ llrs_rstudio_setup <- function() {
 
 }
 
-
 check_rstudio <- function() {
   if (!is.null(.state$rstudio)) {
     return(TRUE)
@@ -29,8 +28,6 @@ check_rstudio <- function() {
   if (!requireNamespace("rappdirs", quietly = TRUE)) {
     stop("Install rappdirs", call. = FALSE)
   }
-
-
 
   # If user changes the Rstudio configuration folder after running this one
   # It will lead to weird behavior.
@@ -56,16 +53,29 @@ rstudio_config_path <- function() {
 
 #' Switch between Rstudio configurations.
 #'
-#'
 #' @return Called by its side effects.
 #' @rdname rstudio_config
 #' @name rstudio_configuration
 #' @examples
 #' \dontrun{
+#' llrs_rstudio_set()
 #' llrs_rstudio_default()
 #' llrs_rstudio_restore()
 #' }
 NULL
+
+#' @export
+#' @describeIn rstudio_config Will setup the configuration.
+llrs_rstudio_set <- function() {
+  check_rstudio()
+
+  path <-  .state$rstudio["path"]
+  if (!dir.exists(dirname(path))) {
+    dir.create(path, recursive = TRUE)
+  }
+  file.copy("inst/rstudio-prefs.json", path, overwrite = TRUE, copy.date = TRUE)
+  rstarting_rstudio()
+}
 
 #' @export
 #' @describeIn rstudio_config Will rename your configuration and restart RStudio,
@@ -79,25 +89,19 @@ llrs_rstudio_default <- function() {
     stop("Already a previous configuration exists.")
   }
   if (file.rename(rstudio_path, rstudio_backup)) {
-    message("Restaring Rstudio")
-    Sys.sleep(1L)
-    rstudioapi::openProject()
+    rstarting_rstudio()
   }
 }
 
-
-#' @export
 #' @export
 #' @describeIn rstudio_config Will restore your configuration.
 llrs_rstudio_restore <- function() {
   check_rstudio()
-  check_rstudio()
+  rstudioapi::getThemes()
   rstudio_path <- .state$rstudio["path"]
   rstudio_backup <- .state$rstudio["backup"]
   if (file.exists(rstudio_backup) && file.rename(rstudio_backup, rstudio_path)) {
-    message("Restaring Rstudio")
-    Sys.sleep(1L)
-    rstudioapi::openProject()
+    rstarting_rstudio()
   } else {
     stop("Missing previous configuration")
   }
@@ -105,10 +109,28 @@ llrs_rstudio_restore <- function() {
 
 # Provide snippets
 llrs_rstudio_snippets <- function() {
+  check_rstudio()
 
+  rcp <- rstudio_config_path()
+  path <-  file.path(rcp, "snippets")
+  if (!dir.exists(path)) {
+    dir.create(path)
+  }
+  all_snippets <- list.files("inst", pattern = "*.snippets", full.names = TRUE)
+  file.copy(all_snippets, path, overwrite = TRUE, copy.date = TRUE)
+  rstarting_rstudio()
 }
 
 # Check if theme is in the computer.
 llrs_rstudio_check_theme <- function(theme) {
+  check_rstudio()
 
+  rcp <- rstudio_config_path()
+  path <-  file.path(rcp)
+}
+
+rstarting_rstudio <- function(message = "Restaring Rstudio", time = 1L) {
+  message(message)
+  Sys.sleep(time)
+  rstudioapi::openProject()
 }
