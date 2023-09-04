@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd ..
+R -q -e "pkgdown::check_pkgdown()"
