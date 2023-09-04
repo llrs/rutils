@@ -29,7 +29,7 @@ llrs_hook <- function(file, path = getwd()) {
   if (isFALSE(out)) {
     out
   }
-  Sys.chmod(hooks_path, mode = "0777")
+  Sys.chmod(file.path(hooks_path, basename(file)), mode = "777")
   invisible(out)
 }
 

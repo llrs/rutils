@@ -1,4 +1,5 @@
 #!/bin/sh
 
 cd ..
+echo "$PWD"
 R -q -e "pkgdown::check_pkgdown()"
