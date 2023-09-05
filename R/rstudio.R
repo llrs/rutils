@@ -103,7 +103,7 @@ llrs_rstudio_restore <- function() {
   if (file.exists(rstudio_backup) && file.rename(rstudio_backup, rstudio_path)) {
     rstarting_rstudio()
   } else {
-    stop("Missing previous configuration")
+    stop("Missing previous configuration or failed to rename the file.")
   }
 }
 
