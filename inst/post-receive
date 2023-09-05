@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sha=$(git rev-parse --short HEAD)
+release_moment=$(date +"%Y-%m-%d %H:%M")
+msg="Released $sha on $release_moment"
+echo "$msg"
+echo "$msg" >> ../VERSIONS
