@@ -16,5 +16,5 @@ Check which hooks are in the package.
 llrs_hooks_list()
 }
 \seealso{
-[llrs_hook()]
+\code{\link[=llrs_hook]{llrs_hook()}}
 }

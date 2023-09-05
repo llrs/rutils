@@ -72,6 +72,6 @@ hook_names <- function(path) {
 #' @examples
 #' llrs_hooks_list()
 llrs_hooks_list <- function() {
-  lf <- list.files("inst", full.names = FALSE)
+  lf <- list.files(system.file(package = "rutils", mustWork = TRUE))
   lf[lf %in% c(hooks_client, hooks_server)]
 }

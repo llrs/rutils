@@ -24,8 +24,8 @@ llrs_hook(hook, "projects/git_something")
 }
 }
 \references{
-<https://git-scm.com/docs/githooks>
+\url{https://git-scm.com/docs/githooks}
 }
 \seealso{
-[llrs_hooks_list()]
+\code{\link[=llrs_hooks_list]{llrs_hooks_list()}}
 }

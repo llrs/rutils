@@ -7,7 +7,7 @@
 llrs_profile()
 }
 \value{
-Whatever [file.copy()] does
+Whatever \code{\link[=file.copy]{file.copy()}} does
 }
 \description{
 Write my preferences on a R user profile.

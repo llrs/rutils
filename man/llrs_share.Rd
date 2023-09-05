@@ -24,5 +24,5 @@ A link to share a resource
 Uses the credentials to share a link to a resource.
 }
 \seealso{
-[func()]
+\code{\link[=func]{func()}}
 }

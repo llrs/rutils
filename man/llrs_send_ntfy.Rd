@@ -11,13 +11,13 @@ llrs_send_ntfy(message, title, ..., topic = NULL)
 
 \item{title}{Title of the notification.}
 
-\item{...}{Other arguments used in `ntfy::ntfy_send()`}
+\item{...}{Other arguments used in \code{ntfy::ntfy_send()}}
 
 \item{topic}{Send the message to the default NTFY environment variable:
 "NTFY_TOPIC". Specify topic if you don't use the default.}
 }
 \value{
-The default `httr` response.
+The default \code{httr} response.
 }
 \description{
 Send a message to the NTFY address
