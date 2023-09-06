@@ -14,6 +14,7 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' llrs_hooks_list()
 #' hook <- system.file("post-receive", package = "rutils")
 #' llrs_hook(hook, "projects/git_something")
 #' }
