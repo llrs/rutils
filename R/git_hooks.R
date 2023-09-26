@@ -5,8 +5,8 @@
 #'
 #' Insert a new hook (It doesn't replace hooks or expand them).
 #'
-#' @param file Name of the file to be used as a hook
-#' @param path Path to the git repository
+#' @param file Name of the file to be used as a hook.
+#' @param path Path to the git repository.
 #'
 #' @return A logical value if the hook can be placed there.
 #' @references <https://git-scm.com/docs/githooks>
@@ -14,16 +14,21 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' llrs_hooks_list()
-#' hook <- system.file("post-receive", package = "rutils")
-#' llrs_hook(hook, "projects/git_something")
+#' hooks <- llrs_hooks_list()
+#' llrs_hook(hooks[1], "projects/git_something")
 #' }
 llrs_hook <- function(file, path = getwd()) {
+  stopifnot(length(file) == 1 && is.character(file))
   if (!check_git(path)) {
     stop("Doesn't seem to be a git repository!")
   }
   stopifnot("Only one hook at the time is allowed" = length(file) == 1)
   hook_names(file)
+  if (!file.exists(file)) {
+    message("Using internal hooks")
+    hooks <- llrs_hooks_list(TRUE)
+    file <- file[which(basename(hooks) == file)]
+  }
   hooks_path <- file.path(path, ".git/hooks")
   dir.create(hooks_path, recursive = TRUE, showWarnings = FALSE)
   out <- file.copy(file, hooks_path)
@@ -67,12 +72,15 @@ hook_names <- function(path) {
 #' List existing hooks
 #'
 #' Check which hooks are in the package.
+#' @param full.names A logical value to be passed to list.files
 #' @return A character vector with the name of the hooks.
 #' @export
 #' @seealso [llrs_hook()]
 #' @examples
 #' llrs_hooks_list()
-llrs_hooks_list <- function() {
-  lf <- list.files(system.file(package = "rutils", mustWork = TRUE))
-  lf[lf %in% c(hooks_client, hooks_server)]
+llrs_hooks_list <- function(full.names = FALSE) {
+  stopifnot(isFALSE(full.names) || isTRUE(full.names))
+  lf <- list.files(system.file("hooks", package = "rutils", mustWork = TRUE),
+                   full.names = full.names)
+  lf[basename(lf) %in% c(hooks_client, hooks_server)]
 }

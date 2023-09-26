@@ -7,9 +7,9 @@
 llrs_hook(file, path = getwd())
 }
 \arguments{
-\item{file}{Name of the file to be used as a hook}
+\item{file}{Name of the file to be used as a hook.}
 
-\item{path}{Path to the git repository}
+\item{path}{Path to the git repository.}
 }
 \value{
 A logical value if the hook can be placed there.
@@ -19,8 +19,8 @@ Insert a new hook (It doesn't replace hooks or expand them).
 }
 \examples{
 \dontrun{
-hook <- system.file("post-receive", package = "rutils")
-llrs_hook(hook, "projects/git_something")
+hooks <- llrs_hooks_list()
+llrs_hook(hooks[1], "projects/git_something")
 }
 }
 \references{

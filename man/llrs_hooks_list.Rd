@@ -4,7 +4,10 @@
 \alias{llrs_hooks_list}
 \title{List existing hooks}
 \usage{
-llrs_hooks_list()
+llrs_hooks_list(full.names = FALSE)
+}
+\arguments{
+\item{full.names}{A logical value to be passed to list.files}
 }
 \value{
 A character vector with the name of the hooks.
