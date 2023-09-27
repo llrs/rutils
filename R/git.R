@@ -23,24 +23,25 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
   on.exit(setwd(old), add = TRUE)
   system2("git", "init --shared=true .")
   system2("git", "config --local receive.denyCurrentBranch updateInstead")
-  if (!dir.exists(path)) {
-    dc2 <- dir.create(path, recursive = TRUE, mode = "755")
+
+  new_proj <- normalizePath(file.path(path, project))
+  if (!dir.exists(new_proj)) {
+    dc2 <- dir.create(new_proj, recursive = TRUE, mode = "755")
     if (!dc2) {
       stop("Problems creating the directory of the project at ", path)
     }
   }
 
-  setwd(path)
+  setwd(new_proj)
   system2("git", paste("clone", norm_path))
   if (!check_rstudio()) {
+    warning("Missing rstudio.")
     return(TRUE)
-    stop("Missing rstudio.")
   }
   info <- rstudioapi::versionInfo()
   if (info$version < "1.1.287") {
     stop("Not working. Please update Rstudio.")
   }
-  new_proj <- normalizePath(file.path(path, project))
   rstudioapi::initializeProject(new_proj)
   rstudioapi::openProject(new_proj, TRUE)
 }
