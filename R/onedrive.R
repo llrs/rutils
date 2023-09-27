@@ -53,7 +53,7 @@ check_onedrive <- function() {
 #' @param file Path to file from the One Drive.
 #' @param dest Path to where the file should be stored.
 #'
-#' @return The path
+#' @return The path of the file in your computer.
 #' @export
 #'
 llrs_download <- function(file, dest = ".") {
@@ -72,8 +72,8 @@ llrs_download <- function(file, dest = ".") {
 #' @param type One of c("view", "edit", "embed").
 #' @param expiry Time it is valid: "x days", "x hours".
 #' @param password Password protected ?
-#' @param scope I don't know
-#' @seealso [func()]
+#' @param scope I don't know.
+#' @seealso [llrs_download()]
 #' @return A link to share a resource
 #' @export
 llrs_share <- function(path, type, expiry, password, scope) {

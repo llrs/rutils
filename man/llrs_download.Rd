@@ -12,7 +12,7 @@ llrs_download(file, dest = ".")
 \item{dest}{Path to where the file should be stored.}
 }
 \value{
-The path
+The path of the file in your computer.
 }
 \description{
 Download a file

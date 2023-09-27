@@ -15,7 +15,7 @@ llrs_share(path, type, expiry, password, scope)
 
 \item{password}{Password protected ?}
 
-\item{scope}{I don't know}
+\item{scope}{I don't know.}
 }
 \value{
 A link to share a resource
@@ -24,5 +24,5 @@ A link to share a resource
 Uses the credentials to share a link to a resource.
 }
 \seealso{
-\code{\link[=func]{func()}}
+\code{\link[=llrs_download]{llrs_download()}}
 }
