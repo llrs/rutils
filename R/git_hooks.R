@@ -23,12 +23,12 @@ llrs_hook <- function(file, path = getwd()) {
     stop("Doesn't seem to be a git repository!")
   }
   stopifnot("Only one hook at the time is allowed" = length(file) == 1)
-  hook_names(file)
   if (!file.exists(file)) {
     message("Using internal hooks")
     hooks <- llrs_hooks_list(TRUE)
-    file <- file[which(basename(hooks) == file)]
+    file <- hooks[which(basename(hooks) == file)]
   }
+
   hooks_path <- file.path(path, ".git/hooks")
   dir.create(hooks_path, recursive = TRUE, showWarnings = FALSE)
   out <- file.copy(file, hooks_path)
