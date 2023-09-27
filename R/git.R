@@ -11,6 +11,10 @@
 llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny-server/") {
   norm_path <- normalizePath(file.path(dest, project), mustWork = FALSE)
   # Permission to edit the user and the group and others can read and execute
+
+  stopifnot("Use only one project" = length(path) == 1 &&
+              length(dest) == 1 &&
+              length(project) == 1)
   if (dir.exists(norm_path)) {
     stop("Destination path already exists.")
   }
@@ -30,10 +34,13 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
     if (!dc2) {
       stop("Problems creating the directory of the project at ", path)
     }
+    setwd(new_proj)
+    system2("git", paste("clone", norm_path))
+  } else {
+    setwd(new_proj)
+    system2("git", paste("remote add master", norm_path))
   }
 
-  setwd(new_proj)
-  system2("git", paste("clone", norm_path))
   if (!check_rstudio()) {
     warning("Missing rstudio.")
     return(TRUE)
