@@ -54,11 +54,11 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>file</dt>
-<dd><p>Name of the file to be used as a hook</p></dd>
+<dd><p>Name of the file to be used as a hook.</p></dd>
 
 
 <dt>path</dt>
-<dd><p>Path to the git repository</p></dd>
+<dd><p>Path to the git repository.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -79,8 +79,8 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">hook</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"post-receive"</span>, package <span class="op">=</span> <span class="st">"rutils"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">llrs_hook</span><span class="op">(</span><span class="va">hook</span>, <span class="st">"projects/git_something"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">hooks</span> <span class="op">&lt;-</span> <span class="fu"><a href="llrs_hooks_list.html">llrs_hooks_list</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">llrs_hook</span><span class="op">(</span><span class="va">hooks</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">"projects/git_something"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
