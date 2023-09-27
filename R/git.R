@@ -5,7 +5,7 @@
 #' @param project Name of the project. It can be also multiple folders.
 #' @param path Path to the folder where it should be.
 #' @param dest Path to the shiny folder used to serve the website.
-#'
+#' @seealso [llrs_hook()]
 #' @return Called by its side effects. It will open a new RStudio project.
 #' @export
 llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny-server/") {

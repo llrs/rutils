@@ -20,3 +20,6 @@ Called by its side effects. It will open a new RStudio project.
 Create a shiny app in the right place as well as set the local git repository
 to synchronize.
 }
+\seealso{
+\code{\link[=llrs_hook]{llrs_hook()}}
+}
