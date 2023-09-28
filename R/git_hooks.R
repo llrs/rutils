@@ -84,3 +84,13 @@ llrs_hooks_list <- function(full.names = FALSE) {
                    full.names = full.names)
   lf[basename(lf) %in% c(hooks_client, hooks_server)]
 }
+
+#' Creates new shiny app and add hooks.
+#' @inheritParams llrs_shiny_create
+#' @returns A logic value if everything went smoothly.
+#' @seealso Wrapper on [llrs_shiny_create()] and [llrs_hook()].
+#' @export
+llrs_shiny_hook <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny-server/") {
+  llrs_shiny_create(project, path = path, dest = dest)
+  llrs_hook("post-receive", file.path(dest, project))
+}
