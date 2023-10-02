@@ -25,20 +25,18 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 
   old <- setwd(norm_path)
   on.exit(setwd(old), add = TRUE)
-  system2("git", "init --shared=true .")
-  system2("git", "config --local receive.denyCurrentBranch updateInstead")
+  system2("git", "init --shared=true .", stdout = FALSE, stderr = FALSE)
+  system2("git", "config --local receive.denyCurrentBranch updateInstead",
+          stdout = FALSE, stderr = FALSE)
 
-  new_proj <- normalizePath(file.path(path, project))
+  setwd(path)
+  new_proj <- normalizePath(file.path(path, project), mustWork = FALSE)
   if (!dir.exists(new_proj)) {
-    dc2 <- dir.create(new_proj, recursive = TRUE, mode = "755")
-    if (!dc2) {
-      stop("Problems creating the directory of the project at ", path)
-    }
-    setwd(new_proj)
-    system2("git", paste("clone", norm_path))
+    system2("git", paste("clone", norm_path), stderr = FALSE, stdout = FALSE)
   } else {
     setwd(new_proj)
-    system2("git", paste("remote add master", norm_path))
+    system2("git", paste("remote add master", norm_path), stderr = FALSE,
+            stdout = FALSE)
   }
 
   if (!check_rstudio()) {
