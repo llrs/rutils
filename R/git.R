@@ -35,8 +35,11 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
     system2("git", paste("clone", norm_path), stderr = FALSE, stdout = FALSE)
   } else {
     setwd(new_proj)
-    system2("git", paste("remote add master", norm_path), stderr = FALSE,
+    system2("git", paste("remote add server", norm_path), stderr = FALSE,
             stdout = FALSE)
+    system2("git", "push -u server master")
+    message("Update the server")
+    system2("git", "push")
   }
 
   if (!check_rstudio()) {
