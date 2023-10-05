@@ -1,3 +1,3 @@
 # rutils (development version)
 
-* Add targets functions.
+ * Add targets functions.
