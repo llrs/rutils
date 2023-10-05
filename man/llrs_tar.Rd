@@ -16,7 +16,7 @@ llrs_tar_read(name, ...)
 \item{...}{Other arguments passed around}
 }
 \value{
-Depending of what \code{\link[=tar_load]{tar_load()}} and \code{tar_read()} returns.
+Depending of what \code{\link[targets:tar_load]{targets::tar_load()}} and \code{\link[targets:tar_read]{targets::tar_read()}} returns.
 }
 \description{
 Prepare a target and serve it to the user

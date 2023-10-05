@@ -17,7 +17,8 @@ Suggests:
     ntfy (>= 0.0.2),
     rappdirs (>= 0.3.3),
     roxygen2 (>= 7.2.3),
-    rstudioapi (>= 0.14)
+    rstudioapi (>= 0.14),
+    targets
 Remotes:
     jonocarroll/ntfy
 Encoding: UTF-8

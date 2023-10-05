@@ -4,7 +4,7 @@
 #' @param name Name of the targets to prepare and load or read.
 #' @param ... Other arguments passed around
 #'
-#' @return Depending of what [tar_load()] and [tar_read()] returns.
+#' @return Depending of what [targets::tar_load()] and [targets::tar_read()] returns.
 #' @export
 #' @rdname llrs_tar
 #' @name targets
