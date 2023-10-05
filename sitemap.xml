@@ -13,6 +13,9 @@
     <loc>https://llrs.github.io/rutils/index.html</loc>
   </url>
   <url>
+    <loc>https://llrs.github.io/rutils/news/index.html</loc>
+  </url>
+  <url>
     <loc>https://llrs.github.io/rutils/reference/index.html</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_shiny_hook.html</loc>
+  </url>
+  <url>
+    <loc>https://llrs.github.io/rutils/reference/llrs_tar.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc>
