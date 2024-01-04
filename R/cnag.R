@@ -16,7 +16,7 @@ llrs_cnag_samples <- function(path) {
                    recursive = TRUE,
                    full.names = TRUE,
                    pattern = "\\.fastq.gz$")
-  if (!(length(lf) %% 2)) {
+  if (length(lf) %% 2) {
     stop("Missing files or not paired end.")
   }
   # Assume that the paired files are in the same folder
@@ -59,6 +59,7 @@ llrs_cnag_stats <- function(path) {
 #'
 #' @param path Path to the project file.
 #' @references [CNAG](https://www.cnag.eu/)
+#' @export
 #' @examples
 #' # llrs_cnag_deliver("AUSER_01.xls")
 llrs_cnag_deliver <- function(path) {
