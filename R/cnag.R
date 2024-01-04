@@ -21,10 +21,12 @@ llrs_cnag_samples <- function(path) {
   }
   # Assume that the paired files are in the same folder
   lf_ord <- sort(lf)
-  df <- data.frame(d1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
-             d2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
+  df <- data.frame(f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
+             f2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
   # Check that they are properly paired.
   all(gsub("_1.fastq.gz$", "", df$d1) == gsub("_2.fastq.gz$", "", df$d2))
+  df$d1 <- basename(df$f1)
+  df$d2 <- basename(df$f2)
   df
 }
 
