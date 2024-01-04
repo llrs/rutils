@@ -6,7 +6,7 @@ Authors@R:
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9747-2570"))
 Description: Helpers to setup my preferences, work with remote data and interact 
-    and iterate faster.
+    and iterate faster. It also has a collection of functions that I might reuse.
 License: GPL (>= 3)
 URL: https://github.com/llrs/rutils, https://llrs.github.io/rutils/
 BugReports: https://github.com/llrs/rutils/issues
@@ -16,6 +16,7 @@ Suggests:
     Microsoft365R (>= 2.4.0),
     ntfy (>= 0.0.2),
     rappdirs (>= 0.3.3),
+    readxl (>= 1.4.3),
     roxygen2 (>= 7.2.3),
     rstudioapi (>= 0.14),
     targets
