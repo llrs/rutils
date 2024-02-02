@@ -25,5 +25,6 @@ diff_qual <- function(x, p = "pval", fc = "diff", fdr = "fdr", fdr_threshold = 0
   out[s < 0 & x[[p]] < p_threshold] <- "DW"
   out[s < 0 & f] <- "DDW"
   out[s > 0 & f] <- "UUP"
+  out[is.na(x[[p]])] <- NA
   cbind(x, sign = out)
 }
