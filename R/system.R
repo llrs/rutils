@@ -12,8 +12,8 @@
 #' @return Always TRUE (even if no notification can be created).
 #' @export
 #' @examples
-#' notify_system(title = "Works", message = "My first message")
-notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NULL) {
+#' llrs_notify_system(title = "Works", message = "My first message")
+llrs_notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NULL) {
   match.arg(urgency, c("low", "normal", "critical"))
   if (!is.null(icon)) {
     icon <- sprintf("-i %s", icon)

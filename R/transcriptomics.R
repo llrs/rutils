@@ -13,7 +13,7 @@
 #' `c("UUP", "UP", "", "DW", "DDW")`.
 #' This new column allows to filter and easily find relevant rows.
 #' @export
-diff_qual <- function(x, p = "pval", fc = "diff", fdr = "fdr", fdr_threshold = 0.05,
+llrs_diff <- function(x, p = "pval", fc = "diff", fdr = "fdr", fdr_threshold = 0.05,
                       p_threshold = 0.05) {
   if (any(!c(p, fc, fdr) %in% colnames(x))) {
     return(x)
