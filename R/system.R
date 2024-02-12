@@ -11,6 +11,7 @@
 #'
 #' @return Always TRUE (even if no notification can be created).
 #' @export
+#' @examples
 #' notify_system(title = "Works", message = "My first message")
 notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NULL) {
   match.arg(urgency, c("low", "normal", "critical"))
@@ -23,7 +24,7 @@ notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NUL
   if (nchar(title) > 40) {
     warning("title might be too big", call. = FALSE)
   }
-  if (!interactive()) {
+  if (interactive()) {
     system2("notify-send", args = paste(icon, urgency, sQuote(title,q = '"'),
                                         sQuote(message, q = '"')))
   }

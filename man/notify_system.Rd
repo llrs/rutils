@@ -24,3 +24,6 @@ Always TRUE (even if no notification can be created).
 Creates a pop up message on the system if it is run from an interactive
 session.
 }
+\examples{
+notify_system(title = "Works", message = "My first message")
+}
