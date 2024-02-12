@@ -28,3 +28,6 @@ llrs_diff <- function(x, p = "pval", fc = "diff", fdr = "fdr", fdr_threshold = 0
   out[is.na(x[[p]])] <- NA
   cbind(x, sign = out)
 }
+
+# In 0.9009 it was renamed to follow the patterns:
+# quant_diff <- llrs_diff
