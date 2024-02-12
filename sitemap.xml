@@ -19,9 +19,6 @@
     <loc>https://llrs.github.io/rutils/reference/Bioinformatics.html</loc>
   </url>
   <url>
-    <loc>https://llrs.github.io/rutils/reference/diff_qual.html</loc>
-  </url>
-  <url>
     <loc>https://llrs.github.io/rutils/reference/index.html</loc>
   </url>
   <url>
@@ -34,6 +31,9 @@
     <loc>https://llrs.github.io/rutils/reference/llrs_cnag_stats.html</loc>
   </url>
   <url>
+    <loc>https://llrs.github.io/rutils/reference/llrs_diff.html</loc>
+  </url>
+  <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_download.html</loc>
   </url>
   <url>
@@ -41,6 +41,9 @@
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_hooks_list.html</loc>
+  </url>
+  <url>
+    <loc>https://llrs.github.io/rutils/reference/llrs_notify_system.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_profile.html</loc>
@@ -65,9 +68,6 @@
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/notify_system.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/rstudio_config.html</loc>
