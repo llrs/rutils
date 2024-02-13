@@ -14,7 +14,12 @@
 #' @examples
 #' llrs_notify_system(title = "Works", message = "My first message")
 llrs_notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NULL) {
-  match.arg(urgency, c("low", "normal", "critical"))
+  urgency <- match.arg(urgency, c("low", "normal", "critical"))
+
+  if (requireNamespace("beepr", quietly = TRUE)) {
+    beepr::beep()
+  }
+
   if (!is.null(icon)) {
     icon <- sprintf("-i %s", icon)
   }
