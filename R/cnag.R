@@ -49,7 +49,7 @@ llrs_cnag_stats <- function(path) {
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
-  r <- readxl::read_excel(path, guess_max = 20,
+  r <- readxl::read_excel(path, guess_max = 20, na = c("", "NA"),
                           .name_repair = "check_unique")
   as.data.frame(r)
 }
@@ -73,7 +73,7 @@ llrs_cnag_deliver <- function(path) {
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
-  r <- readxl::read_excel(path, skip = 2,
+  r <- readxl::read_excel(path, skip = 2, na = c("", "NA"),
                           guess_max = 20, .name_repair = "check_unique")
   # <flowcell>_<lane>_<index>_<read>.fastq.gz
   # Assumes that the three first columns are those
