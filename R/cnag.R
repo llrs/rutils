@@ -51,7 +51,9 @@ llrs_cnag_stats <- function(path) {
   }
   r <- readxl::read_excel(path, guess_max = 20, na = c("", "NA"),
                           .name_repair = "check_unique")
-  as.data.frame(r)
+  rdf <- as.data.frame(r)
+  first_empty <- min(which(is.na(rdf[, 1])))
+  rdf[-seq(from = first_empty, to = NROW(rdf)), ]
 }
 
 #' Read the delivery file
