@@ -1,4 +1,4 @@
-# rutils (development version)
+# rutils 0.0.1
 
  * Add targets functions.
  * Add functions to help with [CNAG](https://www.cnag.eu/) projects.
