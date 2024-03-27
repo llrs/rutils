@@ -96,12 +96,14 @@ llrs_cnag_deliver <- function(path) {
 #' Prepare CNAG data for cellranger
 #'
 #' CNAG returns the data in a format that is not compatible with cellranger.
-#' @return A data.frame with the output of the names of the files ("d1" and "d2") and the new names c("cr1", "cr2")they should have.
+#' @param path Path to a file with information about the delivery file.
+#' @return A data.frame with the output of the names of the files ("d1" and "d2")
+#'  and the new names c("cr1", "cr2")they should have.
 #' @export
 #' @references <https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-specifying-fastqs#file-naming-convention>
 #' @examples
-#' out <- llrs_cnag_cellranger("PROJECT_01.xls")
-#' out[, c("SAMPLE NAME", "d1", "cr1", "d1", "cr2")]
+#' # out <- llrs_cnag_cellranger("PROJECT_01.xls")
+#' # out[, c("SAMPLE NAME", "d1", "cr1", "d1", "cr2")]
 llrs_cnag_cellranger <- function(path){
   d <- llrs_cnag_deliver(path)
   d$cr1 <- paste0(d$`SAMPLE NAME`, "_S1_L00", d$LANE, "_R1_001.fastq.gz")
