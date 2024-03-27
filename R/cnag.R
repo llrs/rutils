@@ -49,6 +49,9 @@ llrs_cnag_stats <- function(path) {
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
+  if (grepl("[0-9]{2}.xls$", x = path)) {
+    warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
+  }
   r <- readxl::read_excel(path, guess_max = 20, na = c("", "NA"),
                           .name_repair = "check_unique")
   rdf <- as.data.frame(r)
@@ -75,6 +78,9 @@ llrs_cnag_deliver <- function(path) {
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
+  if (endsWith(path, "_Sample_Stats.xls")) {
+    warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
+  }
   r <- readxl::read_excel(path, skip = 2, na = c("", "NA"),
                           guess_max = 20, .name_repair = "check_unique")
   # <flowcell>_<lane>_<index>_<read>.fastq.gz
@@ -84,4 +90,21 @@ llrs_cnag_deliver <- function(path) {
   r$d1 <- paste0(root, "_1.fastq.gz")
   r$d2 <- paste0(root, "_2.fastq.gz")
   as.data.frame(r)
+}
+
+
+#' Prepare CNAG data for cellranger
+#'
+#' CNAG returns the data in a format that is not compatible with cellranger.
+#' @return A data.frame with the output of the names of the files ("d1" and "d2") and the new names c("cr1", "cr2")they should have.
+#' @export
+#' @references <https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-specifying-fastqs#file-naming-convention>
+#' @examples
+#' out <- llrs_cnag_cellranger("PROJECT_01.xls")
+#' out[, c("SAMPLE NAME", "d1", "cr1", "d1", "cr2")]
+llrs_cnag_cellranger <- function(path){
+  d <- llrs_cnag_deliver(path)
+  d$cr1 <- paste0(d$`SAMPLE NAME`, "_S1_L00", d$LANE, "_R1_001.fastq.gz")
+  d$cr2 <- paste0(d$`SAMPLE NAME`, "_S1_L00", d$LANE, "_R2_001.fastq.gz")
+  d
 }
