@@ -4,17 +4,25 @@
 \alias{llrs_cnag_cellranger}
 \title{Prepare CNAG data for cellranger}
 \usage{
-llrs_cnag_cellranger(path)
+llrs_cnag_cellranger(path, out_dir)
 }
 \arguments{
 \item{path}{Path to a file with information about the delivery file.}
+
+\item{out_dir}{Path to a folder where the files should be placed.
+If \code{NULL} it doesn't create the symlinks to the folder.}
 }
 \value{
 A data.frame with the output of the names of the files ("d1" and "d2")
 and the new names c("cr1", "cr2")they should have.
+Also called by its side effect of creating a symlink to the original files.
 }
 \description{
 CNAG returns the data in a format that is not compatible with cellranger.
+This function creates symlinks to files from the project.
+}
+\details{
+The CNAG project is assumed to be below the file in \code{path} with all the fastq files.
 }
 \examples{
 # out <- llrs_cnag_cellranger("PROJECT_01.xls")

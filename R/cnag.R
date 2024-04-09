@@ -96,17 +96,75 @@ llrs_cnag_deliver <- function(path) {
 #' Prepare CNAG data for cellranger
 #'
 #' CNAG returns the data in a format that is not compatible with cellranger.
+#' This function creates symlinks to files from the project.
 #' @param path Path to a file with information about the delivery file.
+#' @param out_dir Path to a folder where the files should be placed.
+#' If `NULL` it doesn't create the symlinks to the folder.
 #' @return A data.frame with the output of the names of the files ("d1" and "d2")
 #'  and the new names c("cr1", "cr2")they should have.
+#'  Also called by its side effect of creating a symlink to the original files.
+#' @details
+#' The CNAG project is assumed to be below the file in `path` with all the fastq files.
+#'
 #' @export
 #' @references <https://www.10xgenomics.com/support/software/cell-ranger/latest/analysis/inputs/cr-specifying-fastqs#file-naming-convention>
 #' @examples
 #' # out <- llrs_cnag_cellranger("PROJECT_01.xls")
 #' # out[, c("SAMPLE NAME", "d1", "cr1", "d1", "cr2")]
-llrs_cnag_cellranger <- function(path){
+llrs_cnag_cellranger <- function(path, out_dir){
+
   d <- llrs_cnag_deliver(path)
-  d$cr1 <- paste0(d$`SAMPLE NAME`, "_S1_L00", d$LANE, "_R1_001.fastq.gz")
-  d$cr2 <- paste0(d$`SAMPLE NAME`, "_S1_L00", d$LANE, "_R2_001.fastq.gz")
+  lf <- list.files(dirname(path), pattern = ".*\\.fastq(\\.gz)?$",
+                   recursive = TRUE,
+                   all.files = TRUE, full.names = TRUE)
+
+  if (length(lf) == 0L) {
+    stop("No fastq files found below the path: ", path)
+  }
+
+  # Work with paths
+  full_dir <- normalizePath(dirname(lf))
+  # Allow NULL path
+  if (!is.null(out_dir)) {
+    od <- normalizePath(out_dir)
+  } else {
+    od <- "."
+  }
+
+  if (!dir.exists(od)) {
+    dir.create(od, recursive = TRUE)
+  }
+
+  # Match files and samples
+  m <- match(basename(lf), d$d1)
+  full_dir <- dirname(lf)[m[!is.na(m)]]
+
+  # Rewrite the files paths
+  d$d1 <- file.path(full_dir,
+                    d$d1)
+  d$d2 <- file.path(full_dir,
+                    d$d2)
+  # The samples are concatenated with the index, the flowcell and the lane.
+  # This is to account when samples/libraries are sequenced multiple times...
+  # It could create a problem when a code is repeated...
+  d$cr1 <- file.path(od,
+                     paste0(d$`MULTIPLEX INDEX`, "-", d$FLOWCELL, "_L00",
+                            d$LANE, "_R1_001.fastq.gz"))
+  d$cr2 <- file.path(od,
+                     paste0(d$`MULTIPLEX INDEX`, "-", d$FLOWCELL, "_L00",
+                            d$LANE, "_R2_001.fastq.gz"))
+
+  if (length(unique(d$cr1)) != nrow(d)) {
+    stop("The number of unique files and the number of original files do not match!
+         This requires change on the code.")
+  }
+
+  # Create symlinks
+  if (!is.null(out_dir)) {
+    warning("Creating symlinks")
+    file.symlink(d$d1, d$cr1)
+    file.symlink(d$d2, d$cr2)
+  }
+  # Return the information
   d
 }
