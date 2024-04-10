@@ -51,7 +51,7 @@ llrs_cnag_stats <- function(path) {
     stop("Install readxl", call. = FALSE)
   }
 
-  path <- normalizePath(path)
+  path <- normalizePath(path, mustWork = TRUE)
   project <- tools::file_path_sans_ext(basename(path))
   project <- gsub("_Sample_Stats", "", project)
   if (!file.exists(path)) {
@@ -84,10 +84,7 @@ llrs_cnag_deliver <- function(path) {
   if (!requireNamespace("readxl", quietly = TRUE)) {
     stop("Install readxl", call. = FALSE)
   }
-  path <- normalizePath(path)
-  if (!file.exists(path)) {
-    stop("This file doesn't exists")
-  }
+  path <- normalizePath(path, mustWork = TRUE)
 
   project <- tools::file_path_sans_ext(basename(path))
   if (endsWith(path, "_Sample_Stats.xls")) {
@@ -136,7 +133,7 @@ llrs_cnag_cellranger <- function(path, out_dir) {
   }
 
   # Work with paths
-  full_dir <- normalizePath(dirname(lf))
+  full_dir <- normalizePath(dirname(lf), mustWork = TRUE)
   # Allow NULL path
   if (!is.null(out_dir)) {
     od <- normalizePath(out_dir)
