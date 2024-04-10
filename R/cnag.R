@@ -9,9 +9,14 @@
 #' @references [CNAG](https://www.cnag.eu/)
 #' @export
 #' @examples
-#' # llrs_cnag_samples("AUSER_01.xls")
+#' # llrs_cnag_samples("AUSER_01")
 llrs_cnag_samples <- function(path) {
   path <- normalizePath(path, mustWork = TRUE)
+  project <- basename(path)
+  if (!file.info(path)$isdir) {
+    stop("Expected path to project folder not to a file.")
+  }
+
   lf <- list.files(path,
                    recursive = TRUE,
                    full.names = TRUE,
@@ -21,8 +26,9 @@ llrs_cnag_samples <- function(path) {
   }
   # Assume that the paired files are in the same folder
   lf_ord <- sort(lf)
-  df <- data.frame(f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
-             f2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
+  df <- data.frame(project = project,
+                   f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
+                   f2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
   # Check that they are properly paired.
   all(gsub("_1.fastq.gz$", "", df$d1) == gsub("_2.fastq.gz$", "", df$d2))
   df$d1 <- basename(df$f1)
@@ -33,9 +39,9 @@ llrs_cnag_samples <- function(path) {
 
 #' Read the CNAG stats
 #'
+#' Read the stats of the samples processed by CNAG.
 #' @param path Path to excel file.
-#'
-#' @return A data.frame with the data.
+#' @return A data.frame with the data and the name of the project from the file name.
 #' @references [CNAG](https://www.cnag.eu/)
 #' @export
 #' @examples
@@ -46,6 +52,8 @@ llrs_cnag_stats <- function(path) {
   }
 
   path <- normalizePath(path)
+  project <- tools::file_path_sans_ext(basename(path))
+  project <- gsub("_Sample_Stats", "", project)
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
@@ -56,7 +64,8 @@ llrs_cnag_stats <- function(path) {
                           .name_repair = "check_unique")
   rdf <- as.data.frame(r)
   first_empty <- min(which(is.na(rdf[, 1])))
-  rdf[-seq(from = first_empty, to = NROW(rdf)), ]
+  out <- rdf[-seq(from = first_empty, to = NROW(rdf)), ]
+  cbind(project = project, out)
 }
 
 #' Read the delivery file
@@ -66,6 +75,7 @@ llrs_cnag_stats <- function(path) {
 #'
 #' @param path Path to the project file.
 #' @references [CNAG](https://www.cnag.eu/)
+#' @return A data.frame with the information in the project and its name and the name of the fastq files of the project.
 #' @export
 #' @examples
 #' # llrs_cnag_deliver("AUSER_01.xls")
@@ -78,6 +88,8 @@ llrs_cnag_deliver <- function(path) {
   if (!file.exists(path)) {
     stop("This file doesn't exists")
   }
+
+  project <- tools::file_path_sans_ext(basename(path))
   if (endsWith(path, "_Sample_Stats.xls")) {
     warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
   }
@@ -87,9 +99,10 @@ llrs_cnag_deliver <- function(path) {
   # Assumes that the three first columns are those
   stopifnot(tolower(colnames(r)[1:3]) == c("flowcell", "lane", "multiplex index"))
   root <- apply(r[, 1:3], 1, paste0, collapse = "_")
-  r$d1 <- paste0(root, "_1.fastq.gz")
-  r$d2 <- paste0(root, "_2.fastq.gz")
-  as.data.frame(r)
+  out <- cbind(r, project = project)
+  out$d1 <- paste0(root, "_1.fastq.gz")
+  out$d2 <- paste0(root, "_2.fastq.gz")
+  as.data.frame(out)
 }
 
 
@@ -111,7 +124,7 @@ llrs_cnag_deliver <- function(path) {
 #' @examples
 #' # out <- llrs_cnag_cellranger("PROJECT_01.xls")
 #' # out[, c("SAMPLE NAME", "d1", "cr1", "d1", "cr2")]
-llrs_cnag_cellranger <- function(path, out_dir){
+llrs_cnag_cellranger <- function(path, out_dir) {
 
   d <- llrs_cnag_deliver(path)
   lf <- list.files(dirname(path), pattern = ".*\\.fastq(\\.gz)?$",
@@ -137,8 +150,12 @@ llrs_cnag_cellranger <- function(path, out_dir){
 
   # Match files and samples
   m <- match(basename(lf), d$d1)
+  m2 <- match(basename(lf), d$d2)
   full_dir <- dirname(lf)[m[!is.na(m)]]
 
+  if (nrow(d) *2 != length(lf)) {
+    stop("Not all fastq files are present!")
+  }
   # Rewrite the files paths
   d$d1 <- file.path(full_dir,
                     d$d1)
