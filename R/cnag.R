@@ -14,7 +14,7 @@ llrs_cnag_samples <- function(path) {
   path <- normalizePath(path, mustWork = TRUE)
   project <- basename(path)
   if (!file.info(path)$isdir) {
-    stop("Expected path to project folder not to a file.")
+    stop("Expected path to project folder not to a file.", call. = FALSE)
   }
 
   lf <- list.files(path,
@@ -22,7 +22,7 @@ llrs_cnag_samples <- function(path) {
                    full.names = TRUE,
                    pattern = "\\.fastq.gz$")
   if (length(lf) %% 2) {
-    stop("Missing files or not paired end.")
+    stop("Missing files or not paired end.", call. = FALSE)
   }
   # Assume that the paired files are in the same folder
   lf_ord <- sort(lf)
@@ -55,7 +55,7 @@ llrs_cnag_stats <- function(path) {
   project <- tools::file_path_sans_ext(basename(path))
   project <- gsub("_Sample_Stats", "", project)
   if (!file.exists(path)) {
-    stop("This file doesn't exists")
+    stop("This file doesn't exists", call. = FALSE)
   }
   if (grepl("[0-9]{2}.xls$", x = path)) {
     warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
@@ -129,7 +129,7 @@ llrs_cnag_cellranger <- function(path, out_dir) {
                    all.files = TRUE, full.names = TRUE)
 
   if (length(lf) == 0L) {
-    stop("No fastq files found below the path: ", path)
+    stop("No fastq files found below the path: ", path, call. = FALSE)
   }
 
   # Work with paths
@@ -151,7 +151,7 @@ llrs_cnag_cellranger <- function(path, out_dir) {
   full_dir <- dirname(lf)[m[!is.na(m)]]
 
   if (nrow(d) *2 != length(lf)) {
-    stop("Not all fastq files are present!")
+    stop("Not all fastq files are present!", call. = FALSE)
   }
   # Rewrite the files paths
   d$d1 <- file.path(full_dir,
@@ -170,12 +170,12 @@ llrs_cnag_cellranger <- function(path, out_dir) {
 
   if (length(unique(d$cr1)) != nrow(d)) {
     stop("The number of unique files and the number of original files do not match!
-         This requires change on the code.")
+         This requires change on the code.", call. = FALSE)
   }
 
   # Create symlinks
   if (!is.null(out_dir)) {
-    warning("Creating symlinks")
+    warning("Creating symlinks", call. = FALSE)
     file.symlink(d$d1, d$cr1)
     file.symlink(d$d2, d$cr2)
   }
