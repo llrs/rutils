@@ -31,16 +31,19 @@
     <loc>https://llrs.github.io/rutils/reference/llrs_cellranger_multi.html</loc>
   </url>
   <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_cellranger.html</loc>
+    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_deliver.html</loc>
   </url>
   <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_deliver.html</loc>
+    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_files.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_cnag_samples.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_cnag_stats.html</loc>
+  </url>
+  <url>
+    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_symlinks.html</loc>
   </url>
   <url>
     <loc>https://llrs.github.io/rutils/reference/llrs_diff.html</loc>
