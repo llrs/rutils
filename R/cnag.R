@@ -30,7 +30,7 @@ llrs_cnag_samples <- function(path) {
                    f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
                    f2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
   # Check that they are properly paired.
-  all(gsub("_1.fastq.gz$", "", df$d1) == gsub("_2.fastq.gz$", "", df$d2))
+  all(gsub("_1.fastq.gz$", "", df$f1) == gsub("_2.fastq.gz$", "", df$f2))
   df$d1 <- basename(df$f1)
   df$d2 <- basename(df$f2)
   df
@@ -140,7 +140,7 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   if (!is.data.frame(x) && !NROW(x) > 2) {
     stop("Requiring at least two files per sample in a data.frame!", call. = FALSE)
   }
-  columns <- c("LANE", "MULTIPLEX INDEX", "FLOWCELL", "d1", "d2")
+  columns <- c("LANE", "MULTIPLEX INDEX", "FLOWCELL", "f1", "f2")
   if (is.character(name) && length(name) == 1) {
     columns <- c(columns, name)
   }
@@ -192,7 +192,7 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   # Create symlinks
   if (create_symlinks) {
     warning("Creating symlinks", call. = FALSE)
-    file.symlink(d$d1, d$cr1)
-    file.symlink(d$d2, d$cr2)
+    file.symlink(d$f1, d$cr1)
+    file.symlink(d$f2, d$cr2)
   }
 }
