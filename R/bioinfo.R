@@ -51,7 +51,7 @@ llrs_cellranger_multi <- function(config, gex,
 
   # GEX ####
   # [gene-expression]
-  check_gex(gex)
+  check_cellranger_gex(gex)
 
 
   # "reference",	/home/data/genome/human/refdata-gex-GRCh38-2020-A/
@@ -70,6 +70,7 @@ llrs_cellranger_multi <- function(config, gex,
 
   # Feature ####
   # [vdj] # For TCR and BCR libraries only
+  check_cellranger_vdj(vdj)
   feature_columns <- c("reference", "r1-length", "r2-length", )
   foc <- obligatory_columns(library, feature_columns, 1)
   if (!foc) {
@@ -84,7 +85,7 @@ llrs_cellranger_multi <- function(config, gex,
   vdj_columns <- c("reference", "inner-enrichment-primers", "r1-length", "r2-length")
   voc <- obligatory_columns(library, vdj_columns, 1)
   if (!voc) {
-    stop("library does not have the required columns.")
+    stop("library does not have the required columns.", call. = FALSE)
   }
 
   # library ####
@@ -92,14 +93,17 @@ llrs_cellranger_multi <- function(config, gex,
                        "physical_library_id", "subsample_rate", "chemistry")
   loc <- obligatory_columns(library, library_columns, 1:3)
   if (!loc) {
-    stop("library does not have the required columns.")
+    stop("library does not have the required columns.", call. = FALSE)
+  }
+  if (any(!is_dir(library$fastqs))) {
+    stop("fastqs should be folders.", call. = FALSE)
   }
 
   arg <- match.arg(library$feature_type, feature_options)
   if (!all(startsWith(library$fastqs, "/"))) {
-    stop("File should start with the absolute path.")
+    stop("File should start with the absolute path.", call. = FALSE)
   }
-
+  # antigen ####
   antigen_columns <- c("control_id", "mhc_allele")
   aoc <- obligatory_columns(antigen, antigen_columns)
   if (!aoc) {
@@ -107,8 +111,8 @@ llrs_cellranger_multi <- function(config, gex,
   }
 
   # samples ####
-  samples_columns <- c("sample_id", "expect_cells", "force_cells", "description")
-  soc <- obligatory_columns(samples, samples_columns)
+  samples_columns <- c("sample_id", "expect_cells", "force_cells", "description", "cmo_ids", "probe_barcode_ids")
+  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
   if (!soc) {
     stop("Samples does not have the required columns.")
   }
@@ -133,7 +137,7 @@ llrs_cellranger_aggr <- function() {
 
 }
 
-check_gex <- function(gex) {
+check_cellranger_gex <- function(gex) {
   gex_names <- c("reference", "probe-set", "filter-probes", "r1-length", "r2-length",
                  "chemistry",	"expect-cells",	"force-cells",	"no-secondary",
                  "no-bam",	"check-library-compatibility",	"include-introns",

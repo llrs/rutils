@@ -3,3 +3,8 @@ obligatory_columns <- function(x, columns, obligatory = 1) {
   coln <- colnames(x)
   all(coln %in% columns) && all(columns[obligatory] %in% coln)
 }
+
+
+is_dir <- function(path) {
+  file.info(path)$isdir
+}

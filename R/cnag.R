@@ -13,7 +13,7 @@
 llrs_cnag_samples <- function(path) {
   path <- normalizePath(path, mustWork = TRUE)
   project <- basename(path)
-  if (!file.info(path)$isdir) {
+  if (!is_dir(path)) {
     stop("Expected path to project folder not to a file.", call. = FALSE)
   }
 
@@ -134,14 +134,17 @@ llrs_cnag_cellranger <- function(path, out_dir) {
 
   # Work with paths
   full_dir <- normalizePath(dirname(lf), mustWork = TRUE)
-  # Allow NULL path
-  if (!is.null(out_dir)) {
+  # NULL path or empty character
+  create_symlinks <- !is.null(out_dir) && length(out_dir) == 1
+  if (create_symlinks) {
     od <- normalizePath(out_dir)
   } else {
     od <- "."
   }
-
-  if (!dir.exists(od)) {
+  # Following the recommendation of having subfolders for flowcell
+  # <https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#libraries>
+  od <- file.path(od, d$`SAMPLE NAME`, d$FLOWCELL)
+  if (create_symlinks && any(!dir.exists(od))) {
     dir.create(od, recursive = TRUE)
   }
 
@@ -162,10 +165,10 @@ llrs_cnag_cellranger <- function(path, out_dir) {
   # This is to account when samples/libraries are sequenced multiple times...
   # It could create a problem when a code is repeated...
   d$cr1 <- file.path(od,
-                     paste0(d$`MULTIPLEX INDEX`, "-", d$FLOWCELL, "_L00",
+                     paste0(d$`MULTIPLEX INDEX`, "_S1_L00",
                             d$LANE, "_R1_001.fastq.gz"))
   d$cr2 <- file.path(od,
-                     paste0(d$`MULTIPLEX INDEX`, "-", d$FLOWCELL, "_L00",
+                     paste0(d$`MULTIPLEX INDEX`, "_S1_L00",
                             d$LANE, "_R2_001.fastq.gz"))
 
   if (length(unique(d$cr1)) != nrow(d)) {
@@ -174,7 +177,7 @@ llrs_cnag_cellranger <- function(path, out_dir) {
   }
 
   # Create symlinks
-  if (!is.null(out_dir)) {
+  if (create_symlinks) {
     warning("Creating symlinks", call. = FALSE)
     file.symlink(d$d1, d$cr1)
     file.symlink(d$d2, d$cr2)
