@@ -10,10 +10,10 @@ llrs_cnag_stats(path)
 \item{path}{Path to excel file.}
 }
 \value{
-A data.frame with the data.
+A data.frame with the data and the name of the project from the file name.
 }
 \description{
-Read the CNAG stats
+Read the stats of the samples processed by CNAG.
 }
 \examples{
 # llrs_cnag_stats("AUSER_01_Sample_Stats.xls")

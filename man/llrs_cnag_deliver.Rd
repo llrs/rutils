@@ -9,6 +9,9 @@ llrs_cnag_deliver(path)
 \arguments{
 \item{path}{Path to the project file.}
 }
+\value{
+A data.frame with the information in the project and its name and the name of the fastq files of the project.
+}
 \description{
 Import the delivery file which has information about the machine, application
 and samples provided by the researcher.

@@ -20,7 +20,7 @@ sheets for several programs (multiqc, fastqc, ...).
 Assumes a paired end sequencing.
 }
 \examples{
-# llrs_cnag_samples("AUSER_01.xls")
+# llrs_cnag_samples("AUSER_01")
 }
 \references{
 \href{https://www.cnag.eu/}{CNAG}
