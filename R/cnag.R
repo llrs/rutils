@@ -155,7 +155,7 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
     stop("If name isn't character of the same length as the files", call. = FALSE)
   }
 
-  if (length(x) > 1) {
+  if (length(name) > 1) {
     x$name <- name
     name <- "name"
   }
@@ -175,24 +175,18 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   if (create_symlinks && any(!dir.exists(od))) {
     s <- sapply(od, dir.create, recursive = TRUE, mode = "0744")
   }
-  if (length(unique(x$cr1)) != nrow(x)) {
-    stop("The number of unique files and the number of original files do not match!
-         This requires change on the code.", call. = FALSE)
-  }
+
   # The samples are concatenated with the index, the flowcell and the lane.
   # This is to account when samples/libraries are sequenced multiple times...
   # It could create a problem when a code is repeated...
-  x$cr1 <- file.path(od,
-                     paste0(x[[name]], "_S1_L00",
-                            x$LANE, "_R1_001.fastq.gz"))
-  x$cr2 <- file.path(od,
-                     paste0(x[[name]], "_S1_L00",
-                            x$LANE, "_R2_001.fastq.gz"))
+  x$cr1 <- file.path(od, paste0(x[[name]], "_S1_L00", x$LANE, "_R1_001.fastq.gz"))
+  x$cr2 <- file.path(od, paste0(x[[name]], "_S1_L00", x$LANE, "_R2_001.fastq.gz"))
 
   # Create symlinks
   if (create_symlinks) {
     warning("Creating symlinks", call. = FALSE)
-    file.symlink(d$f1, d$cr1)
-    file.symlink(d$f2, d$cr2)
+    file.symlink(x$f1, x$cr1)
+    file.symlink(x$f2, x$cr2)
   }
+  x
 }
