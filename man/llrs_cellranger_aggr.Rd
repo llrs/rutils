@@ -2,13 +2,23 @@
 % Please edit documentation in R/bioinfo.R
 \name{llrs_cellranger_aggr}
 \alias{llrs_cellranger_aggr}
-\title{Aggregate several cellrangers}
+\title{Aggregate several cellranger output}
 \usage{
-llrs_cellranger_aggr()
+llrs_cellranger_aggr(gex, path, vdj = NULL)
+}
+\arguments{
+\item{gex}{A data.frame with the GEX information.}
+
+\item{path}{A path to were it should be saved.}
+
+\item{vdj}{A data.frame with the VDJ information.}
 }
 \value{
 The path to the file saved with the configuration
 }
 \description{
-Aggregate several cellrangers
+If several samples cannot be processed with \code{\link[=llrs_cellranger_multi]{llrs_cellranger_multi()}} you might need to aggregate them.
+}
+\seealso{
+\code{\link[=llrs_cellranger_multi]{llrs_cellranger_multi()}}
 }

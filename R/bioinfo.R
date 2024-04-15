@@ -26,16 +26,24 @@ llrs_box <- function(size){
 
 
 
-#' Create multi file
+#' Create multi config file
 #'
 #' Prepare the cellranger multi file for some samples.
-#' @param path Files to be used./ Info to be used.
+#'
+#' @param config A list with the general config of the samples.
+#' @param gex A data.frame with the information for the gene expression (GEX).
+#' @param library A data.frame with the information about the libraries used.
+#' @param samples A data.frame with the information about the samples used.
+#' @param vdj A list with the configuration for the vdj assays.
+#' @param feature A list with the configuration for the featured assays.
 #' @param out Path to a directory where to save the file.
+#'
 #' @return The path to a file saved with the configuration as specified.
 #' @export
+#' @seealso Set up names of samples with [llrs_cnag_files()]. Prepare folders and files [llrs_cnag_symlinks()].
 #' @references <https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts>
 #' @examples
-#' llrs_cellranger_multi(out = "/S2_cellranger.csv")
+#' #llrs_cellranger_multi(out = "/S2_cellranger.csv")
 llrs_cellranger_multi <- function(config, gex,
                                   library, samples, vdj, feature, out) {
   if (!dir.exists(dirname(out))) {
@@ -68,9 +76,12 @@ llrs_cellranger_multi <- function(config, gex,
   # "include-introns",	<true|false>
   # "min-assignment-confidence",	<0.9>
 
-  # Feature ####
+  # vdj ####
   # [vdj] # For TCR and BCR libraries only
   check_cellranger_vdj(vdj)
+
+  # Feature ####
+  # [feature]
   feature_columns <- c("reference", "r1-length", "r2-length", )
   foc <- obligatory_columns(library, feature_columns, 1)
   if (!foc) {
@@ -80,13 +91,7 @@ llrs_cellranger_multi <- function(config, gex,
                        "CRISPR Guide Capture", "Multiplexing Capture", "VDJ",
                        "VDJ-T", "VDJ-T-GD", "VDJ-B", "Antigen Capture", "Custom")
 
-  # vdj ####
-  # [vdj] # For TCR and BCR libraries only
-  vdj_columns <- c("reference", "inner-enrichment-primers", "r1-length", "r2-length")
-  voc <- obligatory_columns(library, vdj_columns, 1)
-  if (!voc) {
-    stop("library does not have the required columns.", call. = FALSE)
-  }
+
 
   # library ####
   library_columns <- c("fastq_id","fastqs","feature_types", "lanes",
@@ -111,30 +116,55 @@ llrs_cellranger_multi <- function(config, gex,
   }
 
   # samples ####
-  samples_columns <- c("sample_id", "expect_cells", "force_cells", "description", "cmo_ids", "probe_barcode_ids")
-  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
-  if (!soc) {
-    stop("Samples does not have the required columns.")
+  # It is needed if there are more than one sample to differentiate between them!
+  if (NROW(library) >= 2 && (is.null(samples) || missing(samples))) {
+    stop("There should be a samples section to differentiate the multiple samples")
   }
+
 
 
   cat(file = out, append = )
 }
 
-#' Aggregate several cellrangers
+#' Aggregate several cellranger output
 #'
+#' If several samples cannot be processed with [llrs_cellranger_multi()] you might need to aggregate them.
+#'
+#' @param gex A data.frame with the GEX information.
+#' @param path A path to were it should be saved.
+#' @param vdj A data.frame with the VDJ information.
 #' @return The path to the file saved with the configuration
 #' @export
-llrs_cellranger_aggr <- function() {
-  tcr <- "sample_id,vdj_contig_info,donor,origin"
-  gex <- "sample_id,molecule_h5"
-  if (!endsWith(vdj_contig_info, ".pb")) {
+#' @importFrom utils write.csv
+#' @seealso [llrs_cellranger_multi()]
+llrs_cellranger_aggr <- function(gex, path, vdj = NULL) {
+  gex <- c("sample_id", "molecule_h5")
+  tcr <- c("sample_id", "vdj_contig_info", "donor", "origin")
+  stopifnot(colnames(gex) == gex)
+  if (!all(basename(gex$molecule_h5) == "sample_molecule_info.h5")) {
+    stop("Not all samples are sample_molecule_info.h5!", call. = FALSE)
+  }
+
+  if (is.null(vdj)) {
+    write.csv(gex, file = path, quote = FALSE, row.names = FALSE)
+  }
+  stopifnot(colnames(vdj) == tcr)
+  if (!all(basename(vdj$vdj_contig_info) == "vdj_contig_info.pb")) {
+    stop("Not all samples are sample_molecule_info.h5!", call. = FALSE)
 
   }
-  if (!endsWith(molecule_h5, ".h5")) {
-    stop
+  if (!is.null(vdj)) {
+    write.csv(gex, file = path, quote = FALSE, row.names = FALSE)
   }
 
+}
+
+check_cellranger_vdj <- function(vdj) {
+  vdj_columns <- c("reference", "inner-enrichment-primers", "r1-length", "r2-length")
+  voc <- obligatory_columns(vdj, vdj_columns, 1)
+  if (!voc) {
+    stop("library does not have the required columns.", call. = FALSE)
+  }
 }
 
 check_cellranger_gex <- function(gex) {
@@ -155,6 +185,24 @@ check_cellranger_gex <- function(gex) {
 
   if (!any(check_integer, check_logical, check_numeric)) {
     stop("Some options are not correctly formatted.", call. = FALSE)
+  }
+  TRUE
+}
+
+check_cellranger_samples <- function(samples, library) {
+  samples_columns <- c("sample_id", "expect_cells", "force_cells", "description", "cmo_ids", "probe_barcode_ids")
+  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
+  if (!soc) {
+    stop("Samples does not have the required columns.", call. = FALSE)
+  }
+  if (any(!samples$sample_id %in% library$fastq_id)) {
+    stop("Samples id do not match with fastq ids")
+  }
+  # alphanumeric (I assume ASCII) with hyphens and/or underscores and less than 64 characters
+  pattern <- "[^ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz[:digit:]_-]"
+  # Pattern tested with c("cançó", "vinagre$", "mira-", "test_a", "test1")
+  if (any(nchar(library$fastq_id) > 64) || any(grepl(pattern, library$fastq_id))) {
+    stop("fastq_ids should be less than 64 characters")
   }
   TRUE
 }
