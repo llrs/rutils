@@ -1,7 +1,7 @@
 # Use ntfy to send a message
 
 check_ntfy <- function() {
-  if (!requireNamespace("ntfy", quietly = TRUE)) {
+  if (!check_installed("ntfy")) {
     stop("Install 'jonocarroll/ntfy' package")
   }
 }

@@ -47,9 +47,7 @@ llrs_cnag_samples <- function(path) {
 #' @examples
 #' # llrs_cnag_stats("AUSER_01_Sample_Stats.xls")
 llrs_cnag_stats <- function(path) {
-  if (!requireNamespace("readxl", quietly = TRUE)) {
-    stop("Install readxl", call. = FALSE)
-  }
+  check_installed("readxl")
 
   path <- normalizePath(path, mustWork = TRUE)
   project <- tools::file_path_sans_ext(basename(path))
@@ -81,9 +79,7 @@ llrs_cnag_stats <- function(path) {
 #' # llrs_cnag_deliver("AUSER_01.xls")
 llrs_cnag_deliver <- function(path) {
 
-  if (!requireNamespace("readxl", quietly = TRUE)) {
-    stop("Install readxl", call. = FALSE)
-  }
+  check_installed("readxl")
   path <- normalizePath(path, mustWork = TRUE)
 
   project <- tools::file_path_sans_ext(basename(path))

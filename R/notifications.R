@@ -16,7 +16,7 @@
 llrs_notify_system <- function(..., title, message = NULL, icon = NULL, urgency = NULL) {
   urgency <- match.arg(urgency, c("low", "normal", "critical"))
 
-  if (requireNamespace("beepr", quietly = TRUE)) {
+  if (check_installed("beepr")) {
     beepr::beep()
   }
 

@@ -9,7 +9,7 @@
 #' @rdname llrs_tar
 #' @name targets
 llrs_tar_load <- function(name, ...){
-  check_targets()
+  check_installed("targets")
   targets::tar_make(names = name, ...)
   targets::tar_load(names = name, ...)
 }
@@ -17,14 +17,7 @@ llrs_tar_load <- function(name, ...){
 #' @rdname llrs_tar
 #' @export
 llrs_tar_read <- function(name, ...){
-  check_targets()
+  check_installed("targets")
   targets::tar_make(names = name, ...)
   targets::tar_read(name = name, ...)
-}
-
-
-check_targets <- function() {
-  if (isFALSE(requireNamespace("targets", quietly = TRUE))) {
-    stop("Please install targets to use this function.")
-  }
 }

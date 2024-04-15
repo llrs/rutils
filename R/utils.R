@@ -8,3 +8,11 @@ obligatory_columns <- function(x, columns, obligatory = 1) {
 is_dir <- function(path) {
   file.info(path)$isdir
 }
+
+check_installed <- function(x) {
+  if (!requireNamespace(x, quietly = TRUE)) {
+    stop("Please install the ", paste(sQuote(x), collapse = " or "),
+         " package.", call. = FALSE)
+  }
+  TRUE
+}

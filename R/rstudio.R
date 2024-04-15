@@ -12,21 +12,16 @@ check_rstudio <- function() {
   if (!is.null(.state$rstudio)) {
     return(TRUE)
   }
-  if (!requireNamespace("rstudioapi", quietly = TRUE)) {
-    stop("Install rstudioapi", call. = FALSE)
-  }
+  check_installed("rstudioapi")
+  check_installed("rappdirs")
 
-  if  (!requireNamespace("rstudioapi", quietly = TRUE) && !rstudioapi::isAvailable()) {
+  if  (!rstudioapi::isAvailable()) {
     stop("Not in Rstudio!", call. = FALSE)
   }
 
   info <- rstudioapi::versionInfo()
   if (info$version < "1.1.287") {
     warning("Some functions might not work!")
-  }
-
-  if (!requireNamespace("rappdirs", quietly = TRUE)) {
-    stop("Install rappdirs", call. = FALSE)
   }
 
   # If user changes the Rstudio configuration folder after running this one

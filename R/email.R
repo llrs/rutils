@@ -5,16 +5,10 @@ get_azure <- function() {
 }
 
 check_email <- function() {
-  if (!requireNamespace("emayili", quietly = TRUE) ||
-      !requireNamespace("blastula", quietly = TRUE)) {
-    stop("Install either 'emayili' or 'blastula'")
-  }
-  if (!requireNamespace("Microsoft365R", quietly = TRUE)) {
-    stop("Please install the 'Microsoft365R' package.")
-  }
-  if (!requireNamespace("rappdirs", quietly = TRUE)) {
-    stop("Please install the 'rappdirs' package.")
-  }
+  check_installed(c("emayili", "blastula"))
+  check_installed("Microsoft365R")
+  check_installed("rappdirs")
+
   if (is.null(get_azure())) {
     if (!dir.exists(rappdirs::user_data_dir("AzureR"))) {
       message("R will use your current Outlook account in the default brower.")
