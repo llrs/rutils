@@ -187,3 +187,43 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   }
   x
 }
+
+
+
+#' File names of the CNAG projects.
+#'
+#' Create the name of the files of the CNAG projects.
+#' @param project Name of the project.
+#' @param n Integer value of the project (increasing from 1).
+#' @param path Path to file.
+#' @return A path for the stats or the file describing the samples of a project.
+#' @rdname cnag_file
+#' @name cnag_file
+#' @aliases llrs_cnag_project_file
+#' @aliases llrs_cnag_stats_file
+#' @examples
+#' llrs_cnag_project_file("project")
+#' llrs_cnag_stats_file("project")
+NULL
+
+#' @describeIn cnag_file Create a project file path.
+#' @export
+llrs_cnag_project_file <- function(project, n = 1L, path = "") {
+  stopifnot(is.integer(n))
+  if (nchar(n) < 2L) {
+    n <- paste0("0", n)
+  }
+  project <- paste0(toupper(project), "_")
+  paste0(path, project, n, "/", project, n, ".xls")
+}
+
+#' @describeIn cnag_file Create a project stats file path.
+#' @export
+llrs_cnag_stats_file <- function(project, n= 1L, path = "") {
+  stopifnot(is.integer(n))
+  if (nchar(n) < 2L) {
+    n <- paste0("0", n)
+  }
+  project <- paste0(toupper(project), "_")
+  paste0(path, project, n, "/", project, n, "_Sample_Stats.xls")
+}
