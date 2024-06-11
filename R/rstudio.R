@@ -12,8 +12,10 @@ check_rstudio <- function() {
   if (!is.null(.state$rstudio)) {
     return(TRUE)
   }
-  check_installed("rstudioapi")
-  check_installed("rappdirs")
+  if (!check_installed("rstudioapi") || !check_installed("rappdirs")) {
+    warning("Not possible to check")
+    return(NA)
+  }
 
   if  (!rstudioapi::isAvailable()) {
     stop("Not in Rstudio!", call. = FALSE)

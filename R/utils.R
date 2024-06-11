@@ -10,9 +10,13 @@ is_dir <- function(path) {
 }
 
 check_installed <- function(x) {
-  if (!requireNamespace(x, quietly = TRUE)) {
+  exists <- !requireNamespace(x, quietly = TRUE)
+  if (exists && interactive()) {
     stop("Please install the ", paste(sQuote(x), collapse = " or "),
          " package.", call. = FALSE)
+  } else if (exists && !interactive()) {
+    return(FALSE)
   }
+
   TRUE
 }
