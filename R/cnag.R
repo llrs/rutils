@@ -182,8 +182,12 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   if (create_symlinks) {
     warning("Creating symlinks", call. = FALSE)
     # Skip symlinks of those that already exists (avoids warnings)
-    file.symlink(x$f1[!file.exists(x$cr1)], x$cr1[!file.exists(x$cr1)])
-    file.symlink(x$f2[!file.exists(x$cr2)], x$cr2[!file.exists(x$cr2)])
+    if (any(!file.exists(x$cr1))) {
+      file.symlink(x$f1[!file.exists(x$cr1)], x$cr1[!file.exists(x$cr1)])
+    }
+    if (any(!file.exists(x$cr2))) {
+      file.symlink(x$f2[!file.exists(x$cr2)], x$cr2[!file.exists(x$cr2)])
+    }
   }
   x
 }
