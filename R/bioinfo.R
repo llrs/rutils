@@ -110,6 +110,7 @@ llrs_cellranger_multi <- function(config, gex,
   }
   # antigen ####
   antigen_columns <- c("control_id", "mhc_allele")
+  antigen <- NULL
   aoc <- obligatory_columns(antigen, antigen_columns)
   if (!aoc) {
     stop("Antigen specific is not well formated.")
@@ -191,7 +192,8 @@ check_cellranger_gex <- function(gex) {
 
 check_cellranger_samples <- function(samples, library) {
   samples_columns <- c("sample_id", "expect_cells", "force_cells", "description", "cmo_ids", "probe_barcode_ids")
-  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
+  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){
+    c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
   if (!soc) {
     stop("Samples does not have the required columns.", call. = FALSE)
   }
