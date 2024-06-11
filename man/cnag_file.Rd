@@ -4,11 +4,14 @@
 \alias{cnag_file}
 \alias{llrs_cnag_project_file}
 \alias{llrs_cnag_stats_file}
+\alias{llrs_cnag_id}
 \title{File names of the CNAG projects.}
 \usage{
 llrs_cnag_project_file(project, n = 1L, path = "")
 
 llrs_cnag_stats_file(project, n = 1L, path = "")
+
+llrs_cnag_id(project, n = 1L)
 }
 \arguments{
 \item{project}{Name of the project.}
@@ -29,8 +32,12 @@ Create the name of the files of the CNAG projects.
 
 \item \code{llrs_cnag_stats_file()}: Create a project stats file path.
 
+\item \code{llrs_cnag_id()}: Create a project name from the id.
+
 }}
 \examples{
+llrs_cnag_id("project", 1:10)
 llrs_cnag_project_file("project")
 llrs_cnag_stats_file("project")
+
 }

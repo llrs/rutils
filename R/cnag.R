@@ -206,28 +206,38 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
 #' @aliases llrs_cnag_project_file
 #' @aliases llrs_cnag_stats_file
 #' @examples
+#' llrs_cnag_id("project", 1:10)
 #' llrs_cnag_project_file("project")
 #' llrs_cnag_stats_file("project")
+#'
 NULL
 
 #' @describeIn cnag_file Create a project file path.
 #' @export
 llrs_cnag_project_file <- function(project, n = 1L, path = "") {
   stopifnot(is.integer(n))
-  if (nchar(n) < 2L) {
-    n <- paste0("0", n)
-  }
-  project <- paste0(toupper(project), "_")
-  paste0(path, project, n, "/", project, n, ".xls")
+  project <- llrs_cnag_id(project, n)
+  paste0(path, project, "/", project, ".xls")
 }
 
 #' @describeIn cnag_file Create a project stats file path.
 #' @export
 llrs_cnag_stats_file <- function(project, n= 1L, path = "") {
-  stopifnot(is.integer(n))
-  if (nchar(n) < 2L) {
-    n <- paste0("0", n)
-  }
-  project <- paste0(toupper(project), "_")
-  paste0(path, project, n, "/", project, n, "_Sample_Stats.xls")
+  project <- llrs_cnag_id(project, n)
+  paste0(path, project, "/", project, "_Sample_Stats.xls")
+}
+
+
+#' @describeIn cnag_file Create a project name from the id.
+#' @export
+llrs_cnag_id <- function(project, n = 1L) {
+    stopifnot(any(is.integer(n)))
+    if(length(project) > 1L) {
+      stop("Please handle each project separately")
+    }
+    one_digit <- nchar(n) < 2L
+    if (any(one_digit)) {
+      n[one_digit] <- paste0("0", n[one_digit])
+    }
+  paste0(toupper(project), "_", n)
 }
