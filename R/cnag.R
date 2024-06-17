@@ -232,7 +232,7 @@ llrs_cnag_stats_file <- function(project, n= 1L, path = "") {
 #' @export
 llrs_cnag_id <- function(project, n = 1L) {
     stopifnot(any(is.integer(n)))
-    if(length(project) > 1L) {
+    if (length(project) > 1L) {
       stop("Please handle each project separately")
     }
     one_digit <- nchar(n) < 2L
