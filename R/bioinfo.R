@@ -25,6 +25,59 @@ llrs_box <- function(size){
 }
 
 
+#' Clean cellranger multi output
+#'
+#' This might squeeze 4Gb of data for each folder...
+#' @param path Path to the output of cellranger.
+#'
+#' @return Called by its side effect (It deletes some files and folders)
+#' @importFrom utils askYesNo
+#' @export
+llrs_cellranger_clean <- function(path) {
+  answer <- TRUE
+  path <- path[dir.exists(path)]
+  if (any(!check_cellranger_folder(path))) {
+    warning("This folder was not created with a version that has been tested")
+    answer <- askYesNo("Are you sure you want to continue?", default = FALSE)
+  }
+
+  if (isFALSE(answer)) {
+    message("Cancelling")
+    return(NULL)
+  }
+
+
+  #  SC_MULTI_CS
+  unlink(file.path(path, "SC_MULTI_CS"),
+         recursive = TRUE)
+  # All the internal files
+  # Deleting this will make the folder not recognizable by this own function.
+  files_ <- list.files(path, pattern = "^_", full.names = TRUE)
+  unlink(files_)
+
+  vdj_reference <- file.path(path, "outs", "vdj_reference")
+  unlink(vdj_reference, recursive = TRUE)
+  #
+}
+
+check_cellranger_folder <- function(path, version = "7.2.0") {
+  versions <- file.path(path, "_versions")
+  if (!any(file.exists(versions))) {
+    warning("Doesn't seem a cellranger output.")
+    return(FALSE)
+  }
+
+  if (!check_installed("jsonlite")) {
+    stop("Requires dependencies")
+  }
+  out <- vapply(versions, jsonlite::read_json, FUN.VALUE = vector("list", 2))
+  endsWith(simplify2array(out["pipelines", ]), version)
+}
+
+check_cellranger_version <- function(version = "7.2.0") {
+  out <- system2("cellranger", "--version", stdout = TRUE)
+  endsWith(out, version)
+}
 
 #' Create multi config file
 #'
