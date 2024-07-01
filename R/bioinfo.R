@@ -38,15 +38,7 @@ llrs_box <- function(size){
 llrs_cellranger_clean <- function(path) {
   answer <- TRUE
   path <- path[dir.exists(path)]
-  if (any(!check_cellranger_folder(path))) {
-    warning("This folder was not created with a version that has been tested")
-    answer <- askYesNo("Are you sure you want to continue?", default = FALSE)
-  }
 
-  if (isFALSE(answer)) {
-    message("Cancelling")
-    return(NULL)
-  }
   #  SC_MULTI_CS
   SC_MULTI_CS <- file.path(path, "SC_MULTI_CS")
   # All the internal files
@@ -56,17 +48,29 @@ llrs_cellranger_clean <- function(path) {
   vdj_reference <- file.path(path, "outs", "vdj_reference")
 
   all_paths <- c(file.path(path, "SC_MULTI_CS"), files_, vdj_reference)
+  all_paths <- all_paths[file.exists(all_paths) | dir.exists(all_paths)]
 
-  if (length(all_paths) < 1 && !any(file.exists(all_paths) | dir.exists(all_paths))) {
+  if (length(all_paths) < 1) {
     return(FALSE)
   }
+
+  if (any(!check_cellranger_folder(path))) {
+    message("This folder was not created with a version that has been tested")
+    answer <- askYesNo("Are you sure you want to continue?", default = FALSE)
+  }
+
+  if (isFALSE(answer) | is.na(answer)) {
+    message("Cancelling")
+    return(NULL)
+  }
+
   message("Removing:", paste("\n -", all_paths))
   Sys.sleep(length(all_paths))
 
-  unlink(SC_MULTI_CS, recursive = TRUE)
-  unlink(files_)
-  unlink(vdj_reference, recursive = TRUE)
-  message("Removed files.")
+  unlink(SC_MULTI_CS[dir.exists(SC_MULTI_CS)], recursive = TRUE)
+  unlink(files_[file.exists(files_)])
+  unlink(vdj_reference[dir.exists(vdj_reference)], recursive = TRUE)
+  message("Removed files")
   TRUE
 }
 
