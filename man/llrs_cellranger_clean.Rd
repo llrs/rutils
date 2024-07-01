@@ -10,7 +10,9 @@ llrs_cellranger_clean(path)
 \item{path}{Path to the output of cellranger.}
 }
 \value{
-Called by its side effect (It deletes some files and folders)
+Called by its side effect (It deletes some files and folders).
+Returns \code{TRUE} if removed files and directories, \code{NULL} if cancelled, \code{FALSE}
+if nothing to remove.
 }
 \description{
 This might squeeze 4Gb of data for each folder...

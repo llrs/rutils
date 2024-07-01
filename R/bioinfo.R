@@ -30,7 +30,9 @@ llrs_box <- function(size){
 #' This might squeeze 4Gb of data for each folder...
 #' @param path Path to the output of cellranger.
 #'
-#' @return Called by its side effect (It deletes some files and folders)
+#' @return Called by its side effect (It deletes some files and folders).
+#' Returns `TRUE` if removed files and directories, `NULL` if cancelled, `FALSE`
+#' if nothing to remove.
 #' @importFrom utils askYesNo
 #' @export
 llrs_cellranger_clean <- function(path) {
@@ -45,19 +47,27 @@ llrs_cellranger_clean <- function(path) {
     message("Cancelling")
     return(NULL)
   }
-
-
   #  SC_MULTI_CS
-  unlink(file.path(path, "SC_MULTI_CS"),
-         recursive = TRUE)
+  SC_MULTI_CS <- file.path(path, "SC_MULTI_CS")
   # All the internal files
   # Deleting this will make the folder not recognizable by this own function.
   files_ <- list.files(path, pattern = "^_", full.names = TRUE)
-  unlink(files_)
-
+  # VDJ reference is duplicated on each sample!
   vdj_reference <- file.path(path, "outs", "vdj_reference")
+
+  all_paths <- c(file.path(path, "SC_MULTI_CS"), files_, vdj_reference)
+
+  if (length(all_paths) < 1 && !any(file.exists(all_paths) | dir.exists(all_paths))) {
+    return(FALSE)
+  }
+  message("Removing:", paste("\n -", all_paths))
+  Sys.sleep(length(all_paths))
+
+  unlink(SC_MULTI_CS, recursive = TRUE)
+  unlink(files_)
   unlink(vdj_reference, recursive = TRUE)
-  #
+  message("Removed files.")
+  TRUE
 }
 
 check_cellranger_folder <- function(path, version = "7.2.0") {
