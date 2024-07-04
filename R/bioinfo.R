@@ -29,16 +29,23 @@ llrs_box <- function(size){
 #'
 #' This might squeeze 4Gb of data for each folder...
 #' @param path Path to the output of cellranger.
-#'
+#' @param extreme Logical value if only some specific files should be kept.
 #' @return Called by its side effect (It deletes some files and folders).
 #' Returns `TRUE` if removed files and directories, `NULL` if cancelled, `FALSE`
 #' if nothing to remove.
 #' @importFrom utils askYesNo
 #' @export
-llrs_cellranger_clean <- function(path) {
-  answer <- TRUE
+llrs_cellranger_clean <- function(path, extreme = FALSE) {
   path <- path[dir.exists(path)]
+  if (isTRUE(extreme)) {
+    extreme_cleanup(path)
+  } else {
+    light_cleanup(path)
+  }
+}
 
+light_cleanup <- function(path) {
+  answer <- TRUE
   #  SC_MULTI_CS
   SC_MULTI_CS <- file.path(path, "SC_MULTI_CS")
   # All the internal files
@@ -72,6 +79,26 @@ llrs_cellranger_clean <- function(path) {
   unlink(vdj_reference[dir.exists(vdj_reference)], recursive = TRUE)
   message("Removed files")
   TRUE
+}
+
+extreme_cleanup <- function(path) {
+  files <- paste(c("sample_molecule_info.h5",
+                   "sample_filtered_feature_bc_matrix.h5",
+                   "vdj_contig_info.pb",
+                   "sample_cloupe.cloupe",
+                   "vloupe.vloupe"),
+                 collapse = "|")
+  keep <- list.files(path = path, recursive = TRUE,
+                     pattern = files, full.names = TRUE)
+  all_f <- list.files(path = path, recursive = TRUE, full.names = TRUE)
+  remove_f <- setdiff(all_f, keep)
+  if (length(remove_f)) {
+    unlink(remove_f, recursive = TRUE)
+    # TODO: Remove empty folders...
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 }
 
 check_cellranger_folder <- function(path, version = "7.2.0") {
