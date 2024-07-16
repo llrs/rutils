@@ -85,6 +85,7 @@ extreme_cleanup <- function(path) {
   files <- paste(c("sample_molecule_info.h5",
                    "sample_filtered_feature_bc_matrix.h5",
                    "vdj_contig_info.pb",
+                   "metrics_summary.csv",
                    "sample_cloupe.cloupe",
                    "vloupe.vloupe"),
                  collapse = "|")

@@ -1,6 +1,7 @@
 # rutils (development version)
 
  * Add functions to manage CNAG projects for `cellranger multi`.
+ * Make `llrs_cellranger_clean()` more useful (keeping metrics).
  
 # rutils 0.0.1
 
