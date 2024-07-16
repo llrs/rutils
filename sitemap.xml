@@ -1,105 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://llrs.github.io/rutils/404.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/index.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/Bioinformatics.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/cnag_file.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_box.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cellranger_aggr.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cellranger_clean.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cellranger_multi.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_deliver.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_files.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_samples.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_stats.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_cnag_symlinks.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_diff.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_download.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_figures.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_hook.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_hooks_list.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_notify_system.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_profile.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_results.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_send_email.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_send_ntfy.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_share.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_shiny_create.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_shiny_hook.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_tar.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/rstudio_config.html</loc>
-  </url>
-  <url>
-    <loc>https://llrs.github.io/rutils/reference/rutils-package.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://llrs.github.io/rutils/404.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/LICENSE.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/authors.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/index.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/news/index.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/Bioinformatics.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/cnag_file.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/index.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_box.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cellranger_aggr.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cellranger_clean.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cellranger_multi.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_deliver.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_files.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_samples.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_stats.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_symlinks.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_diff.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_download.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_figures.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_hook.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_hooks_list.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_notify_system.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_profile.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_results.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_send_email.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_send_ntfy.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_share.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_shiny_create.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_shiny_hook.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_tar.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/rstudio_config.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/rutils-package.html</loc></url>
 </urlset>
+
