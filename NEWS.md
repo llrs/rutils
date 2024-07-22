@@ -2,6 +2,7 @@
 
  * Add functions to manage CNAG projects for `cellranger multi`.
  * Make `llrs_cellranger_clean()` more useful (keeping metrics).
+ * Create folders just once in `llrs_cnag_symlinks()`
  
 # rutils 0.0.1
 

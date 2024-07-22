@@ -167,7 +167,7 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   }
   # Following the recommendation of having subfolders for flowcell
   # <https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#libraries>
-  od <- file.path(od, x[[name]], x$FLOWCELL)
+  od <- unique(file.path(od, x[[name]], x$FLOWCELL))
   if (create_symlinks && any(!dir.exists(od))) {
     s <- sapply(od, dir.create, recursive = TRUE, mode = "0744")
   }
@@ -179,7 +179,8 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   x$cr2 <- file.path(od, paste0(x[[name]], "_S1_L00", x$LANE, "_R2_001.fastq.gz"))
 
   # Create symlinks
-  if (create_symlinks) {
+  missing_files <-   any(!file.exists(x$cr1)) | any(!file.exists(x$cr2))
+  if (create_symlinks && missing_files) {
     warning("Creating symlinks", call. = FALSE)
     # Skip symlinks of those that already exists (avoids warnings)
     if (any(!file.exists(x$cr1))) {
