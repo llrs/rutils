@@ -4,10 +4,12 @@
 \alias{llrs_cellranger_clean}
 \title{Clean cellranger multi output}
 \usage{
-llrs_cellranger_clean(path)
+llrs_cellranger_clean(path, extreme = FALSE)
 }
 \arguments{
 \item{path}{Path to the output of cellranger.}
+
+\item{extreme}{Logical value if only some specific files should be kept.}
 }
 \value{
 Called by its side effect (It deletes some files and folders).

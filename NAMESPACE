@@ -3,7 +3,6 @@
 export(llrs_box)
 export(llrs_cellranger_aggr)
 export(llrs_cellranger_clean)
-export(llrs_cellranger_multi)
 export(llrs_cnag_deliver)
 export(llrs_cnag_files)
 export(llrs_cnag_id)

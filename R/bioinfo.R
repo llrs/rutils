@@ -121,110 +121,9 @@ check_cellranger_version <- function(version = "7.2.0") {
   endsWith(out, version)
 }
 
-#' Create multi config file
-#'
-#' Prepare the cellranger multi file for some samples.
-#'
-#' @param config A list with the general config of the samples.
-#' @param gex A data.frame with the information for the gene expression (GEX).
-#' @param library A data.frame with the information about the libraries used.
-#' @param samples A data.frame with the information about the samples used.
-#' @param vdj A list with the configuration for the vdj assays.
-#' @param feature A list with the configuration for the featured assays.
-#' @param out Path to a directory where to save the file.
-#'
-#' @return The path to a file saved with the configuration as specified.
-#' @export
-#' @seealso Set up names of samples with [llrs_cnag_files()]. Prepare folders and files [llrs_cnag_symlinks()].
-#' @references <https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts>
-#' @examples
-#' #llrs_cellranger_multi(out = "/S2_cellranger.csv")
-llrs_cellranger_multi <- function(config, gex,
-                                  library, samples, vdj, feature, out) {
-  if (!dir.exists(dirname(out))) {
-    stop("Directory doesn't exists and won't be created!")
-  }
-  if (file.exists(out)) {
-    stop("Won't overwrite the existing file. Rename the output.")
-  }
-
-  if (length(dim(library)) != 2L) {
-    stop("libraries should be a matrix or data.frame")
-  }
-
-  # GEX ####
-  # [gene-expression]
-  check_cellranger_gex(gex)
-
-
-  # "reference",	/home/data/genome/human/refdata-gex-GRCh38-2020-A/
-  # "probe-set",	/path/to/probe/set
-  # "filter-probes",	<true|false>
-  # "r1-length",	<int>
-  # "r2-length",	<int>
-  # "chemistry",	<auto>
-  # "expect-cells",	<int>
-  # "force-cells",	<int>
-  # "no-secondary",	<true|false>
-  # "no-bam",	<true|false>
-  # "check-library-compatibility",	<true|false>
-  # "include-introns",	<true|false>
-  # "min-assignment-confidence",	<0.9>
-
-  # vdj ####
-  # [vdj] # For TCR and BCR libraries only
-  check_cellranger_vdj(vdj)
-
-  # Feature ####
-  # [feature]
-  feature_columns <- c("reference", "r1-length", "r2-length", )
-  foc <- obligatory_columns(library, feature_columns, 1)
-  if (!foc) {
-    stop("library does not have the required columns.")
-  }
-  feature_options <- c("Gene Expression", "Antibody Capture",
-                       "CRISPR Guide Capture", "Multiplexing Capture", "VDJ",
-                       "VDJ-T", "VDJ-T-GD", "VDJ-B", "Antigen Capture", "Custom")
-
-
-
-  # library ####
-  library_columns <- c("fastq_id","fastqs","feature_types", "lanes",
-                       "physical_library_id", "subsample_rate", "chemistry")
-  loc <- obligatory_columns(library, library_columns, 1:3)
-  if (!loc) {
-    stop("library does not have the required columns.", call. = FALSE)
-  }
-  if (any(!is_dir(library$fastqs))) {
-    stop("fastqs should be folders.", call. = FALSE)
-  }
-
-  arg <- match.arg(library$feature_type, feature_options)
-  if (!all(startsWith(library$fastqs, "/"))) {
-    stop("File should start with the absolute path.", call. = FALSE)
-  }
-  # antigen ####
-  antigen_columns <- c("control_id", "mhc_allele")
-  antigen <- NULL
-  aoc <- obligatory_columns(antigen, antigen_columns)
-  if (!aoc) {
-    stop("Antigen specific is not well formated.")
-  }
-
-  # samples ####
-  # It is needed if there are more than one sample to differentiate between them!
-  if (NROW(library) >= 2 && (is.null(samples) || missing(samples))) {
-    stop("There should be a samples section to differentiate the multiple samples")
-  }
-
-
-
-  cat(file = out, append = )
-}
-
 #' Aggregate several cellranger output
 #'
-#' If several samples cannot be processed with [llrs_cellranger_multi()] you might need to aggregate them.
+#' If several samples cannot be processed with `cellranger multi` you might need to aggregate them.
 #'
 #' @param gex A data.frame with the GEX information.
 #' @param path A path to were it should be saved.
@@ -232,7 +131,6 @@ llrs_cellranger_multi <- function(config, gex,
 #' @return The path to the file saved with the configuration
 #' @export
 #' @importFrom utils write.csv
-#' @seealso [llrs_cellranger_multi()]
 llrs_cellranger_aggr <- function(gex, path, vdj = NULL) {
   gex <- c("sample_id", "molecule_h5")
   tcr <- c("sample_id", "vdj_contig_info", "donor", "origin")

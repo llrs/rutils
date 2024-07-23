@@ -17,8 +17,5 @@ llrs_cellranger_aggr(gex, path, vdj = NULL)
 The path to the file saved with the configuration
 }
 \description{
-If several samples cannot be processed with \code{\link[=llrs_cellranger_multi]{llrs_cellranger_multi()}} you might need to aggregate them.
-}
-\seealso{
-\code{\link[=llrs_cellranger_multi]{llrs_cellranger_multi()}}
+If several samples cannot be processed with \verb{cellranger multi} you might need to aggregate them.
 }
