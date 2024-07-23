@@ -167,9 +167,10 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   }
   # Following the recommendation of having subfolders for flowcell
   # <https://www.10xgenomics.com/support/software/cell-ranger/latest/advanced/cr-multi-config-csv-opts#libraries>
-  od <- unique(file.path(od, x[[name]], x$FLOWCELL))
+  od <- file.path(od, x[[name]], x$FLOWCELL)
   if (create_symlinks && any(!dir.exists(od))) {
-    s <- sapply(od, dir.create, recursive = TRUE, mode = "0744")
+    # Unique to avoid warnings here but keeping the order to match the sample
+    s <- sapply(unique(od), dir.create, recursive = TRUE, mode = "0744")
   }
 
   # The samples are concatenated with the index, the flowcell and the lane.
