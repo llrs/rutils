@@ -170,7 +170,9 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   od <- file.path(od, x[[name]], x$FLOWCELL)
   if (create_symlinks && any(!dir.exists(od))) {
     # Unique to avoid warnings here but keeping the order to match the sample
-    s <- sapply(unique(od), dir.create, recursive = TRUE, mode = "0744")
+    directories <- unique(od)
+    directories <- directories[!dir.exists(directories)]
+    s <- sapply(directories, dir.create, recursive = TRUE, mode = "0744")
   }
 
   # The samples are concatenated with the index, the flowcell and the lane.
