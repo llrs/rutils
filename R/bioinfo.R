@@ -89,6 +89,7 @@ extreme_cleanup <- function(path) {
     "sample_filtered_feature_bc_matrix.h5",
     # Needed for QC
     "metrics_summary.csv",
+    "web_summary.html",
     # Needed for GEC in Loupe
     "sample_cloupe.cloupe",
     # Needed for direct check of TCR
