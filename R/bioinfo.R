@@ -48,31 +48,37 @@ light_cleanup <- function(path) {
   answer <- TRUE
   #  SC_MULTI_CS
   SC_MULTI_CS <- file.path(path, "SC_MULTI_CS")
+  path_sample <- list.dirs(file.path(path, "outs", "per_sample_outs"),
+                           recursive = FALSE)
+  # All the analysis by default
+  analysis <- file.path(path_sample, "count", "analysis")
   # All the internal files
   # Deleting this will make the folder not recognizable by this own function.
   files_ <- list.files(path, pattern = "^_", full.names = TRUE)
   # VDJ reference is duplicated on each sample!
   vdj_reference <- file.path(path, "outs", "vdj_reference")
 
-  all_paths <- c(file.path(path, "SC_MULTI_CS"), files_, vdj_reference)
+  all_paths <- c(file.path(path, "SC_MULTI_CS"), files_, vdj_reference, analysis)
   all_paths <- all_paths[file.exists(all_paths) | dir.exists(all_paths)]
 
   if (length(all_paths) < 1) {
     return(FALSE)
   }
 
-  if (any(!check_cellranger_folder(path))) {
+  if (check_cellranger_folder(path) && !check_cellranger_folder_version(path)) {
     message("This folder was not created with a version that has been tested")
     answer <- askYesNo("Are you sure you want to continue?", default = FALSE)
+  } else {
+    answer <- TRUE
   }
 
-  if (isFALSE(answer) | is.na(answer)) {
+  if (isFALSE(answer) || is.na(answer)) {
     message("Cancelling")
     return(NULL)
   }
 
   message("Removing:", paste("\n -", all_paths))
-  Sys.sleep(length(all_paths))
+  Sys.sleep(length(all_paths)/2)
 
   unlink(SC_MULTI_CS[dir.exists(SC_MULTI_CS)], recursive = TRUE)
   unlink(files_[file.exists(files_)])
@@ -82,7 +88,12 @@ light_cleanup <- function(path) {
 }
 
 extreme_cleanup <- function(path) {
-  files <- paste(c(
+
+  if (is.null(light_cleanup(path))) {
+    return(NULL)
+  }
+
+  files <- c(
     # Needed for easy aggr GEX before filtering
     "sample_molecule_info.h5",
     # Needed for easy parsing GEX and data analysis individually
@@ -97,13 +108,16 @@ extreme_cleanup <- function(path) {
     # Needed for aggr TCR info
     "vdj_contig_info.pb",
     # Needed for TCR in Loupe (multi or after aggr)
-    "vloupe.vloupe",
-    ),
-    collapse = "|")
-  keep <- list.files(path = path, recursive = TRUE,
-                     pattern = files, full.names = TRUE)
+    "vloupe.vloupe"
+  )
+
   all_f <- list.files(path = path, recursive = TRUE, full.names = TRUE)
+  keep <- all_f[basename(all_f) %in% files]
   remove_f <- setdiff(all_f, keep)
+
+  message("Removing:", paste("\n -", remove_f))
+  Sys.sleep(length(remove_f)/2)
+
   if (length(remove_f)) {
     unlink(remove_f, recursive = TRUE)
     # TODO: Remove empty folders...
@@ -113,17 +127,16 @@ extreme_cleanup <- function(path) {
   }
 }
 
-check_cellranger_folder <- function(path, version = "7.2.0") {
-  versions <- file.path(path, "_versions")
-  if (!any(file.exists(versions))) {
-    warning("Doesn't seem a cellranger output.")
-    return(FALSE)
-  }
+check_cellranger_folder <- function(path) {
+  any(file.exists(file.path(path, "_versions")))
+}
 
+check_cellranger_folder_version <- function(path, version = "7.2.0") {
   if (!check_installed("jsonlite")) {
     stop("Requires dependencies")
   }
-  out <- vapply(versions, jsonlite::read_json, FUN.VALUE = vector("list", 2))
+  out <- vapply(file.path(path, "_versions"), jsonlite::read_json,
+                FUN.VALUE = vector("list", 2))
   endsWith(simplify2array(out["pipelines", ]), version)
 }
 
