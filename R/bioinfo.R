@@ -83,21 +83,22 @@ light_cleanup <- function(path) {
 
 extreme_cleanup <- function(path) {
   files <- paste(c(
-    # Needed for easy parsing GEX before filtering
+    # Needed for easy aggr GEX before filtering
     "sample_molecule_info.h5",
-    # Needed for easy parsing GEX
+    # Needed for easy parsing GEX and data analysis individually
     "sample_filtered_feature_bc_matrix.h5",
     # Needed for QC
     "metrics_summary.csv",
     "web_summary.html",
-    # Needed for GEC in Loupe
-    "sample_cloupe.cloupe",
-    # Needed for direct check of TCR
+    # Needed for GEX in Loupe (after aggr)
+    "cloupe.cloupe",
+    # Needed for direct check of TCR (only relevant after aggr)
     "filtered_contig_annotations.csv",
     # Needed for aggr TCR info
     "vdj_contig_info.pb",
-    # Needed for TCR in Loupe
-    "vloupe.vloupe"),
+    # Needed for TCR in Loupe (multi or after aggr)
+    "vloupe.vloupe",
+    ),
     collapse = "|")
   keep <- list.files(path = path, recursive = TRUE,
                      pattern = files, full.names = TRUE)
