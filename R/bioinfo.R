@@ -37,11 +37,12 @@ llrs_box <- function(size){
 #' @export
 llrs_cellranger_clean <- function(path, extreme = FALSE) {
   path <- path[dir.exists(path)]
+  light <- light_cleanup(path)
+  extreme_res <- FALSE
   if (isTRUE(extreme)) {
-    extreme_cleanup(path)
-  } else {
-    light_cleanup(path)
+    extreme_res <- extreme_cleanup(path)
   }
+  light || extreme_res
 }
 
 light_cleanup <- function(path) {
@@ -88,10 +89,6 @@ light_cleanup <- function(path) {
 }
 
 extreme_cleanup <- function(path) {
-
-  if (is.null(light_cleanup(path))) {
-    return(NULL)
-  }
 
   files <- c(
     # Needed for easy aggr GEX before filtering
