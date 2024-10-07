@@ -1,7 +1,7 @@
 Type: Package
 Package: rutils
 Title: Helping with my day to day work
-Version: 0.0.1.9010
+Version: 0.0.1.9011
 Authors@R: 
     person("Lluís", "Revilla Sancho", , "lluis.revilla@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9747-2570"))
