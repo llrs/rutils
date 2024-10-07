@@ -110,12 +110,23 @@ extreme_cleanup <- function(path) {
   keep <- all_f[basename(all_f) %in% files]
   remove_f <- setdiff(all_f, keep)
 
+  dirs <- dirname(all_f)
+  dir_remove <- dirname(remove_f)
+  remove_dir <- vector("character")
+  for (dir in dirs) {
+    files_in_dir <- all_f[dirs == dir]
+    files_remove_in_dir <- remove_f[dir_remove == dir]
+    if (all(files_in_dir %in% files_remove_in_dir)) {
+      remove_dir <- c(remove_dir, dir)
+    }
+  }
   message("Removing:", paste("\n -", remove_f))
   Sys.sleep(length(remove_f)/2)
 
   if (length(remove_f)) {
     unlink(remove_f, recursive = TRUE)
-    # TODO: Remove empty folders...
+    # Only those folders and not anything else
+    unlink(remove_dir, recursive = FALSE)
     return(TRUE)
   } else {
     return(FALSE)
