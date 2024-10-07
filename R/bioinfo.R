@@ -81,9 +81,7 @@ light_cleanup <- function(path) {
   message("Removing:", paste("\n -", all_paths))
   Sys.sleep(length(all_paths)/2)
 
-  unlink(SC_MULTI_CS[dir.exists(SC_MULTI_CS)], recursive = TRUE)
-  unlink(files_[file.exists(files_)])
-  unlink(vdj_reference[dir.exists(vdj_reference)], recursive = TRUE)
+  unlink(all_paths, recursive = TRUE)
   message("Removed files")
   TRUE
 }
