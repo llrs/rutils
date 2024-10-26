@@ -11,7 +11,7 @@ llrs_profile <- function() {
     message("~/.Rprofile exists. Do you want to replace it?")
     overwrite <- c(TRUE, FALSE)[menu(c("Yes", "No"))]
   }
-  path <- base::system.file("inst", "r_profile", package = "rutils",
-                            mustWork = TRUE)
+  path <- base::system.file("r_profile", package = "rutils", mustWork = TRUE)
   file.copy(path, to = dest_file, overwrite = overwrite)
+  message("Adjust the profile and restart the R session")
 }

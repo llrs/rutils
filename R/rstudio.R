@@ -73,7 +73,9 @@ llrs_rstudio_set <- function() {
   orig <- base::system.file("rstudio-prefs.json", package = "rutils",
                             mustWork = TRUE)
   file.copy(orig, path, overwrite = TRUE, copy.date = TRUE)
-  rstarting_rstudio()
+  message("Check the preferences and if not try to modify the configuration at ",
+          path)
+  rstarting_rstudio(time = 10L)
 }
 
 #' @export
