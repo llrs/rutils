@@ -70,7 +70,9 @@ llrs_rstudio_set <- function() {
   if (!dir.exists(dirname(path))) {
     dir.create(path, recursive = TRUE)
   }
-  file.copy("inst/rstudio-prefs.json", path, overwrite = TRUE, copy.date = TRUE)
+  orig <- base::system.file("rstudio-prefs.json", package = "rutils",
+                            mustWork = TRUE)
+  file.copy(orig, path, overwrite = TRUE, copy.date = TRUE)
   rstarting_rstudio()
 }
 
@@ -80,8 +82,8 @@ llrs_rstudio_set <- function() {
 #' teaching) or double checking default options.
 llrs_rstudio_default <- function() {
   check_rstudio()
-  rstudio_path <- .state$rstudio["path"]
-  rstudio_backup <- .state$rstudio["backup"]
+  rstudio_path <- .state[["rstudio"]]["path"]
+  rstudio_backup <- .state[["rstudio"]]["backup"]
   if (file.exists(rstudio_backup)) {
     stop("Already a previous configuration exists.")
   }
@@ -95,8 +97,8 @@ llrs_rstudio_default <- function() {
 llrs_rstudio_restore <- function() {
   check_rstudio()
   rstudioapi::getThemes()
-  rstudio_path <- .state$rstudio["path"]
-  rstudio_backup <- .state$rstudio["backup"]
+  rstudio_path <- .state[["rstudio"]]["path"]
+  rstudio_backup <- .state[["rstudio"]]["backup"]
   if (file.exists(rstudio_backup) && file.rename(rstudio_backup, rstudio_path)) {
     rstarting_rstudio()
   } else {
