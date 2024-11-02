@@ -1,0 +1,20 @@
+LANGUAGE=en
+R_TIMEOUT=100
+# env from INSTALL
+R_ALWAYS_INSTALL_TESTS=0
+R_KEEP_PKG_SOURCE=yes
+# Env from install.packages
+_R_INSTALL_PACKAGES_ELAPSED_TIMEOUT_=0
+_R_CHECK_THINGS_IN_TEMP_DIR_=TRUE
+_R_CHECK_LENGTH_1_LOGIC2_=warn
+# https://mastodon.social/@henrikbengtsson/110436618724310900
+_R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
+# To avoid == to compare objects: https://stat.ethz.ch/pipermail/r-devel/2024-March/083254.html
+ _R_COMPARE_LANG_OBJECTS=eqonly
+# Specify the version for every major thing
+R_LIBS_USER=/home/lluis/bin/R/%v/
+ORCID_ID="0000-0001-9747-2570"
+# R 4.1 onwards : https://stat.ethz.ch/pipermail/r-devel/2021-December/081384.html
+# you have to set the '_R_USE_PIPEBIND_' envvar to a true value to enable =>
+_R_USE_PIPEBIND_=TRUE
+_R_CHECK_ORPHANED_=true

@@ -7,8 +7,8 @@
 llrs_profile()
 }
 \value{
-Whatever \code{\link[=file.copy]{file.copy()}} does
+\code{TRUE} or \code{FALSE} depending on if it has overwritten the files or not.
 }
 \description{
-Write my preferences on a R user profile.
+Write my preferences on a R user profile and R environment.
 }
