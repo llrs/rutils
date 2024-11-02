@@ -12,7 +12,7 @@ _R_CHECK_S3_METHODS_SHOW_POSSIBLE_ISSUES_=true
 # To avoid == to compare objects: https://stat.ethz.ch/pipermail/r-devel/2024-March/083254.html
  _R_COMPARE_LANG_OBJECTS=eqonly
 # Specify the version for every major thing
-R_LIBS_USER=/home/lluis/bin/R/%v/
+#R_LIBS_USER=/home/lluis/bin/R/%v/
 ORCID_ID="0000-0001-9747-2570"
 # R 4.1 onwards : https://stat.ethz.ch/pipermail/r-devel/2021-December/081384.html
 # you have to set the '_R_USE_PIPEBIND_' envvar to a true value to enable =>
