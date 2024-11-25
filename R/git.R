@@ -53,3 +53,54 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
   rstudioapi::initializeProject(new_proj)
   rstudioapi::openProject(new_proj, TRUE)
 }
+
+
+
+#' Check package version
+#'
+#' @param repo Github repository.
+#' @param path Local path to the repository.
+#'
+#' @returns TRUE if successfull
+#' @export
+#'
+#' @examples
+#' suppressWarnings(llrs_check_pkg_version("llrs/rutils"))
+llrs_check_pkg_version <- function(repo, path = ".") {
+  # Local repo
+  stopifnot("Just one path" = length(path) == 1L)
+  desc_file <- file.path(path, "DESCRIPTION")
+  if (file.exists(desc_file)) {
+    local_desc <- read.dcf(desc_file, fields = c("Version", "Package"))
+  } else {
+    stop("Folder doesn't have a package")
+  }
+
+  local_ver <- package_version(local_desc[, "Version"])
+
+  # Remote repo
+  remote <- strsplit(repo, "/", fixed = TRUE)
+  if (length(remote) != 1L || lengths(remote) > 2 || grepl("@", repo, fixed = TRUE)) {
+    stop("Repository ", sQuote(repo), " is not simple.\n",
+         "It cannot have a branch name or a sha number", call. = FALSE)
+  }
+  github <- sprintf("https://raw.githubusercontent.com/%s/master/DESCRIPTION",
+                    repo)
+
+  remote_desc <- read.dcf(url(github), fields = c("Version", "Package"))
+  remote_version <- package_version(remote_desc[, "Version"])
+
+  stopifnot("Packagename does not match" = remote_desc[, "Package"] == local_desc[, "Package"])
+  pkg <- local_desc[, "Package"]
+
+  if (remote_version > local_ver) {
+    stop("Update local repository ", repo, " at ", path, call. = FALSE)
+  } else if (remote_version < local_ver) {
+    warning("Check ", pkg, " branch at ", sQuote(path),
+            ".\nIt might not the be right one,",
+            immediate. = TRUE, call. = FALSE)
+  } else {
+    message("All good for package")
+  }
+  TRUE
+}
