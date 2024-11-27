@@ -63,44 +63,69 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 #'
 #' @returns TRUE if successfull
 #' @export
-#'
+#' @importFrom utils URLencode
 #' @examples
-#' suppressWarnings(llrs_check_pkg_version("llrs/rutils"))
+#' \dontrun{(llrs_check_pkg_version("llrs/rutils")}
 llrs_check_pkg_version <- function(repo, path = ".") {
   # Local repo
   stopifnot("Just one path" = length(path) == 1L)
+  path <- normalizePath(path)
+
   desc_file <- file.path(path, "DESCRIPTION")
   if (file.exists(desc_file)) {
     local_desc <- read.dcf(desc_file, fields = c("Version", "Package"))
   } else {
     stop("Folder doesn't have a package")
   }
+  local_branch <- system2("git",
+                         args = paste("-C", path, "rev-parse --abbrev-ref HEAD"),
+                         stdout = TRUE)
 
   local_ver <- package_version(local_desc[, "Version"])
 
   # Remote repo
   remote <- strsplit(repo, "/", fixed = TRUE)
-  if (length(remote) != 1L || lengths(remote) > 2 || grepl("@", repo, fixed = TRUE)) {
+  check_repo_length <- length(remote) != 1L || lengths(remote) > 2
+  if (check_repo_length || grepl("@", repo, fixed = TRUE)) {
     stop("Repository ", sQuote(repo), " is not simple.\n",
          "It cannot have a branch name or a sha number", call. = FALSE)
   }
-  github <- sprintf("https://raw.githubusercontent.com/%s/master/DESCRIPTION",
-                    repo)
+  remotes <- system2("git", "remote -v", stdout = TRUE)
+  if (!any(grepl(pattern = repo, remotes))) {
+    stop("Repository doesn't match any remote setup", call. = FALSE)
+  }
 
-  remote_desc <- read.dcf(url(github), fields = c("Version", "Package"))
+  # Github redirect master to main
+  # Encoding is required for @ and other reserved characters
+  remote_branch <- URLencode(local_branch, reserved = TRUE)
+  github <- sprintf("https://raw.githubusercontent.com/%s/%s/DESCRIPTION",
+                    repo, remote_branch)
+
+  url_github <- url(github)
+  # Will break if the repository doesn't have a DESCRIPTION
+  remote_desc <- read.dcf(url_github, fields = c("Version", "Package"))
   remote_version <- package_version(remote_desc[, "Version"])
-
-  stopifnot("Packagename does not match" = remote_desc[, "Package"] == local_desc[, "Package"])
+  check_pkg_name_match <- remote_desc[, "Package"] == local_desc[, "Package"]
+  stopifnot("Package name does not match" = check_pkg_name_match)
   pkg <- local_desc[, "Package"]
 
   if (remote_version > local_ver) {
-    stop("Update local repository ", repo, " at ", path, call. = FALSE)
-  } else if (remote_version < local_ver) {
-    warning("Check ", pkg, " branch at ", sQuote(path),
+    warning("Update local repository ", repo, " , branch ", local_branch,
+            " at ", path, call. = FALSE)
+    out <- FALSE
+    names(out) <- pkg
+    return(invisible(out))
+  }
+  if (remote_version < local_ver) {
+    warning("Check ", pkg, " branch ", local_branch, " at ", sQuote(path),
             ".\nIt might not the be right one,",
             immediate. = TRUE, call. = FALSE)
-  } else {
-    message("All good for package")
+    out <- NA
+    names(out) <- pkg
+    return(invisible(out))
+
   }
-  TRUE
+  out <- TRUE
+  names(out) <- pkg
+  invisible(out)
 }

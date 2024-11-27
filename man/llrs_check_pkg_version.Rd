@@ -18,5 +18,5 @@ TRUE if successfull
 Check package version
 }
 \examples{
-suppressWarnings(llrs_check_pkg_version("llrs/rutils"))
+\dontrun{(llrs_check_pkg_version("llrs/rutils")}
 }
