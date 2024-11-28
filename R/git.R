@@ -90,7 +90,7 @@ llrs_check_pkg_version <- function(repo, path = ".") {
     stop("Repository ", sQuote(repo), " is not simple.\n",
          "It cannot have a branch name or a sha number", call. = FALSE)
   }
-  remotes <- system2("git", "remote -v", stdout = TRUE)
+  remotes <- system2("git", paste("-C", path, "remote -v"), stdout = TRUE)
   if (!any(grepl(pattern = repo, remotes))) {
     stop("Repository doesn't match any remote setup", call. = FALSE)
   }
