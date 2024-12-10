@@ -1,3 +1,8 @@
+git_is_installed <- function() {
+  nzchar(Sys.which("git"))
+}
+
+
 #' Create shiny app
 #'
 #' Create a shiny app in the right place as well as set the local git repository
@@ -9,6 +14,11 @@
 #' @return Called by its side effects. It will open a new RStudio project.
 #' @export
 llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny-server/") {
+
+  if (!git_is_installed()) {
+    stop("Git is not installed")
+  }
+
   norm_path <- normalizePath(file.path(dest, project), mustWork = FALSE)
   # Permission to edit the user and the group and others can read and execute
 
@@ -25,6 +35,7 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 
   old <- setwd(norm_path)
   on.exit(setwd(old), add = TRUE)
+
   system2("git", "init --shared=true .", stdout = FALSE, stderr = FALSE)
   system2("git", "config --local receive.denyCurrentBranch updateInstead",
           stdout = FALSE, stderr = FALSE)
@@ -67,6 +78,11 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 #' @examples
 #' \dontrun{(llrs_check_pkg_version("llrs/rutils")}
 llrs_check_pkg_version <- function(repo, path = ".") {
+
+  if (!git_is_installed()) {
+    stop("Git is not installed")
+  }
+
   # Local repo
   stopifnot("Just one path" = length(path) == 1L)
   path <- normalizePath(path)
