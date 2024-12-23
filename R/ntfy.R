@@ -18,5 +18,6 @@ check_ntfy <- function() {
 llrs_send_ntfy <- function(message, title, ..., topic  = NULL) {
   check_ntfy()
   topic <- if (is.null(topic)) ntfy::ntfy_topic() else topic
-  ntfy::ntfy_send(message, title, topic = topic, ...)
+  server <- if (is.null(as.list(...)$server)) ntfy::ntfy_server() else "ntfy.sh"
+  ntfy::ntfy_send(message, title, topic = topic, server = server, ...)
 }
