@@ -19,6 +19,8 @@ if (interactive() && !isNamespace(environment())) {
           # Temporary workaround: https://github.com/rstudio/rstudio/issues/13188#issuecomment-1585012408
           rstudio.help.showDataPreview = FALSE,
           usethis.destdir = "~/Documents/projects/code",
+          showWarnCalls = TRUE,
+          showErrorCalls = TRUE,
           warnPartialMatchArgs = TRUE,
           warnPartialMatchDollar = TRUE,
           warnPartialMatchAttr = TRUE,
