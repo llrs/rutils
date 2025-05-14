@@ -15,9 +15,12 @@ check_ntfy <- function() {
 #' "NTFY_TOPIC". Specify topic if you don't use the default.
 #' @export
 #' @returns The default `httr` response.
+#' @examples
+#' llrs_send_ntfy("Failure", "test")
+#'
 llrs_send_ntfy <- function(message, title, ..., topic  = NULL) {
   check_ntfy()
   topic <- if (is.null(topic)) ntfy::ntfy_topic() else topic
-  server <- if (...length() && !"server" %in% ...names) ntfy::ntfy_server() else "ntfy.sh"
-  ntfy::ntfy_send(message, title, topic = topic, server = server, ...)
+  # server <- if (...length() && !"server" %in% ...names) ntfy::ntfy_server() else "ntfy.sh"
+  ntfy::ntfy_send(message, title, topic = topic, ...)
 }
