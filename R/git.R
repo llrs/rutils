@@ -120,11 +120,13 @@ llrs_check_pkg_version <- function(repo, path = ".") {
   url_github <- url(github)
   # Will break if the repository doesn't have a DESCRIPTION
   remote_desc <- tryCatch(
-    read.dcf(url_github, fields = c("Version", "Package")),
+    suppressWarnings(read.dcf(url_github, fields = c("Version", "Package"))),
     error = function(e){NULL}
   )
   if (is.null(remote_desc)){
-    return(NULL)
+    warning(sprintf("Branch %s not found in remote repository %s",
+                    local_branch, repo),  call. = FALSE)
+    return(NA)
   }
   remote_version <- package_version(remote_desc[, "Version"])
   check_pkg_name_match <- remote_desc[, "Package"] == local_desc[, "Package"]
