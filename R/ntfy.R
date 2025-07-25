@@ -16,8 +16,11 @@ check_ntfy <- function() {
 #' @export
 #' @returns The default `httr` response.
 #' @examples
-#' llrs_send_ntfy("Failure", "test")
-#'
+#' \dontrun{
+#' if(requireNamespace(“ntfy”)) {
+#'     llrs_send_ntfy("Failure", "test")
+#' }
+#' }
 llrs_send_ntfy <- function(message, title, ..., topic  = NULL) {
   check_ntfy()
   topic <- if (is.null(topic)) ntfy::ntfy_topic() else topic
