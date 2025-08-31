@@ -18,3 +18,13 @@ ORCID_ID="0000-0001-9747-2570"
 # you have to set the '_R_USE_PIPEBIND_' envvar to a true value to enable =>
 _R_USE_PIPEBIND_=TRUE
 _R_CHECK_ORPHANED_=true
+_R_CHECK_XREFS_MIND_SUSPECT_ANCHORS_=true
+# Cache packages downloaded (R >= 4.5)
+R_PACKAGES_CACHE_USER_DIR=TRUE
+# Avoid time checks
+_R_CHECK_SYSTEM_CLOCK_=FALSE
+# https://stackoverflow.com/a/76675278
+R_LIBCURL_SSL_REVOKE_BEST_EFFORT=TRUE
+# Check unused variables: cran.r-project.org/doc/manuals/r-devel/R-exts.html#Checking-packages
+R_CHECK_CODETOOLS_PROFILE="suppressLocalUnused=FALSE"
+NOT_CRAN=true
