@@ -30,6 +30,9 @@ llrs_change_role <- function(name, role = "User", path = ".") {
   file_name <- "members.csv"
   path_file <- file.path(path, file_name)
   members <- read.csv(file = path_file, row.names = NULL, header = TRUE)
+  if (!name %in% members$Name) {
+    stop(name,  " wasn't found on the list of members")
+  }
 
   write.csv(out)
 }
