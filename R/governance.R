@@ -22,6 +22,7 @@ llrs_use_governance <- function(path = ".") {
   if (isTRUE(out)) {
     message("Added governance.md")
   }
+  add2buildignore(file_name, path = path)
   out
 }
 
@@ -66,6 +67,7 @@ llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
                 append = TRUE, col.names = FALSE
                 )
   } else {
+    add2buildignore(file_name, path = path)
     write.table(out,
                 sep = ",",
                 file = path_file,
@@ -148,3 +150,5 @@ llrs_change_role <- function(name = NULL, role = "User", path = ".") {
   write.csv(members, file = path_file, row.names = FALSE)
   return(invisible(NULL))
 }
+
+
