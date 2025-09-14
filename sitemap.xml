@@ -2,14 +2,17 @@
 <url><loc>https://llrs.github.io/rutils/404.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/LICENSE.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/authors.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/governance.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/index.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/news/index.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/Bioinformatics.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/cnag_file.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/index.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_add_member.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_box.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_cellranger_aggr.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_cellranger_clean.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_change_role.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_check_pkg_version.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_deliver.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_cnag_files.html</loc></url>
@@ -32,6 +35,7 @@
 <url><loc>https://llrs.github.io/rutils/reference/llrs_shiny_hook.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_tar.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_use_governance.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/rstudio_config.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/rutils-package.html</loc></url>
 </urlset>
