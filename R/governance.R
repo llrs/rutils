@@ -60,6 +60,13 @@ llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
                     `Date removed` = "",
                     check.names = FALSE)
   if (file.exists(path_file)) {
+
+    members <- read.csv(path_file)
+    w_name <- which(name %in% members[, 1])
+    if (nzchar(members[w_name[length(w_name)], 4])) {
+      stop("Contributor is already present but with no end date.", call. = FALSE)
+    }
+
     write.table(out,
                 sep = ",",
                 file = path_file,

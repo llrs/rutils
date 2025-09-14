@@ -134,8 +134,8 @@ llrs_check_pkg_version <- function(repo, path = ".") {
   pkg <- local_desc[, "Package"]
 
   if (remote_version > local_ver) {
-    warning("Update local repository ", repo, " , branch ", local_branch,
-            " at ", path, call. = FALSE)
+    warning("Update local repository ", path, ", branch ", local_branch, ".",
+            call. = FALSE)
     out <- FALSE
     names(out) <- pkg
     return(invisible(out))
