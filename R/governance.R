@@ -7,7 +7,7 @@ llrs_use_governance <- function(path = ".") {
   }
   out <- file.copy(governance, to = ".", overwrite = file.exists(path_out))
   add2buildignore(file_name, path = path)
-  if (isTRUE(out) {
+  if (isTRUE(out)) {
     message("Added governance.md")
   }
   out

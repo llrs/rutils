@@ -36,7 +36,7 @@ Eligible voters can cast three votes explaining their rationale:
 
 -   Support: +1
 
--    Accept: 0
+-   Accept: 0
 
 -   Reject: -3
 
@@ -50,8 +50,7 @@ A **Collaborator** can step down to being a **User** and a **Publisher** can ste
 The pull request is accepted without a vote if it is opened by the person subject to the change.
 A **Collaborator** who hasn't made use of **Collaborator's** rights for 2 years becomes a **User**.
 
-A **Publisher** who hasn't made use of **members'** rights for 1 year becomes a **Collaborator**, unless there is only one **Publisher**.
-\
+A **Publisher** who hasn't made use of **members'** rights for 1 year becomes a **Collaborator**, unless there is only one **Publisher**.\
 
 ## Changing this document
 
