@@ -5,5 +5,13 @@ add2buildignore <- function(text, path = ".") {
   if (!file.exists(path_file) && file.path(path, "DESCRIPTION")) {
     file.create(path_file)
   }
+  if (!endsWith(text, "\n")) {
+    text <- paste0(text, "\n")
+  }
+  # Only add the new ignore if it is not present
+  lines <- readLines(path_file)
+  if (any(text %in% lines)) {
+    return(NULL)
+  }
   cat(text, file = path_file, append = TRUE)
 }
