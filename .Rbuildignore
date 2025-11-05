@@ -7,3 +7,5 @@
 ^pkgdown$
 ^\.github$
 .lintr
+governance.md
+members.csv
