@@ -2,6 +2,7 @@
 #' 
 #' Set github file for funding.
 #' @param path Path to project/package folder.
+#' @param ... Other named strings that are [accepted by GitHub](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository)
 #' @returns Called by its side effects of creating a file.
 #' @export
 #' @examples

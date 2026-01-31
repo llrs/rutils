@@ -8,6 +8,8 @@ use_funding(path = ".", ...)
 }
 \arguments{
 \item{path}{Path to project/package folder.}
+
+\item{...}{Other named strings that are \href{https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository}{accepted by GitHub}}
 }
 \value{
 Called by its side effects of creating a file.
