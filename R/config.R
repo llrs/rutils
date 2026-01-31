@@ -1,5 +1,4 @@
 
-
 #' Copy config to config repository
 #'
 #' Copy file to config repository and add it and push it.
