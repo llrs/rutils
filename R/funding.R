@@ -6,8 +6,8 @@
 #' @returns Called by its side effects of creating a file.
 #' @export
 #' @examples
-#' use_funding(path = tempdir())
-use_funding <- function(path = ".", ...) {
+#' llrs_funding(path = tempdir())
+llrs_funding <- function(path = ".", ...) {
     funding_path <- file.path(path, ".github", "funding.yaml")
     if (!dir.exists(dirname(funding_path))) {
         dir.create(dirname(funding_path), recursive = TRUE)
