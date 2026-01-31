@@ -1,6 +1,6 @@
 #' Send toot
 #'
-#' @param x A vector of strings if possible they will be joined
+#' @param msg A vector of strings if possible they will be joined
 #' @param width Allowed width on the server
 #' @param join_text Character used to join the text
 #'
@@ -14,87 +14,66 @@
 #'     llrs_send_toot(c("First message", "Second message"))
 #' }
 #' }
-llrs_send_toot <- function(x, width = 500, join_text = ". ") {
+llrs_send_toot <- function(msg, width = 500, join_text = ". ") {
   check_installed("rtoot")
-  stopifnot(is.character(x))
-  if (length(x) == 1L) {
-    return(x)
+  stopifnot(is.character(msg))
+  if (length(msg) == 1L) {
+    return(msg)
   }
-  x <- x[nzchar(x) & !is.na(x)]
+  msg <- msg[nzchar(msg) & !is.na(msg)]
+  
+  msg_split <- split_messages(msg = msg, width = width)
+  join_messages(msg = msg_split, width = width, join_text = join_text)
+}
 
-  len <- mast_length(x)
-
+split_messages <- function(msg, width, len = mast_length(msg)) {
   # Split long message into multiple strings to later combine them iff needed.
-  if (any(len > width)) {
-    w <- which(len > width)
+  msg2split <- which(len > width)
+  if (!length(msg2split)) {
+    return(msg)
+  }
+  
+  msg_split <- strsplit(msg[msg2split], split = "[.})]\\s+")
+  if (any(mast_length(unlist(msg_split, FALSE, FALSE)) > width)) {
+    stop("Couldn't split the messages into smaller sentences.")
+  }
+  
+  msg_wo_split <- msg[-msg2split]
+  # Get the text back to its place
+  for (p in seq_along(msg2split)) {
+    msg_wo_split <- append(msg_wo_split, msg_split[[p]], after = msg2split[p] - 1L)
+  }
+  msg_wo_split
+}
 
-    xw <- strsplit(x[w], split = "[.})]\\s+")
-    y <- x[-w]
-    for (p in seq_along(w)) {
-      y <- append(y, xw[[p]], after = w[p] - 1)
+join_messages <- function(msg, width, join_text) {
+  
+  njoin <- mast_length(join_text)
+  #browser()
+  p <- 1
+  repeat {
+    index <- c(p, p + 1)
+    len <- mast_length(msg[index])
+    if (sum(len) + njoin  < width) {
+      msg[p] <- paste0(msg[index], sep = join_text, collapse = join_text)
+      msg <- msg[-index[2]]
+    } else {
+      p <- p + 1L
     }
-    x <- y
-  }
 
-  join_messages(x = x, width = width, join_text = join_text)
+    if (p == length(msg)) {
+      break
+    }
+  }
+  msg
 }
 
-
-join_messages <- function(x, width, join_text) {
-  len <- mast_length(x)
-  names(len) <- NULL
-  length_text_joiner <- c(0, rep_len(1, length(x) - 1)) * nchar(join_text)
-  below_limits <- len + length_text_joiner < width
-
-  # No two text below the limits
-  if (sum(below_limits) < 2L) {
-    return(x)
-  }
-
-  # All strings are below the limit: one message as output
-  all_below_limits <- sum(len + length_text_joiner) <= width
-  if (all(below_limits) && all_below_limits) {
-    return(paste0(x, collapse = join_text))
-  }
-
-  wbl <- which(below_limits)
-
-  # Consecutive messages to join
-  # consecutive (cons) indexes (i)
-  cons_i <- intersect(wbl + 1, wbl)
-  cons_i <- c(cons_i - 1, max(cons_i))
-
-  # No consecutive messages to join
-  if (!length(cons_i)) {
-    return(x)
-  }
-  cons_i <- sort(cons_i)
-
-  # Find start and end of consecutive (cons) indexes (i)
-  start_cons <- c(0, cons_i[-length(cons_i)]) == cons_i
-  starts_joins <- cons_i[which(start_cons)]
-
-  ends_cons <- c(which(start_cons) - 1, length(start_cons))
-  ends_joins <- cons_i[ends_cons]
-
-
-  joined_text <- Map(function(start, end) {
-    paste0(x[seq(from = start, to = end)], collapse = join_text)
-  }, start = starts_joins, end = ends_joins)
-
-  # Replace joined text by new text
-  no_starts <- setdiff(cons_i, start_cons)
-  x <- x[-no_starts]
-  x[start_cons] <- unlist(joined_text, recursive = FALSE, use.names = FALSE)
-  x
-}
-
-find_urls <- function(x) {
-  htps <- gregexpr("(https?://[^[:space:]]+)", x)
-  l <- lapply(htps, function(x){if (length(x) == 1L && x < 0) {
+find_urls <- function(msg) {
+  htps <- gregexpr("(https?://[^[:space:]]+)", msg)
+  l <- lapply(htps, function(msg){if (length(msg) == 1L && msg < 0) {
     return(NULL)
-  } else{x}})
-  names(l) <- seq_len(length(x))
+  } else{msg}})
+  names(l) <- seq_len(length(msg))
   l[lengths(l) >= 1L]
 }
 
@@ -116,23 +95,24 @@ urls_info <- function(urls) {
 
 substract_len <- function(len, ui) {
   diff_length <- vapply(split(ui, ui$Message),
-                        function(x) {
-                          # Each url counts per 25 characters
-                          NROW(x)*25 - sum(x$Length)},
-                        numeric(1L))
-  names(len) <- as.character(seq_along(len))
-  len[names(diff_length)] <- len[names(diff_length)] - diff_length
-  len
-}
-
-mast_length <- function(x) {
-  len <- nchar(x)
-  with_url <- grepl("https?://", x)
-  if (any(with_url)) {
-    g <- find_urls(x)
-    ui <- urls_info(g)
-    substract_len(len, ui)
-  } else {
+  function(msg) {
+    # Each url counts per 25 characters
+    NROW(msg)*25 - sum(msg$Length)},
+    numeric(1L))
+    names(len) <- as.character(seq_along(len))
+    len[names(diff_length)] <- len[names(diff_length)] - diff_length
     len
   }
-}
+  
+  mast_length <- function(msg) {
+    len <- nchar(msg)
+    with_url <- grepl("https?://", msg)
+    if (any(with_url)) {
+      g <- find_urls(msg)
+      ui <- urls_info(g)
+      substract_len(len, ui)
+    } else {
+      len
+    }
+  }
+  
