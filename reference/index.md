@@ -1,0 +1,73 @@
+# Package index
+
+## All functions
+
+- [`Bioinformatics`](https://llrs.github.io/rutils/reference/Bioinformatics.md)
+  : Bioinformatics
+- [`llrs_cnag_project_file()`](https://llrs.github.io/rutils/reference/cnag_file.md)
+  [`llrs_cnag_stats_file()`](https://llrs.github.io/rutils/reference/cnag_file.md)
+  [`llrs_cnag_id()`](https://llrs.github.io/rutils/reference/cnag_file.md)
+  : File names of the CNAG projects.
+- [`llrs_add_member()`](https://llrs.github.io/rutils/reference/llrs_add_member.md)
+  : Add a contributor to the registry
+- [`llrs_box()`](https://llrs.github.io/rutils/reference/llrs_box.md) :
+  Create positions of a box
+- [`llrs_cellranger_aggr()`](https://llrs.github.io/rutils/reference/llrs_cellranger_aggr.md)
+  : Aggregate several cellranger output
+- [`llrs_cellranger_clean()`](https://llrs.github.io/rutils/reference/llrs_cellranger_clean.md)
+  : Clean cellranger multi output
+- [`llrs_change_role()`](https://llrs.github.io/rutils/reference/llrs_change_role.md)
+  : Remove role of a contributor
+- [`llrs_check_pkg_version()`](https://llrs.github.io/rutils/reference/llrs_check_pkg_version.md)
+  : Check package version
+- [`llrs_cnag_deliver()`](https://llrs.github.io/rutils/reference/llrs_cnag_deliver.md)
+  : Read the delivery file
+- [`llrs_cnag_files()`](https://llrs.github.io/rutils/reference/llrs_cnag_files.md)
+  : Prepare CNAG data for cellranger
+- [`llrs_cnag_samples()`](https://llrs.github.io/rutils/reference/llrs_cnag_samples.md)
+  : Create a sample sheet from files
+- [`llrs_cnag_stats()`](https://llrs.github.io/rutils/reference/llrs_cnag_stats.md)
+  : Read the CNAG stats
+- [`llrs_cnag_symlinks()`](https://llrs.github.io/rutils/reference/llrs_cnag_symlinks.md)
+  : Create symlinks
+- [`llrs_copy_config()`](https://llrs.github.io/rutils/reference/llrs_copy_config.md)
+  : Copy config to config repository
+- [`llrs_diff()`](https://llrs.github.io/rutils/reference/llrs_diff.md)
+  : Add column with
+- [`llrs_download()`](https://llrs.github.io/rutils/reference/llrs_download.md)
+  : Download a file
+- [`llrs_figures()`](https://llrs.github.io/rutils/reference/llrs_figures.md)
+  : Creates path for a figure
+- [`llrs_funding()`](https://llrs.github.io/rutils/reference/llrs_funding.md)
+  : Funding
+- [`llrs_hook()`](https://llrs.github.io/rutils/reference/llrs_hook.md)
+  : Insert hook
+- [`llrs_hooks_list()`](https://llrs.github.io/rutils/reference/llrs_hooks_list.md)
+  : List existing hooks
+- [`llrs_notify_system()`](https://llrs.github.io/rutils/reference/llrs_notify_system.md)
+  : Use system's notify-send to send a message
+- [`llrs_profile()`](https://llrs.github.io/rutils/reference/llrs_profile.md)
+  : Provide a R global user profile
+- [`llrs_results()`](https://llrs.github.io/rutils/reference/llrs_results.md)
+  : Creates path for results
+- [`llrs_send_email()`](https://llrs.github.io/rutils/reference/llrs_send_email.md)
+  : Send a quick email
+- [`llrs_send_ntfy()`](https://llrs.github.io/rutils/reference/llrs_send_ntfy.md)
+  : Send a message to the NTFY address
+- [`llrs_share()`](https://llrs.github.io/rutils/reference/llrs_share.md)
+  : Create a link to a shared file
+- [`llrs_shiny_create()`](https://llrs.github.io/rutils/reference/llrs_shiny_create.md)
+  : Create shiny app
+- [`llrs_shiny_hook()`](https://llrs.github.io/rutils/reference/llrs_shiny_hook.md)
+  : Creates new shiny app and add hooks.
+- [`llrs_tar_load()`](https://llrs.github.io/rutils/reference/llrs_tar.md)
+  [`llrs_tar_read()`](https://llrs.github.io/rutils/reference/llrs_tar.md)
+  : Functions helping with targets
+- [`llrs_upload()`](https://llrs.github.io/rutils/reference/llrs_upload.md)
+  : Upload a file to Microsoft cloud in One Drive
+- [`llrs_use_governance()`](https://llrs.github.io/rutils/reference/llrs_use_governance.md)
+  : Add the governance
+- [`llrs_rstudio_set()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
+  [`llrs_rstudio_default()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
+  [`llrs_rstudio_restore()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
+  : Switch between Rstudio configurations.
