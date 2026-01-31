@@ -3,10 +3,17 @@
 #' Set github file for funding.
 #' @param path Path to project/package folder.
 #' @returns Called by its side effects of creating a file.
+#' @export
 #' @examples
-#' use_funding()
-use_funding <- function(path = ".") {
+#' use_funding(path = tempdir())
+use_funding <- function(path = ".", ...) {
     funding_path <- file.path(path, ".github", "funding.yaml")
+    if (!dir.exists(dirname(funding_path))) {
+        dir.create(dirname(funding_path), recursive = TRUE)
+    }
     format <- c("buy_me_a_coffee: llrs")
-    cat(format, file = funding_path)
+    other <- list(...)
+    other_formatted <- paste0(names(other), ": ", other, collapse = "\n")
+    out <- paste(other, other_formatted, sep = "\n")
+    cat(out, file = funding_path)
 }

@@ -4,7 +4,7 @@
 \alias{use_funding}
 \title{Funding}
 \usage{
-use_funding(path = ".")
+use_funding(path = ".", ...)
 }
 \arguments{
 \item{path}{Path to project/package folder.}
@@ -16,5 +16,5 @@ Called by its side effects of creating a file.
 Set github file for funding.
 }
 \examples{
-use_funding()
+use_funding(path = tempdir())
 }
