@@ -14,7 +14,11 @@ llrs_funding <- function(path = ".", ...) {
     }
     format <- c("buy_me_a_coffee: llrs")
     other <- list(...)
-    other_formatted <- paste0(names(other), ": ", other, collapse = "\n")
-    out <- paste(other, other_formatted, sep = "\n")
+    if (length(other)) {
+        other_formatted <- paste0(names(other), ": ", other, collapse = "\n")
+        out <- paste(format, other_formatted, sep = "\n")
+    } else {
+        out <- format
+    }
     cat(out, file = funding_path)
 }
