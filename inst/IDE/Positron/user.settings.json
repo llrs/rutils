@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "renv.lock": "json"
+    },
+    "git.confirmSync": false,
+    "git.suggestSmartCommit": false,
+    "[r]": {
+        "editor.defaultFormatter": "positron.positron-r",
+        "editor.tabSize": 4
+    },
+    "workbench.editor.revealIfOpen": true,
+    "positron.assistant.enable": true,
+    "positron.assistant.toolDetails.enable": true,
+    "positron.assistant.showTokenUsage.enable": true,
+    "positron.assistant.gitIntegration.enable": true,
+    "diffEditor.ignoreTrimWhitespace": false
+}

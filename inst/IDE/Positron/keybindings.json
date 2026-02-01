@@ -1,0 +1,192 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+2",
+        "command": "workbench.panel.positronConsole.focus",
+        "args": {
+            "focus": true
+        }
+    },
+    {
+        "key": "ctrl+3",
+        "command": "workbench.action.terminal.focus",
+        "args": {
+            "focus": true
+        }
+    },
+    {
+        "key": "ctrl+k",
+        "command": "editor.action.deleteLines"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+k",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "deleteAllRight"
+    },
+    {
+        "key": "ctrl+u",
+        "command": "deleteAllLeft"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "command": "r.sourceCurrentFileWithEcho",
+        "when": "editorLangId == 'r'"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                {
+                    "command": "editor.action.reindentselectedlines"
+
+                },
+                {
+                    "command": "editor.action.indentLines"
+                },
+                {
+                "command": "cursorMove",
+                "args": {
+                    "by": "line",
+                    "to": "down",
+                    "value": 1
+                    }
+                }
+            ]
+        },
+        "when": "!editorReadonly"
+    },
+    {
+        "key": "ctrl+[Period]",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus"
+    },
+    {
+        "key": "f2",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && isWeb"
+    },
+    {
+        "key": "ctrl+f12",
+        "command": "-editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && isWeb"
+    },
+    {
+        "key": "f2",
+        "command": "editor.action.goToImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus"
+    },
+    {
+        "key": "ctrl+f12",
+        "command": "-editor.action.goToImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus"
+    },
+    {
+        "key": "f2",
+        "command": "editor.action.goToReferences",
+        "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "shift+f12",
+        "command": "-editor.action.goToReferences",
+        "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "f2",
+        "command": "editor.action.revealDefinitionAside",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+k f12",
+        "command": "-editor.action.revealDefinitionAside",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "shift+f2",
+        "command": "editor.action.peekImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+shift+f12",
+        "command": "-editor.action.peekImplementation",
+        "when": "editorHasImplementationProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "editor.action.formatSelection",
+        "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+k ctrl+f",
+        "command": "-editor.action.formatSelection",
+        "when": "editorHasDocumentSelectionFormattingProvider && editorTextFocus && !editorReadonly"
+    },
+        // create reprex from selection
+    {
+        "key": "ctrl+shift+x",
+        "command": "workbench.action.executeCode.console",
+        "when": "editorTextFocus",
+        "args": {
+            "langId": "r",
+            "code": "reprex::reprex_selection()",
+            "focus": true
+        }
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+7",
+        "command": "-editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+shift+a",
+        "command": "-editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+c",
+        "command": "-workbench.action.terminal.openNativeConsole",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "editor.action.indentLines"
+    },
+    {
+        "key": "alt+g",
+        "command": "workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+shift+g",
+        "command": "-workbench.view.scm",
+        "when": "workbench.scm.active"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "editor.action.reindentlines"
+    }
+]
