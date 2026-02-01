@@ -21,8 +21,14 @@ Change a contributor role on the project.
 }
 \examples{
 \dontrun{
-llrs_use_governance()
+llrs_governance()
 llrs_add_member(NULL)
 llrs_change_member(NULL, "Publisher")
 }
 }
+\seealso{
+Other governance functions: 
+\code{\link{llrs_add_member}()},
+\code{\link{llrs_governance}()}
+}
+\concept{governance functions}
