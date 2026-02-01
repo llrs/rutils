@@ -1,29 +1,31 @@
 #' Send toot
 #'
+#' Split and merge the text as needed to reduce the number of toots to post.
+#' It only handles text and not images as per `rtoot::post_thread()`
+#'
 #' @param msg A vector of strings if possible they will be joined
 #' @param width Allowed width on the server
 #' @param join_text Character used to join the text
-#'
-#'
 #' @returns The ids of the toots posted
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' if(requireNamespace(“rtoot”)) {
-#'     llrs_send_toot(c("First message", "Second message"))
+#'     llrs_toots(c("First message", "Second message", "Testing rtoo::post_threads"))
 #' }
 #' }
-llrs_send_toot <- function(msg, width = 500, join_text = ". ") {
+llrs_toots <- function(msg, width = 500, join_text = ". ") {
   check_installed("rtoot")
   stopifnot(is.character(msg))
   if (length(msg) == 1L) {
     return(msg)
   }
   msg <- msg[nzchar(msg) & !is.na(msg)]
-  
+
   msg_split <- split_messages(msg = msg, width = width)
-  join_messages(msg = msg_split, width = width, join_text = join_text)
+  msg_joined <- join_messages(msg = msg_split, width = width, join_text = join_text)
+  rtoot::post_thread(msg_joined, language = "en")
 }
 
 split_messages <- function(msg, width, len = mast_length(msg)) {
@@ -32,12 +34,12 @@ split_messages <- function(msg, width, len = mast_length(msg)) {
   if (!length(msg2split)) {
     return(msg)
   }
-  
+
   msg_split <- strsplit(msg[msg2split], split = "[.})]\\s+")
   if (any(mast_length(unlist(msg_split, FALSE, FALSE)) > width)) {
     stop("Couldn't split the messages into smaller sentences.")
   }
-  
+
   msg_wo_split <- msg[-msg2split]
   # Get the text back to its place
   for (p in seq_along(msg2split)) {
@@ -47,15 +49,14 @@ split_messages <- function(msg, width, len = mast_length(msg)) {
 }
 
 join_messages <- function(msg, width, join_text) {
-  
+
   njoin <- mast_length(join_text)
-  #browser()
   p <- 1
   repeat {
     index <- c(p, p + 1)
     len <- mast_length(msg[index])
     if (sum(len) + njoin  < width) {
-      msg[p] <- paste0(msg[index], sep = join_text, collapse = join_text)
+      msg[p] <- paste0(msg[index], collapse = join_text)
       msg <- msg[-index[2]]
     } else {
       p <- p + 1L
@@ -103,7 +104,7 @@ substract_len <- function(len, ui) {
     len[names(diff_length)] <- len[names(diff_length)] - diff_length
     len
   }
-  
+
   mast_length <- function(msg) {
     len <- nchar(msg)
     with_url <- grepl("https?://", msg)
@@ -115,4 +116,3 @@ substract_len <- function(len, ui) {
       len
     }
   }
-  
