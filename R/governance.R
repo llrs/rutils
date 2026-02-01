@@ -8,9 +8,9 @@
 #' @references \url{https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/}
 #' @examples
 #' \dontrun{
-#' llrs_use_governance()
+#' llrs_governance()
 #' }
-llrs_use_governance <- function(path = ".") {
+llrs_governance <- function(path = ".") {
   file_name <- "governance.md"
   governance <- system.file(file_name, package = "rutils")
   path_out <- file.path(path, "governance.md")
@@ -23,7 +23,7 @@ llrs_use_governance <- function(path = ".") {
     message("Added governance.md")
   }
   add2buildignore(file_name, path = path)
-  out
+  invisible(out)
 }
 
 
@@ -37,14 +37,14 @@ llrs_use_governance <- function(path = ".") {
 #' @export
 #' @examples
 #' \dontrun{
-#' llrs_use_governance()
+#' llrs_governance()
 #' llrs_add_member(NULL)
 #' }
-llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
+llrs_add_member <- function(name = getOption("usethis.full_name"), role = "Collaborator", path = ".") {
   role <- match.arg(role, c("Collaborator", "Publisher"))
   if (!file.exists(file.path(path, "governance.md"))) {
     warning("No governance file detected")
-    llrs_use_governance(path)
+    llrs_governance(path)
   }
   if (is.null(name) && !is.null(usethis_name <- getOption("usethis.full_name"))) {
     name <- usethis_name
@@ -67,7 +67,7 @@ llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
       stop("Contributor is already present but with no end date.", call. = FALSE)
     }
 
-    write.table(out,
+    out <- write.table(out,
                 sep = ",",
                 file = path_file,
                 row.names = FALSE,
@@ -75,13 +75,14 @@ llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
                 )
   } else {
     add2buildignore(file_name, path = path)
-    write.table(out,
+    out <- write.table(out,
                 sep = ",",
                 file = path_file,
                 append = FALSE,
                 row.names = FALSE
                 )
   }
+  invisible(out)
 }
 
 #' Remove role of a contributor
@@ -95,7 +96,7 @@ llrs_add_member <- function(name = NULL, role = "Collaborator", path = ".") {
 #' @importFrom utils read.csv write.table
 #' @examples
 #' \dontrun{
-#' llrs_use_governance()
+#' llrs_governance()
 #' llrs_add_member(NULL)
 #' llrs_change_member(NULL, "Publisher")
 #' }

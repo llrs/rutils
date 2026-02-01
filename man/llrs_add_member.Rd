@@ -4,7 +4,11 @@
 \alias{llrs_add_member}
 \title{Add a contributor to the registry}
 \usage{
-llrs_add_member(name = NULL, role = "Collaborator", path = ".")
+llrs_add_member(
+  name = getOption("usethis.full_name"),
+  role = "Collaborator",
+  path = "."
+)
 }
 \arguments{
 \item{name}{Character name of the contributor.}
@@ -21,7 +25,7 @@ Add a contributor to the registry
 }
 \examples{
 \dontrun{
-llrs_use_governance()
+llrs_governance()
 llrs_add_member(NULL)
 }
 }
