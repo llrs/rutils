@@ -29,3 +29,9 @@ llrs_governance()
 llrs_add_member(NULL)
 }
 }
+\seealso{
+Other governance functions: 
+\code{\link{llrs_change_role}()},
+\code{\link{llrs_governance}()}
+}
+\concept{governance functions}
