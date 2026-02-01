@@ -86,6 +86,8 @@ Exported functions start with `llrs_`
 - [`llrs_tar_load()`](https://llrs.github.io/rutils/reference/llrs_tar.md)
   [`llrs_tar_read()`](https://llrs.github.io/rutils/reference/llrs_tar.md)
   : Functions helping with targets
+- [`llrs_toots()`](https://llrs.github.io/rutils/reference/llrs_toots.md)
+  : Send toot
 - [`llrs_upload()`](https://llrs.github.io/rutils/reference/llrs_upload.md)
   : Upload a file to Microsoft cloud in One Drive
 - [`llrs_rstudio_set()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
