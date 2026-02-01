@@ -6,7 +6,7 @@
 #' @returns A logical value if the file has been added.
 #' @export
 #' @family governance functions
-#' @references \url{https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/}
+#' @references Blog post about [governance models](https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/).
 #' @examples
 #' \dontrun{
 #' llrs_governance()

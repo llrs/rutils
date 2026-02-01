@@ -22,7 +22,7 @@ llrs_governance()
 }
 }
 \references{
-\url{https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/}
+Blog post about \href{https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/}{governance models}.
 }
 \seealso{
 Other governance functions: 
