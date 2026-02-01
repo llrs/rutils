@@ -24,6 +24,7 @@ Suggests:
     readxl (>= 1.4.3),
     roxygen2 (>= 7.2.3),
     rstudioapi (>= 0.14),
+    rtoot (>= 0.3.6),
     targets (>= 1.5.1),
     testthat (>= 3.0.0)
 Remotes:
