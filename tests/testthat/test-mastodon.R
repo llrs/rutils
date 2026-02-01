@@ -15,5 +15,6 @@ test_that("Splits correctly messages", {
   message <- c(sample("dlksjflñkasd.", size = rnorm(1, mean = 41), replace = TRUE),
   "df sdjfñl jfñasljf asdlñfj https://google.com",
   "fasdlkñj fsfj sd https://google2.com")
-  expect_false(anyNA(llrs_send_toot(paste0(message, collapse = ". "))))
+  expect_false(anyNA(split_messages(paste0(message, collapse = ". "),
+                                    width = 500)))
 })
