@@ -11,12 +11,12 @@ Source:
 [`DESCRIPTION`](https://github.com/llrs/rutils/blob/main/DESCRIPTION)
 
 Revilla Sancho L (2026). *rutils: Helping with my day to day work*. R
-package version 0.0.2.93, <https://github.com/llrs/rutils>.
+package version 0.0.2.94, <https://github.com/llrs/rutils>.
 
     @Manual{,
       title = {rutils: Helping with my day to day work},
       author = {Lluís {Revilla Sancho}},
       year = {2026},
-      note = {R package version 0.0.2.93},
+      note = {R package version 0.0.2.94},
       url = {https://github.com/llrs/rutils},
     }

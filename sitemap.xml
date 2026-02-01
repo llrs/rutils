@@ -24,6 +24,7 @@
 <url><loc>https://llrs.github.io/rutils/reference/llrs_download.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_figures.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_funding.html</loc></url>
+<url><loc>https://llrs.github.io/rutils/reference/llrs_governance.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_hook.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_hooks_list.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_notify_system.html</loc></url>
@@ -36,7 +37,6 @@
 <url><loc>https://llrs.github.io/rutils/reference/llrs_shiny_hook.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_tar.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/llrs_upload.html</loc></url>
-<url><loc>https://llrs.github.io/rutils/reference/llrs_use_governance.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/rstudio_config.html</loc></url>
 <url><loc>https://llrs.github.io/rutils/reference/rutils-package.html</loc></url>
 </urlset>

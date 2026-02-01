@@ -40,6 +40,8 @@
   : Creates path for a figure
 - [`llrs_funding()`](https://llrs.github.io/rutils/reference/llrs_funding.md)
   : Funding
+- [`llrs_governance()`](https://llrs.github.io/rutils/reference/llrs_governance.md)
+  : Add the governance
 - [`llrs_hook()`](https://llrs.github.io/rutils/reference/llrs_hook.md)
   : Insert hook
 - [`llrs_hooks_list()`](https://llrs.github.io/rutils/reference/llrs_hooks_list.md)
@@ -65,8 +67,6 @@
   : Functions helping with targets
 - [`llrs_upload()`](https://llrs.github.io/rutils/reference/llrs_upload.md)
   : Upload a file to Microsoft cloud in One Drive
-- [`llrs_use_governance()`](https://llrs.github.io/rutils/reference/llrs_use_governance.md)
-  : Add the governance
 - [`llrs_rstudio_set()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
   [`llrs_rstudio_default()`](https://llrs.github.io/rutils/reference/rstudio_config.md)
   [`llrs_rstudio_restore()`](https://llrs.github.io/rutils/reference/rstudio_config.md)

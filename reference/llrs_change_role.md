@@ -26,11 +26,17 @@ llrs_change_role(name = NULL, role = "User", path = ".")
 
 `NULL`
 
+## See also
+
+Other governance functions:
+[`llrs_add_member()`](https://llrs.github.io/rutils/reference/llrs_add_member.md),
+[`llrs_governance()`](https://llrs.github.io/rutils/reference/llrs_governance.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
-llrs_use_governance()
+llrs_governance()
 llrs_add_member(NULL)
 llrs_change_member(NULL, "Publisher")
 } # }

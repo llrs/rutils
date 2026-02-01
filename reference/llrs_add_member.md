@@ -5,7 +5,11 @@ Add a contributor to the registry
 ## Usage
 
 ``` r
-llrs_add_member(name = NULL, role = "Collaborator", path = ".")
+llrs_add_member(
+  name = getOption("usethis.full_name"),
+  role = "Collaborator",
+  path = "."
+)
 ```
 
 ## Arguments
@@ -26,11 +30,17 @@ llrs_add_member(name = NULL, role = "Collaborator", path = ".")
 
 `NULL`
 
+## See also
+
+Other governance functions:
+[`llrs_change_role()`](https://llrs.github.io/rutils/reference/llrs_change_role.md),
+[`llrs_governance()`](https://llrs.github.io/rutils/reference/llrs_governance.md)
+
 ## Examples
 
 ``` r
 if (FALSE) { # \dontrun{
-llrs_use_governance()
+llrs_governance()
 llrs_add_member(NULL)
 } # }
 ```
