@@ -18,17 +18,20 @@ llrs_cnag_samples <- function(path) {
   }
 
   lf <- list.files(path,
-                   recursive = TRUE,
-                   full.names = TRUE,
-                   pattern = "\\.fastq.gz$")
+    recursive = TRUE,
+    full.names = TRUE,
+    pattern = "\\.fastq.gz$"
+  )
   if (length(lf) %% 2) {
     stop("Missing files or not paired end.", call. = FALSE)
   }
   # Assume that the paired files are in the same folder
   lf_ord <- sort(lf)
-  df <- data.frame(project = project,
-                   f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
-                   f2 = lf_ord[endsWith(lf, "_2.fastq.gz")])
+  df <- data.frame(
+    project = project,
+    f1 = lf_ord[endsWith(lf, "_1.fastq.gz")],
+    f2 = lf_ord[endsWith(lf, "_2.fastq.gz")]
+  )
   # Check that they are properly paired.
   all(gsub("_1.fastq.gz$", "", df$f1) == gsub("_2.fastq.gz$", "", df$f2))
   df$d1 <- basename(df$f1)
@@ -58,8 +61,10 @@ llrs_cnag_stats <- function(path) {
   if (grepl("[0-9]{2}.xls$", x = path)) {
     warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
   }
-  r <- readxl::read_excel(path, guess_max = 20, na = c("", "NA"),
-                          .name_repair = "check_unique")
+  r <- readxl::read_excel(path,
+    guess_max = 20, na = c("", "NA"),
+    .name_repair = "check_unique"
+  )
   rdf <- as.data.frame(r)
   first_empty <- min(which(is.na(rdf[, 1])))
   out <- rdf[-seq(from = first_empty, to = NROW(rdf)), ]
@@ -78,7 +83,6 @@ llrs_cnag_stats <- function(path) {
 #' @examples
 #' # llrs_cnag_deliver("AUSER_01.xls")
 llrs_cnag_deliver <- function(path) {
-
   check_installed("readxl")
   path <- normalizePath(path, mustWork = TRUE)
 
@@ -86,8 +90,10 @@ llrs_cnag_deliver <- function(path) {
   if (endsWith(path, "_Sample_Stats.xls")) {
     warning("This might file as this file might require `llrs_cnag_stats()`", call. = FALSE)
   }
-  r <- readxl::read_excel(path, skip = 2, na = c("", "NA"),
-                          guess_max = 20, .name_repair = "check_unique")
+  r <- readxl::read_excel(path,
+    skip = 2, na = c("", "NA"),
+    guess_max = 20, .name_repair = "check_unique"
+  )
   # <flowcell>_<lane>_<index>_<read>.fastq.gz
   # Assumes that the three first columns are those
   stopifnot(tolower(colnames(r)[1:3]) == c("flowcell", "lane", "multiplex index"))
@@ -143,8 +149,9 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
 
   if (!any(columns %in% colnames(x))) {
     stop("Missing columns. It should have: ",
-         paste(columns, collapse = ", "),
-         call. = FALSE)
+      paste(columns, collapse = ", "),
+      call. = FALSE
+    )
   }
 
   if (!is.character(name) || length(name) == NROW(x)) {
@@ -182,7 +189,7 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   x$cr2 <- file.path(od, paste0(x[[name]], "_S1_L00", x$LANE, "_R2_001.fastq.gz"))
 
   # Create symlinks
-  missing_files <-   any(!file.exists(x$cr1)) | any(!file.exists(x$cr2))
+  missing_files <- any(!file.exists(x$cr1)) | any(!file.exists(x$cr2))
   if (create_symlinks && missing_files) {
     warning("Creating symlinks", call. = FALSE)
     # Skip symlinks of those that already exists (avoids warnings)
@@ -195,7 +202,6 @@ llrs_cnag_symlinks <- function(x, name, out_dir) {
   }
   x
 }
-
 
 
 #' File names of the CNAG projects.
@@ -226,7 +232,7 @@ llrs_cnag_project_file <- function(project, n = 1L, path = "") {
 
 #' @describeIn cnag_file Create a project stats file path.
 #' @export
-llrs_cnag_stats_file <- function(project, n= 1L, path = "") {
+llrs_cnag_stats_file <- function(project, n = 1L, path = "") {
   project <- llrs_cnag_id(project, n)
   paste0(path, project, "/", project, "_Sample_Stats.xls")
 }
@@ -235,13 +241,13 @@ llrs_cnag_stats_file <- function(project, n= 1L, path = "") {
 #' @describeIn cnag_file Create a project name from the id.
 #' @export
 llrs_cnag_id <- function(project, n = 1L) {
-    stopifnot(any(is.integer(n)))
-    if (length(project) > 1L) {
-      stop("Please handle each project separately")
-    }
-    one_digit <- nchar(n) < 2L
-    if (any(one_digit)) {
-      n[one_digit] <- paste0("0", n[one_digit])
-    }
+  stopifnot(any(is.integer(n)))
+  if (length(project) > 1L) {
+    stop("Please handle each project separately")
+  }
+  one_digit <- nchar(n) < 2L
+  if (any(one_digit)) {
+    n[one_digit] <- paste0("0", n[one_digit])
+  }
   paste0(toupper(project), "_", n)
 }

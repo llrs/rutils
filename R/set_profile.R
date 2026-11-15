@@ -8,7 +8,8 @@ llrs_profile <- function() {
   overwrite1 <- TRUE
   if (file.exists(dest_file_profile)) {
     overwrite1 <- askYesNo("~/.Rprofile exists. Do you want to replace it?",
-             default = "Cancel")
+      default = "Cancel"
+    )
   }
   path <- base::system.file("r_profile", package = "rutils", mustWork = TRUE)
   file.copy(path, to = dest_file_profile, overwrite = overwrite1)
@@ -17,13 +18,14 @@ llrs_profile <- function() {
   overwrite2 <- TRUE
   if (file.exists(dest_file_environ)) {
     overwrite2 <- askYesNo("~/.Renviron exists. Do you want to replace it?",
-             default = "Cancel")
+      default = "Cancel"
+    )
   }
   path <- base::system.file("r_environ", package = "rutils", mustWork = TRUE)
   file.copy(path, to = dest_file_environ, overwrite = overwrite2)
 
   if (overwrite1 || overwrite2) {
-    if (overwrite1 && overwrite2 ) {
+    if (overwrite1 && overwrite2) {
       msg <- "R profile and environment"
     } else if (overwrite1) {
       msg <- "R profile"

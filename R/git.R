@@ -14,7 +14,6 @@ git_is_installed <- function() {
 #' @return Called by its side effects. It will open a new RStudio project.
 #' @export
 llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny-server/") {
-
   if (!git_is_installed()) {
     stop("Git is not installed")
   }
@@ -23,8 +22,8 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
   # Permission to edit the user and the group and others can read and execute
 
   stopifnot("Use only one project" = length(path) == 1 &&
-              length(dest) == 1 &&
-              length(project) == 1)
+    length(dest) == 1 &&
+    length(project) == 1)
   if (dir.exists(norm_path)) {
     stop("Destination path already exists.")
   }
@@ -38,7 +37,8 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 
   system2("git", "init --shared=true .", stdout = FALSE, stderr = FALSE)
   system2("git", "config --local receive.denyCurrentBranch updateInstead",
-          stdout = FALSE, stderr = FALSE)
+    stdout = FALSE, stderr = FALSE
+  )
 
   setwd(path)
   new_proj <- normalizePath(file.path(path, project), mustWork = FALSE)
@@ -46,8 +46,10 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
     system2("git", paste("clone", norm_path), stderr = FALSE, stdout = FALSE)
   } else {
     setwd(new_proj)
-    system2("git", paste("remote add server", norm_path), stderr = FALSE,
-            stdout = FALSE)
+    system2("git", paste("remote add server", norm_path),
+      stderr = FALSE,
+      stdout = FALSE
+    )
     system2("git", "push -u server master")
     message("Update the server")
     system2("git", "push")
@@ -66,7 +68,6 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 }
 
 
-
 #' Check package version
 #'
 #' @param repo Github repository.
@@ -76,9 +77,10 @@ llrs_shiny_create <- function(project, path = "~/ShinyApps/", dest = "/srv/shiny
 #' @export
 #' @importFrom utils URLencode
 #' @examples
-#' \dontrun{(llrs_check_pkg_version("llrs/rutils")}
+#' \dontrun{
+#' llrs_check_pkg_version("llrs/rutils")
+#' }
 llrs_check_pkg_version <- function(repo, path = ".") {
-
   if (!git_is_installed()) {
     stop("Git is not installed")
   }
@@ -94,8 +96,9 @@ llrs_check_pkg_version <- function(repo, path = ".") {
     stop("Folder doesn't have a package")
   }
   local_branch <- system2("git",
-                         args = paste("-C", path, "rev-parse --abbrev-ref HEAD"),
-                         stdout = TRUE)
+    args = paste("-C", path, "rev-parse --abbrev-ref HEAD"),
+    stdout = TRUE
+  )
 
   local_ver <- package_version(local_desc[, "Version"])
 
@@ -104,7 +107,9 @@ llrs_check_pkg_version <- function(repo, path = ".") {
   check_repo_length <- length(remote) != 1L || lengths(remote) > 2
   if (check_repo_length || grepl("@", repo, fixed = TRUE)) {
     stop("Repository ", sQuote(repo), " is not simple.\n",
-         "It cannot have a branch name or a sha number", call. = FALSE)
+      "It cannot have a branch name or a sha number",
+      call. = FALSE
+    )
   }
   remotes <- system2("git", paste("-C", path, "remote -v"), stdout = TRUE)
   if (!any(grepl(pattern = repo, remotes))) {
@@ -114,18 +119,24 @@ llrs_check_pkg_version <- function(repo, path = ".") {
   # Github redirect master to main
   # Encoding is required for @ and other reserved characters
   remote_branch <- URLencode(local_branch, reserved = TRUE)
-  github <- sprintf("https://raw.githubusercontent.com/%s/%s/DESCRIPTION",
-                    repo, remote_branch)
+  github <- sprintf(
+    "https://raw.githubusercontent.com/%s/%s/DESCRIPTION",
+    repo, remote_branch
+  )
 
   url_github <- url(github)
   # Will break if the repository doesn't have a DESCRIPTION
   remote_desc <- tryCatch(
     suppressWarnings(read.dcf(url_github, fields = c("Version", "Package"))),
-    error = function(e){NULL}
+    error = function(e) {
+      NULL
+    }
   )
-  if (is.null(remote_desc)){
-    warning(sprintf("Branch %s not found in remote repository %s",
-                    local_branch, repo),  call. = FALSE)
+  if (is.null(remote_desc)) {
+    warning(sprintf(
+      "Branch %s not found in remote repository %s",
+      local_branch, repo
+    ), call. = FALSE)
     return(NA)
   }
   remote_version <- package_version(remote_desc[, "Version"])
@@ -135,19 +146,20 @@ llrs_check_pkg_version <- function(repo, path = ".") {
 
   if (remote_version > local_ver) {
     warning("Update local repository ", path, ", branch ", local_branch, ".",
-            call. = FALSE)
+      call. = FALSE
+    )
     out <- FALSE
     names(out) <- pkg
     return(invisible(out))
   }
   if (remote_version < local_ver) {
     warning("Check ", pkg, " branch ", local_branch, " at ", sQuote(path),
-            ".\nIt might not the be right one,",
-            immediate. = TRUE, call. = FALSE)
+      ".\nIt might not the be right one,",
+      immediate. = TRUE, call. = FALSE
+    )
     out <- NA
     names(out) <- pkg
     return(invisible(out))
-
   }
   out <- TRUE
   names(out) <- pkg

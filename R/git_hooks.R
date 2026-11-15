@@ -44,17 +44,21 @@ check_git <- function(path) {
   dir.exists(file.path(path, ".git"))
 }
 
-hooks_client <- c("pre-commit", "repare-commit-msg", "commit-msg", "post-commit",
-                  "pre-applypatch", "applypatch-msg", "post-applypatch",
-                  "pre-rebase", "post-rewrite",
-                  "pre-push", "post-checkout",
-                  "post-merge",
-                  "pre-auto-gc")
-hooks_server <- c("pre-receive", "update", "proc-receive", "post-receive", "post-update",
-                  "reference-transaction", "push-to-checkout",
-                  "sendemail-validate", "fsmonitor-watchman",
-                  "p4-changelist", "p4-prepare-changelist", "p4-post-changelist", "p4-pre-submit",
-                  "post-index-change")
+hooks_client <- c(
+  "pre-commit", "repare-commit-msg", "commit-msg", "post-commit",
+  "pre-applypatch", "applypatch-msg", "post-applypatch",
+  "pre-rebase", "post-rewrite",
+  "pre-push", "post-checkout",
+  "post-merge",
+  "pre-auto-gc"
+)
+hooks_server <- c(
+  "pre-receive", "update", "proc-receive", "post-receive", "post-update",
+  "reference-transaction", "push-to-checkout",
+  "sendemail-validate", "fsmonitor-watchman",
+  "p4-changelist", "p4-prepare-changelist", "p4-post-changelist", "p4-pre-submit",
+  "post-index-change"
+)
 
 hook_names <- function(path) {
   file <- basename(path)
@@ -64,7 +68,7 @@ hook_names <- function(path) {
   } else if (file %in% hooks_server) {
     message("Setting a server hook.")
   } else {
-    stop("Hook name ", sQuote(file)," not recognized!")
+    stop("Hook name ", sQuote(file), " not recognized!")
   }
   TRUE
 }
@@ -81,7 +85,8 @@ hook_names <- function(path) {
 llrs_hooks_list <- function(full.names = FALSE) {
   stopifnot(isFALSE(full.names) || isTRUE(full.names))
   lf <- list.files(system.file("hooks", package = "rutils", mustWork = TRUE),
-                   full.names = full.names)
+    full.names = full.names
+  )
   lf[basename(lf) %in% c(hooks_client, hooks_server)]
 }
 

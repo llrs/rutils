@@ -37,8 +37,10 @@ export(llrs_tar_load)
 export(llrs_tar_read)
 export(llrs_toots)
 export(llrs_upload)
-importFrom(utils,URLencode)
-importFrom(utils,askYesNo)
-importFrom(utils,read.csv)
-importFrom(utils,write.csv)
-importFrom(utils,write.table)
+importFrom(utils,
+  URLencode,
+  askYesNo,
+  read.csv,
+  write.csv,
+  write.table
+)

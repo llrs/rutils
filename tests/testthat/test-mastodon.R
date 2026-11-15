@@ -1,5 +1,4 @@
 test_that("join_messages works", {
-
   x <- "whatever https://google.com"
   xx <- "Google url is https://google.com or http://google.com"
   y <- rep_len("A", 501L)
@@ -12,9 +11,12 @@ test_that("join_messages works", {
 })
 
 test_that("Splits correctly messages", {
-  message <- c(sample("dlksjflñkasd.", size = rnorm(1, mean = 41), replace = TRUE),
-  "df sdjfñl jfñasljf asdlñfj https://google.com",
-  "fasdlkñj fsfj sd https://google2.com")
+  message <- c(
+    sample("dlksjflñkasd.", size = rnorm(1, mean = 41), replace = TRUE),
+    "df sdjfñl jfñasljf asdlñfj https://google.com",
+    "fasdlkñj fsfj sd https://google2.com"
+  )
   expect_false(anyNA(split_messages(paste0(message, collapse = ". "),
-                                    width = 500)))
+    width = 500
+  )))
 })

@@ -27,8 +27,8 @@ llrs_change_member(NULL, "Publisher")
 }
 }
 \seealso{
-Other governance functions: 
-\code{\link{llrs_add_member}()},
-\code{\link{llrs_governance}()}
+Other governance functions:
+\code{\link[=llrs_add_member]{llrs_add_member()}},
+\code{\link[=llrs_governance]{llrs_governance()}}
 }
 \concept{governance functions}

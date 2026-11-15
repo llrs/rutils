@@ -22,8 +22,8 @@ It only handles text and not images as per \code{rtoot::post_thread()}
 }
 \examples{
 \dontrun{
-if(requireNamespace(“rtoot”)) {
-    llrs_toots(c("First message", "Second message", "Testing rtoo::post_threads"))
+if (requireNamespace("rtoot")) {
+  llrs_toots(c("First message", "Second message", "Testing rtoot::post_threads"))
 }
 }
 }

@@ -25,8 +25,8 @@ llrs_governance()
 Blog post about \href{https://antonin.delpeuch.eu/posts/off-the-shelf-governance-models-for-small-foss-projects/}{governance models}.
 }
 \seealso{
-Other governance functions: 
-\code{\link{llrs_add_member}()},
-\code{\link{llrs_change_role}()}
+Other governance functions:
+\code{\link[=llrs_add_member]{llrs_add_member()}},
+\code{\link[=llrs_change_role]{llrs_change_role()}}
 }
 \concept{governance functions}

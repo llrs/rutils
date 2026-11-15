@@ -27,7 +27,6 @@ llrs_upload <- function(file, dest) {
     warning("It will create a new folder!")
   }
   onedrive$upload_file(dest = dest, src = file)
-
 }
 
 check_onedrive <- function() {
@@ -56,8 +55,10 @@ check_onedrive <- function() {
 llrs_download <- function(file, dest = ".") {
   onedrive <- check_onedrive()
   if (!nzchar(tools::file_ext(file))) {
-    onedrive$download_folder(src = file, recursive = TRUE, overwrite = TRUE,
-                             parallel = FALSE, dest = dest)
+    onedrive$download_folder(
+      src = file, recursive = TRUE, overwrite = TRUE,
+      parallel = FALSE, dest = dest
+    )
   }
   onedrive$download_file(file, overwrite = TRUE, dest = dest)
 }
@@ -75,6 +76,8 @@ llrs_download <- function(file, dest = ".") {
 #' @export
 llrs_share <- function(path, type, expiry, password, scope) {
   onedrive <- check_onedrive()
-  onedrive$create_share_link(name = path, type = type, expiry = expiry,
-                             scope = scope)
+  onedrive$create_share_link(
+    name = path, type = type, expiry = expiry,
+    scope = scope
+  )
 }

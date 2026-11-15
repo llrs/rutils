@@ -42,10 +42,11 @@ check_to <- function(email_address) {
 }
 
 choose_email_method <- function(attachments = NULL) {
-  possibilities <- c("microsoft" = TRUE,
-                     "emayili" = requireNamespace("emayili", quietly = TRUE),
-                     "blastula" = requireNamespace("blastula", quietly = TRUE)
-                     )
+  possibilities <- c(
+    "microsoft" = TRUE,
+    "emayili" = requireNamespace("emayili", quietly = TRUE),
+    "blastula" = requireNamespace("blastula", quietly = TRUE)
+  )
   out <- names(possibilities)[possibilities]
   if (length(out) > 1L) {
     out <- out[[1L]]
@@ -72,20 +73,24 @@ llrs_send_email <- function(text, subject, to, attachments = NULL) {
 
   if (method == "emayili") {
     ey_email <- emayili::envelope(
-      text = text, to = to, subject = subject) |>
+      text = text, to = to, subject = subject
+    ) |>
       emayili::attachment(attachments)
     em <- outlook$create_email(ey_email)
   }
 
   if (method == "blastula") {
     bl_em <- blastula::compose_email(
-      body = blastula::md(body)) |>
+      body = blastula::md(body)
+    ) |>
       blastula::add_attachment(attachments)
     em <- outlook$create_email(bl_em, subject = subject, to = to)
   }
   if (method == "microsoft") {
-    em <- outlook$create_email(text, content_type = "html",to = to, subject = subject,
-                         send_now = FALSE)
+    em <- outlook$create_email(text,
+      content_type = "html", to = to, subject = subject,
+      send_now = FALSE
+    )
     if (!is.null(attachments)) {
       em$add_attachment(attachments)
     }
