@@ -1,8 +1,8 @@
-pandoc: 3.1.11
-pkgdown: 2.2.0
+pandoc: 3.8.3
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-02-01T12:25Z
+last_built: 2026-11-26T22:51Z
 urls:
   reference: https://llrs.github.io/rutils/reference
   article: https://llrs.github.io/rutils/articles

@@ -8,9 +8,9 @@ repository/project.
 At any point in time, a person is either a user, **Users**, a
 **Collaborator** or a **Publisher**. Last two persons, Collaborators and
 Publishers, are known as members. The list of Collaborators and
-Publishers is recorded in `members.yml` in this repository.
+Publishers is recorded in `members.csv` in this repository.
 
-The contents of `members.yml` is used by the software managing the
+The contents of `members.csv` is used by the software managing the
 configuration of the repository/project.
 
 ## Rights and responsibilities

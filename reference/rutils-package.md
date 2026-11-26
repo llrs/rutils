@@ -17,3 +17,8 @@ Useful links:
 
 **Maintainer**: Lluís Revilla Sancho <lluis.revilla@gmail.com>
 ([ORCID](https://orcid.org/0000-0001-9747-2570))
+
+Authors:
+
+- Lluís Revilla Sancho <lluis.revilla@gmail.com>
+  ([ORCID](https://orcid.org/0000-0001-9747-2570))

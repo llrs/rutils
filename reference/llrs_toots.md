@@ -29,3 +29,11 @@ llrs_toots(msg, width = 500, join_text = ". ")
 The ids of the toots posted
 
 ## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+if (requireNamespace("rtoot")) {
+  llrs_toots(c("First message", "Second message", "Testing rtoot::post_threads"))
+}
+} # }
+```

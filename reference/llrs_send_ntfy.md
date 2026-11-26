@@ -33,3 +33,11 @@ llrs_send_ntfy(message, title, ..., topic = NULL)
 The default `httr` response.
 
 ## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+if (requireNamespace("ntfy")) {
+  llrs_send_ntfy("Failure", "test")
+}
+} # }
+```

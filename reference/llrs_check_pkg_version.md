@@ -23,3 +23,9 @@ llrs_check_pkg_version(repo, path = ".")
 TRUE if successfull
 
 ## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+llrs_check_pkg_version("llrs/rutils")
+} # }
+```
