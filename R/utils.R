@@ -13,7 +13,9 @@ check_installed <- function(x) {
   exists <- !requireNamespace(x, quietly = TRUE)
   if (exists && interactive()) {
     stop("Please install the ", paste(sQuote(x), collapse = " or "),
-         " package.", call. = FALSE)
+      " package.",
+      call. = FALSE
+    )
   } else if (exists && !interactive()) {
     return(FALSE)
   }

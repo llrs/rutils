@@ -1,4 +1,3 @@
-
 #' rutils: Personal collection of functions to work with R
 #'
 #' @description

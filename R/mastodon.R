@@ -11,8 +11,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' if(requireNamespace(“rtoot”)) {
-#'     llrs_toots(c("First message", "Second message", "Testing rtoo::post_threads"))
+#' if (requireNamespace("rtoot")) {
+#'   llrs_toots(c("First message", "Second message", "Testing rtoot::post_threads"))
 #' }
 #' }
 llrs_toots <- function(msg, width = 500, join_text = ". ") {
@@ -49,13 +49,12 @@ split_messages <- function(msg, width, len = mast_length(msg)) {
 }
 
 join_messages <- function(msg, width, join_text) {
-
   njoin <- mast_length(join_text)
   p <- 1
   repeat {
     index <- c(p, p + 1)
     len <- mast_length(msg[index])
-    if (sum(len) + njoin  < width) {
+    if (sum(len) + njoin < width) {
       msg[p] <- paste0(msg[index], collapse = join_text)
       msg <- msg[-index[2]]
     } else {
@@ -71,9 +70,13 @@ join_messages <- function(msg, width, join_text) {
 
 find_urls <- function(msg) {
   htps <- gregexpr("(https?://[^[:space:]]+)", msg)
-  l <- lapply(htps, function(msg){if (length(msg) == 1L && msg < 0) {
-    return(NULL)
-  } else{msg}})
+  l <- lapply(htps, function(msg) {
+    if (length(msg) == 1L && msg < 0) {
+      return(NULL)
+    } else {
+      msg
+    }
+  })
   names(l) <- seq_len(length(msg))
   l[lengths(l) >= 1L]
 }
@@ -95,24 +98,27 @@ urls_info <- function(urls) {
 }
 
 substract_len <- function(len, ui) {
-  diff_length <- vapply(split(ui, ui$Message),
-  function(msg) {
-    # Each url counts per 25 characters
-    NROW(msg)*25 - sum(msg$Length)},
-    numeric(1L))
-    names(len) <- as.character(seq_along(len))
-    len[names(diff_length)] <- len[names(diff_length)] - diff_length
+  diff_length <- vapply(
+    split(ui, ui$Message),
+    function(msg) {
+      # Each url counts per 25 characters
+      NROW(msg) * 25 - sum(msg$Length)
+    },
+    numeric(1L)
+  )
+  names(len) <- as.character(seq_along(len))
+  len[names(diff_length)] <- len[names(diff_length)] - diff_length
+  len
+}
+
+mast_length <- function(msg) {
+  len <- nchar(msg)
+  with_url <- grepl("https?://", msg)
+  if (any(with_url)) {
+    g <- find_urls(msg)
+    ui <- urls_info(g)
+    substract_len(len, ui)
+  } else {
     len
   }
-
-  mast_length <- function(msg) {
-    len <- nchar(msg)
-    with_url <- grepl("https?://", msg)
-    if (any(with_url)) {
-      g <- find_urls(msg)
-      ui <- urls_info(g)
-      substract_len(len, ui)
-    } else {
-      len
-    }
-  }
+}

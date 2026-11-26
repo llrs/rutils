@@ -5,7 +5,6 @@ llrs_rstudio_setup <- function() {
   rstudioapi::readRStudioPreference("", "")
   rstudioapi::writeRStudioPreference
   r <- rstudioapi::readPreference("readRStudioPreference")
-
 }
 
 check_rstudio <- function() {
@@ -17,7 +16,7 @@ check_rstudio <- function() {
     return(NA)
   }
 
-  if  (!rstudioapi::isAvailable()) {
+  if (!rstudioapi::isAvailable()) {
     stop("Not in Rstudio!", call. = FALSE)
   }
 
@@ -32,7 +31,8 @@ check_rstudio <- function() {
     rcp <- rstudio_config_path()
     .state$rstudio <- c(
       path = file.path(rcp, "rstudio-prefs.json"),
-      backup =  file.path(rcp, "rstudio-prefs.json.bkp") )
+      backup = file.path(rcp, "rstudio-prefs.json.bkp")
+    )
   }
   TRUE
 }
@@ -66,15 +66,19 @@ NULL
 llrs_rstudio_set <- function() {
   check_rstudio()
 
-  path <-  .state$rstudio["path"]
+  path <- .state$rstudio["path"]
   if (!dir.exists(dirname(path))) {
     dir.create(path, recursive = TRUE)
   }
-  orig <- base::system.file("rstudio-prefs.json", package = "rutils",
-                            mustWork = TRUE)
+  orig <- base::system.file("rstudio-prefs.json",
+    package = "rutils",
+    mustWork = TRUE
+  )
   file.copy(orig, path, overwrite = TRUE, copy.date = TRUE)
-  message("Check the preferences and if not try to modify the configuration at ",
-          path)
+  message(
+    "Check the preferences and if not try to modify the configuration at ",
+    path
+  )
   rstarting_rstudio(time = 10L)
 }
 
@@ -113,7 +117,7 @@ llrs_rstudio_snippets <- function() {
   check_rstudio()
 
   rcp <- rstudio_config_path()
-  path <-  file.path(rcp, "snippets")
+  path <- file.path(rcp, "snippets")
   if (!dir.exists(path)) {
     dir.create(path)
   }
@@ -127,7 +131,7 @@ llrs_rstudio_check_theme <- function(theme) {
   check_rstudio()
 
   rcp <- rstudio_config_path()
-  path <-  file.path(rcp)
+  path <- file.path(rcp)
 }
 
 rstarting_rstudio <- function(message = "Restaring Rstudio", time = 1L) {

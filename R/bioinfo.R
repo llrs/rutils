@@ -1,4 +1,3 @@
-
 #' @name Bioinformatics
 #' @title Bioinformatics
 #' @description
@@ -18,10 +17,10 @@ NULL
 #' @examples
 #' box10 <- llrs_box(10)
 #' box9 <- llrs_box(9)
-llrs_box <- function(size){
+llrs_box <- function(size) {
   stopifnot(is.numeric(size) && size %% 1 == 0L)
   sl <- seq_len(size)
-  data.frame(fila =  rep(LETTERS[sl], each = size), columna = rep(sl))
+  data.frame(fila = rep(LETTERS[sl], each = size), columna = rep(sl))
 }
 
 
@@ -50,7 +49,8 @@ light_cleanup <- function(path) {
   #  SC_MULTI_CS
   SC_MULTI_CS <- file.path(path, "SC_MULTI_CS")
   path_sample <- list.dirs(file.path(path, "outs", "per_sample_outs"),
-                           recursive = FALSE)
+    recursive = FALSE
+  )
   # All the analysis by default
   analysis <- file.path(path_sample, "count", "analysis")
   # All the internal files
@@ -79,7 +79,7 @@ light_cleanup <- function(path) {
   }
 
   message("Removing:", paste("\n -", all_paths))
-  Sys.sleep(length(all_paths)/2)
+  Sys.sleep(length(all_paths) / 2)
 
   unlink(all_paths, recursive = TRUE)
   message("Removed files")
@@ -87,7 +87,6 @@ light_cleanup <- function(path) {
 }
 
 extreme_cleanup <- function(path) {
-
   files <- c(
     # Needed for easy aggr GEX before filtering
     "sample_molecule_info.h5",
@@ -121,7 +120,7 @@ extreme_cleanup <- function(path) {
     }
   }
   message("Removing:", paste("\n -", remove_f))
-  Sys.sleep(length(remove_f)/2)
+  Sys.sleep(length(remove_f) / 2)
 
   if (length(remove_f)) {
     unlink(remove_f, recursive = TRUE)
@@ -142,7 +141,8 @@ check_cellranger_folder_version <- function(path, version = "7.2.0") {
     stop("Requires dependencies")
   }
   out <- vapply(file.path(path, "_versions"), jsonlite::read_json,
-                FUN.VALUE = vector("list", 2))
+    FUN.VALUE = vector("list", 2)
+  )
   endsWith(simplify2array(out["pipelines", ]), version)
 }
 
@@ -175,12 +175,10 @@ llrs_cellranger_aggr <- function(gex, path, vdj = NULL) {
   stopifnot(colnames(vdj) == tcr)
   if (!all(basename(vdj$vdj_contig_info) == "vdj_contig_info.pb")) {
     stop("Not all samples are sample_molecule_info.h5!", call. = FALSE)
-
   }
   if (!is.null(vdj)) {
     write.csv(gex, file = path, quote = FALSE, row.names = FALSE)
   }
-
 }
 
 check_cellranger_vdj <- function(vdj) {
@@ -192,19 +190,23 @@ check_cellranger_vdj <- function(vdj) {
 }
 
 check_cellranger_gex <- function(gex) {
-  gex_names <- c("reference", "probe-set", "filter-probes", "r1-length", "r2-length",
-                 "chemistry",	"expect-cells",	"force-cells",	"no-secondary",
-                 "no-bam",	"check-library-compatibility",	"include-introns",
-                 "min-assignment-confidence")
+  gex_names <- c(
+    "reference", "probe-set", "filter-probes", "r1-length", "r2-length",
+    "chemistry", "expect-cells", "force-cells", "no-secondary",
+    "no-bam", "check-library-compatibility", "include-introns",
+    "min-assignment-confidence"
+  )
 
   if (!is.list(gex) && !all(gex %in% gex_names)) {
     stop("The gene expression doesn't have all the fields.", call. = FALSE)
   }
 
   check_integer <- all(vapply(gex[gex_names[4:5, 7:8]], is.integer,
-                              FUN.VALUE = logical(1L)))
+    FUN.VALUE = logical(1L)
+  ))
   check_logical <- all(vapply(gex[gex_names[10:13]], is.logical,
-                       FUN.VALUE = logical(1L)))
+    FUN.VALUE = logical(1L)
+  ))
   check_numeric <- is.numeric(gex["min-assignment-confidence"])
 
   if (!any(check_integer, check_logical, check_numeric)) {
@@ -215,8 +217,13 @@ check_cellranger_gex <- function(gex) {
 
 check_cellranger_samples <- function(samples, library) {
   samples_columns <- c("sample_id", "expect_cells", "force_cells", "description", "cmo_ids", "probe_barcode_ids")
-  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing"){
-    c(1, 5)} else if ("Fixed RNA Profiling"){6}else{ 1})
+  soc <- obligatory_columns(samples, samples_columns, if ("3' Cell Multiplexing") {
+    c(1, 5)
+  } else if ("Fixed RNA Profiling") {
+    6
+  } else {
+    1
+  })
   if (!soc) {
     stop("Samples does not have the required columns.", call. = FALSE)
   }

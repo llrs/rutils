@@ -1,4 +1,3 @@
-
 #' Copy config to config repository
 #'
 #' Copy file to config repository and add it and push it.
@@ -24,8 +23,10 @@ llrs_copy_config <- function(path, dest_dir = "~/Documents/Projects/customizatio
   }
   old_file <- file.path(dest_dir, basename(path), fsep = "/")
   if (file.exists(old_file) && tools::Rdiff(old_file, path)) {
-    warning("There are differences between the files:\n - New: ",
-    path, "\n - Old: ", old_file, "\n")
+    warning(
+      "There are differences between the files:\n - New: ",
+      path, "\n - Old: ", old_file, "\n"
+    )
     pick <- utils::askYesNo("Continue?", default = FALSE)
     if (!isTRUE(pick)) {
       return(NULL)
@@ -37,8 +38,10 @@ llrs_copy_config <- function(path, dest_dir = "~/Documents/Projects/customizatio
   }
   message("Added to the repository: ", old_file)
   system2("git", sprintf("-C %s add .", dirname(old_file)))
-  system2("git", sprintf("-C %s commit -m 'Adding/updating file %s'",
-                         dirname(old_file), basename(old_file)))
+  system2("git", sprintf(
+    "-C %s commit -m 'Adding/updating file %s'",
+    dirname(old_file), basename(old_file)
+  ))
   system2("git", sprintf("-C %s push", dirname(old_file)))
   TRUE
 }

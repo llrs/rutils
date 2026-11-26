@@ -1,4 +1,3 @@
-
 #' Use system's notify-send to send a message
 #'
 #' Creates a pop up message on the system if it is run from an interactive
@@ -30,8 +29,10 @@ llrs_notify_system <- function(..., title, message = NULL, icon = NULL, urgency 
     warning("title might be too big", call. = FALSE)
   }
   if (interactive()) {
-    system2("notify-send", args = paste(icon, urgency, sQuote(title,q = '"'),
-                                        sQuote(message, q = '"')))
+    system2("notify-send", args = paste(
+      icon, urgency, sQuote(title, q = '"'),
+      sQuote(message, q = '"')
+    ))
   }
   TRUE
 }

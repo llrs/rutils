@@ -24,8 +24,8 @@ Send a message to the NTFY address
 }
 \examples{
 \dontrun{
-if(requireNamespace(“ntfy”)) {
-    llrs_send_ntfy("Failure", "test")
+if (requireNamespace("ntfy")) {
+  llrs_send_ntfy("Failure", "test")
 }
 }
 }

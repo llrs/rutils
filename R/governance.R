@@ -50,19 +50,20 @@ llrs_add_member <- function(name = getOption("usethis.full_name"), role = "Colla
   }
   if (is.null(name) && !is.null(usethis_name <- getOption("usethis.full_name"))) {
     name <- usethis_name
-  } else if(is.null(name)) {
+  } else if (is.null(name)) {
     stop("Missing name of contributor.", call. = TRUE)
   }
 
   file_name <- "members.csv"
   path_file <- file.path(path, file_name)
-  out <- data.frame(Name = name,
-                    Role = role,
-                    `Date added` = as.character(Sys.Date()),
-                    `Date removed` = "",
-                    check.names = FALSE)
+  out <- data.frame(
+    Name = name,
+    Role = role,
+    `Date added` = as.character(Sys.Date()),
+    `Date removed` = "",
+    check.names = FALSE
+  )
   if (file.exists(path_file)) {
-
     members <- read.csv(path_file)
     w_name <- which(name %in% members[, 1])
     if (nzchar(members[w_name[length(w_name)], 4])) {
@@ -70,19 +71,19 @@ llrs_add_member <- function(name = getOption("usethis.full_name"), role = "Colla
     }
 
     out <- write.table(out,
-                sep = ",",
-                file = path_file,
-                row.names = FALSE,
-                append = TRUE, col.names = FALSE
-                )
+      sep = ",",
+      file = path_file,
+      row.names = FALSE,
+      append = TRUE, col.names = FALSE
+    )
   } else {
     add2buildignore(file_name, path = path)
     out <- write.table(out,
-                sep = ",",
-                file = path_file,
-                append = FALSE,
-                row.names = FALSE
-                )
+      sep = ",",
+      file = path_file,
+      append = FALSE,
+      row.names = FALSE
+    )
   }
   invisible(out)
 }
@@ -110,18 +111,20 @@ llrs_change_role <- function(name = NULL, role = "User", path = ".") {
   if (!file.exists(path_file)) {
     stop("No members.csv exists at ", sQuote(path), call. = FALSE)
   }
-  members <- read.csv(file = path_file,
-                      row.names = NULL, header = TRUE,
-                      check.names = FALSE)
+  members <- read.csv(
+    file = path_file,
+    row.names = NULL, header = TRUE,
+    check.names = FALSE
+  )
 
   if (is.null(name) && !is.null(usethis_name <- getOption("usethis.full_name"))) {
     name <- usethis_name
-  } else if(is.null(name)) {
+  } else if (is.null(name)) {
     stop("Missing name of contributor.", call. = TRUE)
   }
 
   if (!name %in% members$Name) {
-    stop(sQuote(name),  " wasn't found on the list of members")
+    stop(sQuote(name), " wasn't found on the list of members")
   }
 
   w <- which(members$Name %in% name)
@@ -129,7 +132,7 @@ llrs_change_role <- function(name = NULL, role = "User", path = ".") {
   date_removed <- members[w[length(w)], 4]
   current_date <- as.character(Sys.Date())
 
-  if (role  == "User") {
+  if (role == "User") {
     if (!nzchar(date_removed)) {
       members[w[length(w)], 4] <- current_date
     } else {
@@ -140,8 +143,10 @@ llrs_change_role <- function(name = NULL, role = "User", path = ".") {
   }
 
   if (current_role == role) {
-    out <- askYesNo(paste0("Collaborator ", sQuote(name), " is already ", role,
-                    ".\nDid you meant a differnet role?"))
+    out <- askYesNo(paste0(
+      "Collaborator ", sQuote(name), " is already ", role,
+      ".\nDid you meant a differnet role?"
+    ))
     if (!isTRUE(out)) {
       return(invisible(NULL))
     }
@@ -154,12 +159,14 @@ llrs_change_role <- function(name = NULL, role = "User", path = ".") {
   }
 
   # Add new line to new role with current date
-  members <- rbind(members,
-                   data.frame(Name = name, Role = role,
-                              "Date added" = current_date,
-                              "Date removed" = "", check.names = FALSE))
+  members <- rbind(
+    members,
+    data.frame(
+      Name = name, Role = role,
+      "Date added" = current_date,
+      "Date removed" = "", check.names = FALSE
+    )
+  )
   write.csv(members, file = path_file, row.names = FALSE)
   return(invisible(NULL))
 }
-
-
