@@ -22,11 +22,13 @@ Suggests:
     ntfy (>= 0.0.2),
     rappdirs (>= 0.3.3),
     readxl (>= 1.4.3),
+    rmarkdown (>= 2.32),
     roxygen2 (>= 7.2.3),
     rstudioapi (>= 0.14),
     rtoot (>= 0.3.6),
     targets (>= 1.5.1),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    xfun (>= 0.62)
 Remotes:
     jonocarroll/ntfy
 Config/testthat/edition: 3
